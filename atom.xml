@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>D:/felix/docs/Gridea/output</id>
+    <id>https://zxpzhong.github.io/</id>
     <title>Gridea</title>
-    <updated>2019-06-12T02:19:32.853Z</updated>
+    <updated>2019-06-12T04:03:52.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="D:/felix/docs/Gridea/output"/>
-    <link rel="self" href="D:/felix/docs/Gridea/output/atom.xml"/>
+    <link rel="alternate" href="https://zxpzhong.github.io/"/>
+    <link rel="self" href="https://zxpzhong.github.io//atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>D:/felix/docs/Gridea/output/images/avatar.png</logo>
-    <icon>D:/felix/docs/Gridea/output/favicon.ico</icon>
+    <logo>https://zxpzhong.github.io//images/avatar.png</logo>
+    <icon>https://zxpzhong.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>D:/felix/docs/Gridea/output/post/hello-gridea/index.html</id>
-        <link href="D:/felix/docs/Gridea/output/post/hello-gridea/index.html">
+        <id>https://zxpzhong.github.io//post/hello-gridea</id>
+        <link href="https://zxpzhong.github.io//post/hello-gridea">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
