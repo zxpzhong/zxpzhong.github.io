@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zxpzhong.github.io/</id>
     <title>Felix计算机视觉小屋</title>
-    <updated>2019-06-12T05:50:15.127Z</updated>
+    <updated>2019-06-19T14:29:15.313Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zxpzhong.github.io/"/>
     <link rel="self" href="https://zxpzhong.github.io//atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://zxpzhong.github.io//images/avatar.png</logo>
     <icon>https://zxpzhong.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Felix计算机视觉小屋</rights>
+    <entry>
+        <title type="html"><![CDATA[Gridea对接github page]]></title>
+        <id>https://zxpzhong.github.io//post/gridea-dui-jie-github-page</id>
+        <link href="https://zxpzhong.github.io//post/gridea-dui-jie-github-page">
+        </link>
+        <updated>2019-06-19T12:51:50.000Z</updated>
+        <summary type="html"><![CDATA[<p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
+<!-- more -->
+<h2 id="hexo部署github-page的缺点">hexo部署github page的缺点</h2>
+<ol>
+<li>hexo主题虽然多但是一般自己只会喜欢一两个，尤其是hexo的自定义程度高，可以用来玩（一玩玩一天的那种- - ！）但是对于我这种对于前端完全是小白的代码搬运工，并不是很想用可玩性这么高的，因为不自己配置没有特色，自己配置又搞不来</li>
+<li>hexo文章的属性在MD文件的开头，需要手动设置，Gridea把这几项都集成到了软件中，使用起来比较人性化!
+<img src="http://qiniu.aicv.club/image/20190619/zokW9vj9iIpq.png?imageslim" alt="mark"></li>
+<li>编辑界面集成到了Gridea中，编辑发布一体化，适合小白使用</li>
+<li>可以把Gridea源位置设置在onedrive文件夹，这样还可以动态备份，就算换电脑，换软件，把文件夹下载下来还可以继续编辑</li>
+</ol>
+<h2 id="部署流程">部署流程</h2>
+<h3 id="安装gridea">安装Gridea</h3>
+<p>从Gridea网站下载软件，然后在下图中，设置好自己的github page域名，仓库名称，用户名（github用户名），邮箱，Token生成方法自行搜索
+<img src="http://qiniu.aicv.club/image/20190619/Lw4tYW9d8aYH.png?imageslim" alt="mark"></p>
+<h3 id="gitalk评论系统配置">gitalk评论系统配置</h3>
+<p><img src="http://qiniu.aicv.club/image/20190619/5L5K2zjsISn5.png?imageslim" alt="mark">
+在自己的github设置页面内-&gt;Developer settings-&gt;OAuth Apps-&gt;new OAuth App,新建一个，然后会返回一个client ID和一个Client Seceret
+<img src="http://qiniu.aicv.club/image/20190619/LbWEYyxqfQIu.png?imageslim" alt="mark">
+将这个client ID和Client Seceret填入Gridea中</p>
+<h3 id="其他设置">其他设置</h3>
+<p>可以直接可视化设置头像、主题、一些样式、显示内容、标签等，这点是我最喜欢的
+<strong>完成设置后，可以发布测试一下，输入你的github page域名，即可看到对应的页面</strong></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://zxpzhong.github.io//post/hello-gridea</id>
