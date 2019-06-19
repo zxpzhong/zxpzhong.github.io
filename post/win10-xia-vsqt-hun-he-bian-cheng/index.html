@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>win10下VS+QT混合编程 | Felix计算机视觉小屋</title>
+<meta name="description" content="念念不忘必有回响">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1560958212963">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135106908-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-135106908-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zxpzhong.github.io/">
+        <img src="https://zxpzhong.github.io//images/avatar.png?v=1560958212963" class="site-logo">
+        <h1 class="site-title">Felix计算机视觉小屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/zxpzhong" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      念念不忘必有回响
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/zxpzhong" target="_blank">My github</a> | <a class="rss" href="https://zxpzhong.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">win10下VS+QT混合编程</h2>
+            <div class="post-date">2019-06-19</div>
+            
+              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/vRYzYemiPSCr.png?imageslim')">
+              </div>
+            
+            <div class="post-content">
+              <p>厌倦了windows系统API？但是又没脱离VS进行环境配置？何不试试windows下的VS+QT混合编程</p>
+<!-- more --> 
+<h1 id="visiual-studio与qt对比">Visiual Studio与QT对比</h1>
+<h2 id="win10下vs进行c编程的痛点">Win10下VS进行c++编程的痛点</h2>
+<ul>
+<li>功能没有整合，变量名、类名都贼长（是见名知义了，但是每次看都要半天，而且这么长的变名字导致程序密集，看的眼疼）</li>
+<li>总是需要大段大段复制粘贴（为什么不把一大段功能整合？）</li>
+<li>MFC界面功能完善但是外观老套布局难（相比之下QtCreator就好很多，这也是QtCreator+QT类库用来做界面程序最大的优势了）</li>
+</ul>
+<h2 id="qt的优点">QT的优点</h2>
+<ul>
+<li>功能集成度高、功能分类明确、编程时逻辑清晰</li>
+<li>跨平台，在linux和win下基本不用考虑操作系统差异</li>
+</ul>
+<h2 id="qt的缺点">QT的缺点</h2>
+<ul>
+<li>环境配置远远不如Visual Studio，QtCreator配置环境全部放到.pro文件中，默认使用qmake配置工程，而不是cmake，原意应该是想更加简化cmake适应qt的环境，但是明明在qmake配置过（不论是头文件还是库文件），但是重新构建就是不管用，无解</li>
+<li>编译时，常常出现symbol not found错误，一个简单的程序，又没有用到自己外部的库，却老是出现这种莫名其妙的错误</li>
+<li>我的熟练的Ctrl+Z技能应该就是大二那会用QT练起来的，明明只是简单的加了几个回车，编译后缺出现symbol not found错误，赶紧回退回退，有时候万一不小心存盘了又找不到旧版，出现symbol not found后然后就完全没办法让程序通过编译，然后又要新建工程，然后把文件都拷贝过来，改来改去</li>
+</ul>
+<h1 id="vsqt取长补短">VS+QT取长补短</h1>
+<p>上面说到了，VS在win下做c++开发天下无敌的有点就是完全可视化的环境配置，所有的头文件、库等等配置全部通过工程的属性中可以设置，相比于Qt Creator为了满足跨平台的需求，必须通过qmake文件（cmake也一样）配置，这种手动输入的方法，对于非常熟练、经验十足的大佬来说没有问题，但是对于一般人来说，要了解所有的qmake中特殊变量名比直接鼠标点点难得多，而且在windows下运行的程序，依赖的环境变量、还有很多我也不知道的东西，感觉比linux下多很多，如果全部都通过手敲代码的形式配置，又麻烦又难记。
+所以<strong>综合这两者的优缺点</strong>，采用VS作为IDE用来配置工程依赖+QT类库进行开发，这种方法可行，很大程度上是自称宇宙第一无敌IDE Visual Stidio的功劳，完美得QT插件使得Qt、QtCreator等都可以完美集成到VS中来做（人家QT并不想鸟你而你却强行把人家包含进来干什么！），事实正面，VS在这方面做的确实很好，试了下，基本上不费事，可以完美在VS中开发QT，而且再也不用管qmake文件得编辑了</p>
+<h1 id="vsqt安装">VS+QT安装</h1>
+<h2 id="qt安装">QT安装</h2>
+<ul>
+<li>qt版本：5.9.3</li>
+<li>下载地址：http://download.qt.io/archive/qt/5.9/5.9.3/</li>
+<li>安装注意事项，编译器一定要选择msvc2015-64bit选项，其他可以都不用选择（msvc是win下专用的c++编译器，微软出品；工业相机的SDK程序出厂测试编译器是msvc；VS对msvc的支持性最好）</li>
+</ul>
+<h2 id="vs安装">VS安装</h2>
+<ul>
+<li>VS版本：2015 专业版</li>
+<li>下载地址：http://download.microsoft.com/download/B/8/9/B898E46E-CBAE-4045-A8E2-2D33DD36F3C4/vs2015.pro_chs.iso</li>
+<li>该版本是官方的专业版，不用担心中毒什么的，激活密钥：HMGNV-WCYXV-X7G9W-YCX63-B98R2</li>
+<li>安装过程中，选择编译器为msvc2015-x64、msvc2015-x86、MFC支持（以防万一要用）</li>
+</ul>
+<h2 id="qt与vs完美融合">QT与VS完美融合</h2>
+<p>教程地址：<a href="https://blog.csdn.net/yzy_1996/article/details/81939610">https://blog.csdn.net/yzy_1996/article/details/81939610</a></p>
+<h2 id="opencv安装">OPENCV安装</h2>
+<ul>
+<li>opencv版本：3.2</li>
+<li>下载地址：https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.2.0/opencv-3.2.0-vc14.exe/download</li>
+<li>不需要安装网上的编译，直接下载opencv win的编译好的包，直接解压后</li>
+<li>lib路径：$OPENCV_DIR/build/x64/vc14/lib/opencv_world320.lib</li>
+<li>include路径：$OPENCV_DIR/build/include/</li>
+</ul>
+<h2 id="大恒相机sdk安装">大恒相机SDK安装</h2>
+<ul>
+<li>版本：V18.06.25.01</li>
+<li>下载地址：http://gb.daheng-imaging.com/CN/Software/Cameras/Windows/Galaxy_V18.06.25.01_X86_Win_cn.zip</li>
+<li>lib路径：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>D</mi><msub><mi>K</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi><mi mathvariant="normal">/</mi><mi>S</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>C</mi><mo>+</mo><mo>+</mo><mi>S</mi><mi>D</mi><mi>K</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>i</mi><mi>b</mi><mi mathvariant="normal">/</mi><mi>x</mi><mn>64</mn><mi mathvariant="normal">/</mi><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">SDK_DIR/Samples/C++ SDK/lib/x64/;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">b</span><span class="mord">/</span><span class="mord mathdefault">x</span><span class="mord">6</span><span class="mord">4</span><span class="mord">/</span><span class="mpunct">;</span></span></span></span>SDK_DIR/Samples/VC SDK/lib/x64/;</li>
+<li>include路径：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>D</mi><msub><mi>K</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi><mi mathvariant="normal">/</mi><mi>S</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>C</mi><mo>+</mo><mo>+</mo><mi>S</mi><mi>D</mi><mi>K</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi mathvariant="normal">/</mi><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">SDK_DIR/Samples/C++ SDK/inc/;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord">/</span><span class="mpunct">;</span></span></span></span>SDK_DIR/Samples/VC SDK/inc/;</li>
+</ul>
+<h1 id="采坑记录">采坑记录</h1>
+<h2 id="无法解析的外部符号-winmain">无法解析的外部符号 WinMain</h2>
+<p>这是因为windows应用程序分为两种，一种是console（控制台），另一种是windwos（窗口），QT相对于VS的分类属于console，需要将项目/属性/链接器/子系统一栏设置为：(/SUBSYSTEM:CONSOLE)，如果设置为(/SUBSYSTEM:WINDOWS)则会找不到WinMain符号</p>
+<h2 id="stdafxh-not-found">stdafx.h not found</h2>
+<p>将程序中的这一句话注释，然后将项目/属性/c/c++/预编译头/预编译头一栏修改为不使用预编译头</p>
+<h2 id="include-qlabel-qlabel-not-found">#include &quot;QLabel&quot; QLabel not found</h2>
+<p>这是因为Qt5.9.3中，将QT加入VS后，默认只添加了<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;#&#039; at position 78: …gets路径下，因此要改为使用#̲include &quot;QtWidg…'>QT_DIR/msvc2015_64/include/为include路径，但是QLabel文件再include/QtWidgets路径下，因此要改为使用#include &quot;QtWidgets/QLabel&quot;，或者手动将</span>QT_DIR/msvc2015_64/include/QtWidgets添加到include路径中</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zxpzhong.github.io//tag/Y0XIWBfe0" class="tag">
+                    c++
+                  </a>
+                
+                  <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
+                    工具
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zxpzhong.github.io//post/pytorch-mo-xing-zhuan-ncnn">
+                  <h3 class="post-title">
+                    pytorch模型转ncnn
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '83c4a343274b5d1b37bc',
+        clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
+        repo: 'zxpzhong.github.io',
+        owner: 'zxpzhong',
+        admin: ['zxpzhong'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

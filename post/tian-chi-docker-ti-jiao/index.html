@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>天池Docker提交 | Felix计算机视觉小屋</title>
+<meta name="description" content="念念不忘必有回响">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1560958212963">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135106908-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-135106908-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zxpzhong.github.io/">
+        <img src="https://zxpzhong.github.io//images/avatar.png?v=1560958212963" class="site-logo">
+        <h1 class="site-title">Felix计算机视觉小屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/zxpzhong" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      念念不忘必有回响
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/zxpzhong" target="_blank">My github</a> | <a class="rss" href="https://zxpzhong.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">天池Docker提交</h2>
+            <div class="post-date">2019-06-19</div>
+            
+              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/vzyfFpPjmfTC.png?imageslim')">
+              </div>
+            
+            <div class="post-content">
+              <p>天池竞赛提交如何提交Docker镜像？相信很多小伙伴容易倒在第一步上~~</p>
+<!-- more -->
+<h1 id="天池竞赛简介">天池竞赛简介</h1>
+<ul>
+<li>天池大数据竞赛是由阿里巴巴集团主办，面向全球科研工作者的高端算法竞赛。通过开放海量数据和分布式计算资源，大赛让所有参与者有机会运用其设计的算法解决各类社会问题或业务问题。特别优秀的解决方案将有机会直接上线阿里巴巴旗下各电商网站（含淘宝、天猫等）或第三方合作伙伴平台，服务中国乃至世界数以亿计的用户。</li>
+<li>这个竞赛在国内的地位可以比肩Kaggle，在竞赛中拿到好的成绩可以直接写上简历，加分还是很足的，具体优点我就不列举了，现在体会还那么深刻，但是前人的经验告诉我们，参加这个百利而无一害！！！！</li>
+<li>B乎问答“参加天池对校招的作用”：
+<a href="https://www.zhihu.com/question/41449961" title="参加天池大数据竞赛对校园招聘有帮助吗？">https://www.zhihu.com/question/41449961</a></li>
+</ul>
+<h1 id="docker简介">Docker简介</h1>
+<p>参加天池竞赛不可避免得要碰到一个问题，那就是最基本得提交赛题，本次我遇到的是通过提交<strong>阿里容器镜像服务</strong>的地址，竞赛刚看完题目后，第一遍提交应该是使用赛题提供的Demo文件提交，这样可以熟悉一遍赛题，熟悉提交流程。所以一定要先对Docker进行一个科普性了解。</p>
+<h2 id="docker是什么">Docker是什么？</h2>
+<ul>
+<li>Docker是一个虚拟环境容器，可以将你的开发环境、代码、配置文件等一并打包到这个容器中，并发布和应用到任意平台中。比如，你在本地用Python开发网站后台，开发测试完成后，就可以将Python3及其依赖包、Flask及其各种插件、Mysql、Nginx等打包到一个容器中，然后部署到任意你想部署到的环境。<img src="http://qiniu.aicv.club/image/20190619/Bwmm22yG9MYj.png?imageslim" alt="mark"></li>
+<li>大家从github上拉下来的代码，能直接运行么？往往不能，因为：</li>
+<li>代码运行系统环境不同</li>
+<li>数据集的文件夹路径不同</li>
+<li>python依赖不同，可能你的环境中没装，可能你的版本过高或者过低</li>
+<li>版本差别比较大的深度学习框架，有些函数有差异，是修改当前python的框架版本？还是新建虚拟环境重新装一个？</li>
+<li>所以从github上拉下来的代码，多多少少还是要经过修改后才能正常运行，修改少的十分钟可以运行起来，多的需要一个小时以上，但是赛题方不可能帮你把你提交的代码全部修改后，然你的代码能够在赛题方的环境中运行，所以这种要求<strong>程序跨环境运行</strong>的要求就需要靠Docker来解决！！</li>
+</ul>
+<h2 id="docker基本概念">Docker基本概念</h2>
+<p>说白了，Docker就是一个能够把你的运行环境也打包的容器，这样才能够让你的提交给赛题方的容器，可以不经过任何修改而直接运行，得出你的成绩。真正使用前还需要了解一些基本概念：镜像、容器、仓库。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">打包后大小</th>
+<th style="text-align:center">运行底层</th>
+<th style="text-align:center">响应时间（包含修改）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">代码打包</td>
+<td style="text-align:center">MB级别</td>
+<td style="text-align:center">python+本机操作系统</td>
+<td style="text-align:center">小时级别</td>
+</tr>
+<tr>
+<td style="text-align:center">虚拟机</td>
+<td style="text-align:center">10G级别</td>
+<td style="text-align:center">虚拟化硬件+虚拟机</td>
+<td style="text-align:center">开机5分钟</td>
+</tr>
+<tr>
+<td style="text-align:center">Docker</td>
+<td style="text-align:center">5G级别</td>
+<td style="text-align:center">操作系统的Docker引擎</td>
+<td style="text-align:center">秒级</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://qiniu.aicv.club/image/20190619/PXrH6q4SnK2i.png?imageslim" alt="mark"></p>
+<ol>
+<li>Docker的gitbook地址，有时间的话建议还是把这个全部看完。<a href="https://yeasy.gitbooks.io/docker_practice/">https://yeasy.gitbooks.io/docker_practice/</a></li>
+<li><strong>镜像</strong>：镜像就像面向对象程序中的类，镜像是静态的定义，镜像可以被修改，增删内容，但是镜像的运行必须通过生成容器实体</li>
+<li><strong>容器</strong>：容器就像面向对象程序中的示例，容器是镜像运行时的实体，容器可以被创建、启动、停止、删除、暂停</li>
+<li><strong>仓库</strong>：这个仓库就类似git仓库，但是git仓库是储存代码，而docker仓库是储存docker镜像
+<ul>
+<li><code>Docker Registry</code>：Docker Registry就像是一个仓库基地，里面可以有很多独立的仓库（Repository）</li>
+<li><code>Repository</code>：每个仓库中只能存放一个镜像，同一镜像的不同版本（tag）都放在同一仓库中</li>
+<li><code>tag</code>：仓库中镜像的标签（tag）就对应于镜像的版本，取名一般为0.0/2.4等</li>
+<li><code>jwilder/nginx-proxy:2.03</code>：表示Docker Registry为jwilder，Repository为nginx-proxy，版本为2.03</li>
+</ul>
+</li>
+</ol>
+<h1 id="如何在天池中提交docker成功拿到自己的分数精炼版">如何在天池中提交Docker成功拿到自己的分数（精炼版）</h1>
+<h2 id="本地准备好代码">本地准备好代码</h2>
+<p>按照赛题方要求，写好python代码的输入输出，做好输入参数检查，这里推荐使用<code>argparse</code>，使用demo</p>
+<pre><code class="language-python">import argparse
+# 获取参数
+parser = argparse.ArgumentParser()
+parser.add_argument('--arg1', dest='arg1', type=str, default=None, help='接受--arg1=的参数为变量arg1，类型为str,缺省值为None，参数对应的帮助文档为help的内容')
+args = parser.parse_args()
+# 执行python **.py --arg1=SSS 后args.arg1的值为'SSS'
+</code></pre>
+<h2 id="编写requirementstxt">编写requirements.txt</h2>
+<p>检查你的代码中所有的import,然后使用pip list查看你本地使用的版本，在同级目录中添加requirements.txt</p>
+<pre><code>Pillow==5.3.0
+tqdm==4.19.2
+torchnet==0.0.4
+</code></pre>
+<h2 id="编写docker文件">编写Docker文件</h2>
+<p>这一步其实是<strong>最难也是最关键的</strong>，但是我们是为了使用Docker而使用，所以这一步简化再简化，这里直接提供一个可以使用的制作cuda8.0+pytorch1.0.1镜像的Docker文件，使用该文件可以直接生成cuda8.0+pytorch1.0.1镜像</p>
+<pre><code># Modify from source: https://hub.docker.com/r/nvidia/cuda
+# This Docker build is 3.1G
+# -----------------------------------------------------------------------------
+FROM ubuntu:16.04
+LABEL maintainer &quot;NVIDIA CORPORATION &lt;cudatools@nvidia.com&gt;&quot;
+
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends ca-certificates apt-transport-https bzip2 gnupg-curl wget &amp;&amp; \
+    rm -rf /var/lib/apt/lists/* &amp;&amp; \
+    NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 &amp;&amp; \
+    NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 &amp;&amp; \
+    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub &amp;&amp; \
+    apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +5 &gt; cudasign.pub &amp;&amp; \
+    echo &quot;$NVIDIA_GPGKEY_SUM  cudasign.pub&quot; | sha256sum -c --strict - &amp;&amp; rm cudasign.pub &amp;&amp; \
+    echo &quot;deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64 /&quot; &gt; /etc/apt/sources.list.d/cuda.list
+
+
+ENV CUDA_VERSION 8.0.61
+
+ENV CUDA_PKG_VERSION 8-0=$CUDA_VERSION-1
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+        cuda-nvrtc-$CUDA_PKG_VERSION \
+        cuda-nvgraph-$CUDA_PKG_VERSION \
+        cuda-cusolver-$CUDA_PKG_VERSION \
+        cuda-cublas-8-0=8.0.61.2-1 \
+        cuda-cufft-$CUDA_PKG_VERSION \
+        cuda-curand-$CUDA_PKG_VERSION \
+        cuda-cusparse-$CUDA_PKG_VERSION \
+        cuda-npp-$CUDA_PKG_VERSION \
+        cuda-cudart-$CUDA_PKG_VERSION &amp;&amp; \
+    ln -s cuda-8.0 /usr/local/cuda &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# nvidia-docker 1.0
+LABEL com.nvidia.volumes.needed=&quot;nvidia_driver&quot;
+LABEL com.nvidia.cuda.version=&quot;${CUDA_VERSION}&quot;
+
+RUN echo &quot;/usr/local/nvidia/lib&quot; &gt;&gt; /etc/ld.so.conf.d/nvidia.conf &amp;&amp; \
+    echo &quot;/usr/local/nvidia/lib64&quot; &gt;&gt; /etc/ld.so.conf.d/nvidia.conf
+
+ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+
+# nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA &quot;cuda&gt;=8.0&quot;
+#-----------------------------------------------------------------------------
+
+
+#MiniConda Install
+RUN wget &quot;https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh&quot; &amp;&amp; \
+    bash ./Miniconda3-latest-Linux-x86_64.sh* -b -p &amp;&amp; \
+    rm Miniconda3* 
+ENV PATH=&quot;/root/miniconda3/bin:${PATH}&quot;
+
+#Add Requirement Packages 
+RUN conda install pytorch torchvision cudatoolkit=8.0 -c pytorch &amp;&amp; \
+    conda clean -all --yes
+</code></pre>
+<p>执行完成后，将对应的Docker镜像push到阿里云Docker镜像服务，这样相当于有了一个自己的cuda8+pythch镜像，在这个镜像的基础上，再进行后续操作</p>
+<pre><code>#Above image
+FROM $你的阿里镜像地址
+LABEL maintainer &quot;容器名称&quot;
+#设置工作目录
+WORKDIR /competition
+#添加工作目录下的所有文件
+ADD [^p^u]* /competition/
+</code></pre>
+<h2 id="编写runsh文件">编写run.sh文件</h2>
+<p>run.sh文件是docker运行的入口，所以你的python执行文件命令必须在run.sh中写完整，<code>$1</code>在脚本中表示脚本接收到的第一个参数（也相当于docker运行的第一个参数），我们需要把这个参数传递给python执行</p>
+<pre><code>#!/bin/bash
+#
+# run.sh is the entry point of the submission.
+# nvidia-docker run -v ${INPUT_DIR}:/input_images -v ${OUTPUT_DIR}:/output_data
+#       -w /competition ${DOCKER_IMAGE_NAME} sh ./run.sh /input_images /output_data/result.csv
+# where:
+#   INPUT_DIR - directory with input png images
+#   OUTPUT_FILE - the classification result for each image
+#
+
+INPUT_DIR=$1
+OUTPUT_FILE=$2
+
+python main.py \
+  --input_dir=&quot;${INPUT_DIR}&quot; \
+  --output_file=&quot;${OUTPUT_FILE}&quot; \
+</code></pre>
+<h2 id="拉取官方私有docker基础镜像并且制作自己的镜像">拉取官方/私有Docker基础镜像，并且制作自己的镜像</h2>
+<p>做好上述工作后，使用命令<code>sudo docker build -t $docker_name .</code>制作新的docker镜像，这时系统会拉取Docker文件中FROM地址对应的镜像，并且执行后续的修改，并且将其打包成新的镜像，镜像名称为<code>$docker_name</code>，</p>
+<h2 id="自己的镜像添加改名版本号">自己的镜像添加改名版本号</h2>
+<p>使用<code>sudo docker images</code>查看刚才自己制作的docker的$ID，并且使用如下命令对docker重命名，为后续的push设置仓库地址和版本号
+<code>sudo docker tag $ID registry.cn-shenzhen.aliyuncs.com/$你的阿里容器仓库地址:$版本号</code></p>
+<h2 id="push自己的镜像">Push自己的镜像</h2>
+<p>使用如下命令push自己的本地镜像到阿里云
+<code>sudo docker push registry.cn-shenzhen.aliyuncs.com/felix1/$你的阿里容器仓库地址:$版本号</code>
+执行完毕后，可以在自己镜像仓库的镜像版本中看到自己推送的镜像，即完成了整个Docker的制作与推送</p>
+<h1 id="感想">感想</h1>
+<p>这也是我本人第一次用Docker，感觉Docker是在纯代码和虚拟机之间的一种折衷，既想方设法得保证所有环境都可以正常迁移到新的环境，又相比于虚拟机减少冗余部分，而只保留了程序运行所必须的部分，而且实测，新制作的Docker拉取到一台陌生的机器上时，可以完美直接运行，性能也基本没有下降，而且支持Docker直接使用本机显卡，这对深度学习使用Docker简直是福音。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
+                    工具
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zxpzhong.github.io//post/ncnn-cmo-xing-ce-shi">
+                  <h3 class="post-title">
+                    ncnn c++模型测试
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '83c4a343274b5d1b37bc',
+        clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
+        repo: 'zxpzhong.github.io',
+        owner: 'zxpzhong',
+        admin: ['zxpzhong'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

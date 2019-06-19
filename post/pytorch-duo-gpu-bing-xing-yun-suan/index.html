@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Gridea对接github page | Felix计算机视觉小屋</title>
+<title>pytorch多GPU并行运算 | Felix计算机视觉小屋</title>
 <meta name="description" content="念念不忘必有回响">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,40 +111,52 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Gridea对接github page</h2>
+            <h2 class="post-title">pytorch多GPU并行运算</h2>
             <div class="post-date">2019-06-19</div>
             
-              <div class="feature-container" style="background-image: url('https://zxpzhong.github.io//post-images/gridea-dui-jie-github-page.png')">
+              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/J5bvw6fKKsQj.png?imageslim')">
               </div>
             
             <div class="post-content">
-              <p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
-<!-- more -->
-<h2 id="hexo部署github-page的缺点">hexo部署github page的缺点</h2>
+              <p>pytorch使用多块GPU并行运算</p>
+<!-- more --> 
+<h1 id="pytorch多gpu运行">Pytorch多GPU运行</h1>
 <ol>
-<li>hexo主题虽然多但是一般自己只会喜欢一两个，尤其是hexo的自定义程度高，可以用来玩（一玩玩一天的那种- - ！）但是对于我这种对于前端完全是小白的代码搬运工，并不是很想用可玩性这么高的，因为不自己配置没有特色，自己配置又搞不来</li>
-<li>hexo文章的属性在MD文件的开头，需要手动设置，Gridea把这几项都集成到了软件中，使用起来比较人性化!
-<img src="http://qiniu.aicv.club/image/20190619/zokW9vj9iIpq.png?imageslim" alt="mark"></li>
-<li>编辑界面集成到了Gridea中，编辑发布一体化，适合小白使用</li>
-<li>可以把Gridea源位置设置在onedrive文件夹，这样还可以动态备份，就算换电脑，换软件，把文件夹下载下来还可以继续编辑</li>
+<li>设置可用GPU环境变量。例如，使用0号和1号GPU'
+<code>os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = '0,1'</code></li>
+<li>设置模型参数放置到多个GPU上。在pytorch1.0之后的版本中，多GPU运行变得十分方便，先将模型的参数设置并行</li>
 </ol>
-<h2 id="部署流程">部署流程</h2>
-<p>具体细节可以搜索github page部署教程，这里只写Gridea软件如何设置</p>
-<h3 id="安装gridea">安装Gridea</h3>
-<p>从Gridea网站下载软件，然后在下图中，设置好自己的github page域名，仓库名称，用户名（github用户名），邮箱，Token生成方法自行搜索
-<img src="http://qiniu.aicv.club/image/20190619/Lw4tYW9d8aYH.png?imageslim" alt="mark"></p>
-<h3 id="gitalk评论系统配置">gitalk评论系统配置</h3>
-<p><img src="http://qiniu.aicv.club/image/20190619/5L5K2zjsISn5.png?imageslim" alt="mark">
-在自己的github设置页面内-&gt;Developer settings-&gt;OAuth Apps-&gt;new OAuth App,新建一个，然后会返回一个client ID和一个Client Seceret
-<img src="http://qiniu.aicv.club/image/20190619/LbWEYyxqfQIu.png?imageslim" alt="mark">
-将这个client ID和Client Seceret填入Gridea中</p>
-<h3 id="其他设置">其他设置</h3>
-<p>可以直接可视化设置头像、主题、一些样式、显示内容、标签等，这点是我最喜欢的
-<strong>完成设置后，可以发布测试一下，输入你的github page域名，即可看到对应的页面</strong></p>
+<pre><code>        if torch.cuda.device_count() &gt; 1:
+            print(&quot;Let's use&quot;, torch.cuda.device_count(), &quot;GPUs!&quot;)
+            model = nn.DataParallel(model)
+</code></pre>
+<ol start="3">
+<li>将模型参数设置使用GPU运行</li>
+</ol>
+<pre><code>        if torch.cuda.is_available():
+            model.cuda()
+</code></pre>
+<h1 id="踩坑记录">踩坑记录</h1>
+<ol>
+<li>在训练中，需要使用验证集/测试集对目前的准确率进行测试，验证集/测试集的加载也会占用部分显存，所以在训练开始时，不要将所有显存都几乎占满，稍微留一些显存给训练过程中的测试环节</li>
+<li>pytorch并行后，假设batchsize设置为64，表示每张并行使用的GPU都使用batchsize=64来计算（单张卡使用时，使用batchsize=64比较合适时，多张卡并行时，batchsize仍为64比较合适，而不是64*并行卡数）。</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://www.zhihu.com/question/67726969">https://www.zhihu.com/question/67726969</a></li>
+</ol>
 
             </div>
             
               <div class="tag-container">
+                
+                  <a href="https://zxpzhong.github.io//tag/9KaeNFCAl" class="tag">
+                    深度学习
+                  </a>
+                
+                  <a href="https://zxpzhong.github.io//tag/VprpCf9Mu" class="tag">
+                    python
+                  </a>
                 
                   <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
                     工具
@@ -155,9 +167,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://zxpzhong.github.io//post/hello-gridea">
+                <a href="https://zxpzhong.github.io//post/tian-chi-docker-ti-jiao">
                   <h3 class="post-title">
-                    Hello Gridea
+                    天池Docker提交
                   </h3>
                 </a>
               </div>

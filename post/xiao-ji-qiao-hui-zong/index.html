@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | Felix计算机视觉小屋</title>
+<title>箫技巧汇总 | Felix计算机视觉小屋</title>
 <meta name="description" content="念念不忘必有回响">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,20 +110,54 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">箫技巧汇总</h2>
+            <div class="post-date">2019-06-19</div>
             
-              <a class="tag" href="https://zxpzhong.github.io//tag/9KaeNFCAl">深度学习</a>
+              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/iY0S0d5jJlfU.png?imageslim')">
+              </div>
             
-              <a class="tag" href="https://zxpzhong.github.io//tag/VprpCf9Mu">python</a>
+            <div class="post-content">
+              <p>箫技巧汇总+感想</p>
+<!-- more -->
+<h1 id="基础入门阶段">基础入门阶段</h1>
+<p>基础入门阶段，主要在于<strong>口风练习</strong>、<strong>指法记忆</strong>、<strong>气息训练</strong></p>
+<h2 id="口风练习">口风练习</h2>
+<ol>
+<li>最开始时，不按任何吹孔，手轻握箫，箫吹口下边缘顶着唇部下方，收紧口风，对准箫孔清吹，可以逐渐</li>
+</ol>
+<h2 id="指法记忆">指法记忆</h2>
+<p>最开始入门的时候，大多数人应该都要拘泥于那张指法表了，这是箫之根本，必须熟记熟背，每个音要手到擒来，指法记忆可以分为以下几个阶段吧：
+<img src="http://qiniu.aicv.club/image/20190619/BVaG49ALhkaQ.png?imageslim" alt="mark"></p>
+<ol>
+<li>筒音5开始的基础指法表，每个音的指法要记牢，训练时，最开始可以看着指法表，对着单个音吹，每个音尽量做到一吹就响，初学时可以从筒5吹到中音1左右就可以，再高的话气息比较难上去</li>
+<li>指法记忆和练习，可以反复吹奏5671234，4321765，做到手指抬起、放下的位置准确，形成肌肉记忆</li>
+<li>再往后可以试着吹奏12345671（5671为中音），17654321，尝试中音低音的切换，还有手法的熟练，在3与4的切换时，需要运动的手指较多；在4与5的低音与中音切换时，需要气息变化突然加快。整体来说低音气息速度慢，音越高呼出气流速度越快，在低音4与中音5的切换之间有其明显!</li>
+<li></li>
+</ol>
+
+            </div>
             
-              <a class="tag" href="https://zxpzhong.github.io//tag/fSlHkHK3n">工具</a>
+              <div class="tag-container">
+                
+                  <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
+                    工具
+                  </a>
+                
+              </div>
             
-              <a class="tag" href="https://zxpzhong.github.io//tag/Y0XIWBfe0">c++</a>
             
-              <a class="tag" href="https://zxpzhong.github.io//tag/gridea">Gridea</a>
+
             
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
           </div>
+
         </div>
       </div>
     </div>
@@ -138,6 +178,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '83c4a343274b5d1b37bc',
+        clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
+        repo: 'zxpzhong.github.io',
+        owner: 'zxpzhong',
+        admin: ['zxpzhong'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 

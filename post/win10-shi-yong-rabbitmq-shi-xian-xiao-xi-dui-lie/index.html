@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>win10使用RabbitMQ实现消息队列 | Felix计算机视觉小屋</title>
+<meta name="description" content="念念不忘必有回响">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1560958212963">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135106908-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-135106908-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zxpzhong.github.io/">
+        <img src="https://zxpzhong.github.io//images/avatar.png?v=1560958212963" class="site-logo">
+        <h1 class="site-title">Felix计算机视觉小屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/zxpzhong" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      念念不忘必有回响
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/zxpzhong" target="_blank">My github</a> | <a class="rss" href="https://zxpzhong.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">win10使用RabbitMQ实现消息队列</h2>
+            <div class="post-date">2019-06-19</div>
+            
+              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/C36x2uskVWan.png?imageslim')">
+              </div>
+            
+            <div class="post-content">
+              <p>熟悉了linux下使用消息队列实现进程异步，转到win10下该怎么办？</p>
+<!-- more -->
+<h1 id="第三方消息队列服务rabbitmq">第三方消息队列服务RabbitMQ</h1>
+<h2 id="rabbitmq简介">RabbitMQ简介</h2>
+<ol>
+<li>可靠性（Reliability）:RabbitMQ 使用一些机制来保证可靠性，如持久化、传输确认、发布确认。</li>
+<li>灵活的路由（Flexible Routing）:在消息进入队列之前，通过 Exchange 来路由消息的。对于典型的路由功能，RabbitMQ 已经提供了一些内置的 Exchange 来实现。针对更复杂的路由功能，可以将多个 Exchange 绑定在一起，也通过插件机制实现自己的 Exchange 。</li>
+<li>消息集群（Clustering）:多个 RabbitMQ 服务器可以组成一个集群，形成一个逻辑 Broker 。</li>
+<li>高可用（Highly Available Queues）:队列可以在集群中的机器上进行镜像，使得在部分节点出问题的情况下队列仍然可用。</li>
+<li>多种协议（Multi-protocol）:RabbitMQ 支持多种消息队列协议，比如 STOMP、MQTT 等等。</li>
+<li>多语言客户端（Many Clients）:RabbitMQ 几乎支持所有常用语言，比如 Java、.NET、Ruby 等等。</li>
+<li>管理界面（Management UI）:RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息 Broker 的许多方面。</li>
+<li>跟踪机制（Tracing）:如果消息异常，RabbitMQ 提供了消息跟踪机制，使用者可以找出发生了什么。</li>
+<li>插件机制（Plugin System）:RabbitMQ 提供了许多插件，来从多方面进行扩展，也可以编写自己的插件。</li>
+</ol>
+<h2 id="rabbitmq-server安装">RabbitMQ  server安装</h2>
+<ol>
+<li>RabbitMQ服务端代码是使用并发式语言Erlang，所以先安装Erlang
+<ul>
+<li>Erlang官网<a href="http://www.erlang.org/downloads">http://www.erlang.org/downloads</a>，下载对应版本后，安装
+<img src="http://qiniu.aicv.club/image/20190619/2JcHlNvzH25r.png?imageslim" alt="mark"></li>
+<li>安装位置任意，安装过程中会自动把安装位置的bin目录加入PATH环境变量</li>
+</ul>
+</li>
+<li>官网<a href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a>，下载对应的安装文件exe，安装
+<img src="http://qiniu.aicv.club/image/20190619/tKtVPAestNIv.png?imageslim" alt="mark"></li>
+<li>进入安装目录的sbin目录
+<img src="http://qiniu.aicv.club/image/20190619/SX5IIvRiAATq.png?imageslim" alt="mark"></li>
+<li>输入<code>rabbitmq-plugins enable rabbitmq_management</code>安装rabbitmq对应的web管理界面</li>
+<li>rabbitmq安装后会在操作系统中注册为系统服务，并且自动启动。在浏览器中输入<a href="http://127.0.0.1:15672">http://127.0.0.1:15672</a>,如果正确显示rabbitmq的web界面，则安装正确
+<img src="http://qiniu.aicv.club/image/20190619/6DekMfUYqC52.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="rabbitmq-c安装">RabbitMQ-c安装</h2>
+<ol>
+<li>环境：
+<ul>
+<li>PC：win10 64位</li>
+<li>VS版本：VS2015 msvc14 64bit编译器</li>
+<li>RabbitMQ-c版本：v0.9.0</li>
+</ul>
+</li>
+<li>拉取RabbitMQ-c源码：<code>git clone https://github.com/alanxz/rabbitmq-c.git</code></li>
+<li>进入RabbitMQ-c目录<code>cd $RabbitMQ-c_PATH/</code>，创建build文件夹<code>mkdir build</code></li>
+<li>打开cmake-gui，设置src与build目录为<code>$RabbitMQ-c_PATH/</code>和<code>$RabbitMQ-c_PATH/build</code></li>
+<li>编译器选择msvc2014 64bit，如果没有弹出让你选择编译器，则可以点击file-&gt;delete cache来删除缓存，重新选择编译器
+<img src="http://qiniu.aicv.club/image/20190619/JmfPHGIPtFIB.png?imageslim" alt="mark"></li>
+<li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目
+<img src="http://qiniu.aicv.club/image/20190619/NCK73VINqqVf.png?imageslim" alt="mark"></li>
+<li>VS中设置64bit release版本
+<img src="http://qiniu.aicv.club/image/20190619/DIqQa49DMxvO.png?imageslim" alt="mark"></li>
+<li>生成解决方案
+<img src="http://qiniu.aicv.club/image/20190619/hKYm7kIkxEe9.png?imageslim" alt="mark"></li>
+<li>在对应目录下生成库文件
+<img src="http://qiniu.aicv.club/image/20190619/HzzXQth56qoX.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="rabbitmq-c封装库simpleamqpclient安装">RabbitMQ-c封装库SimpleAmqpClient安装</h2>
+<ol>
+<li>安装boost
+<ul>
+<li><strong>注意，一定要安装二进制安装文件，不要下载源码自己编译</strong>,自己编译可能出现很多问题</li>
+<li>下载地址<a href="https://sourceforge.net/projects/boost/files/boost-binaries/">https://sourceforge.net/projects/boost/files/boost-binaries/</a></li>
+<li>安装后，include路径为<img src="http://qiniu.aicv.club/image/20190619/0b1uBG96BtpO.png?imageslim" alt="mark">，lib路径为<img src="http://qiniu.aicv.club/image/20190619/32HVtJKWMTCb.png?imageslim" alt="mark"></li>
+</ul>
+</li>
+<li>安装doxygen（这一步是为了生成API Document，可以不做）
+<ul>
+<li>下载地址<a href="http://www.doxygen.nl/download.html">http://www.doxygen.nl/download.html</a></li>
+<li><img src="http://qiniu.aicv.club/image/20190619/rE5bl6Y8RgH9.png?imageslim" alt="mark">直接下载对应的安装文件，安装后会自动加入PATH环境变量</li>
+</ul>
+</li>
+<li>git拉取SimpleAmqpClient源码,在SimpleAmqpClient源码下创建build目录</li>
+<li>cmake设置src目录和build目录</li>
+<li>取消ENABLE_SSL_SUPPORT，手动添加Boost_USE_STATIC_LIBS二进制类型
+<img src="http://qiniu.aicv.club/image/20190619/aWFbGl667pmP.png?imageslim" alt="mark"></li>
+<li>手动添加BOOST_ROOT，填入BOOST的安装根目录；手动添加BOOST_LIBRARY，填入BOOST库目录</li>
+<li>手动添加Rabbitmqc_INCLUDE_DIR,填入Rabbitmqc的头文件路径，手动添加Rabbitmqc_LIBRARY,填入Rabbitmqc的库路径</li>
+<li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目</li>
+<li>VS中设置64bit release版本</li>
+<li>在项目属性中添加Rabbitmqc的头文件路径、boost头文件路径，Rabbitmqc的库路径、boost库路径，和对应的lib名称</li>
+<li>右键点击项目中的SimpleAmqpClient，点击重新生成，编译成功后，会在build/release目录下生成对应的库
+<img src="http://qiniu.aicv.club/image/20190619/kuMowCtwyrwk.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="simpleamqpclient-demo测试">SimpleAmqpClient   Demo测试</h2>
+<ul>
+<li>VS中新建项目</li>
+<li>添加<strong>Rabbitmqc</strong>的头文件和库文件；添加<strong>boost</strong>的头文件和库文件；添加<strong>SimpleAmqpClient</strong>的头文件和库文件（怎么添加不详述了）</li>
+<li>分别编译下列两个程序，执行后，可以在Send.cpp对应的console中输入任意字符，回车，在Recv.cpp对应的console中可以接收到输入，同时在Rabbitmq的web管理界面可以看到有两个连接接入，并且消息队列的数据流情况都可以看到</li>
+</ul>
+<p>Send.cpp</p>
+<pre><code>#include &lt;SimpleAmqpClient/SimpleAmqpClient.h&gt;
+#include &lt;iostream&gt;
+int main() {
+  std::string queue_name = &quot;hello&quot;;
+
+  AmqpClient::Channel::ptr_t channel = AmqpClient::Channel::Create(&quot;localhost&quot;);
+  //创建channel
+
+  channel-&gt;DeclareQueue(queue_name, false, true, false, false);
+  //创建队列，第一个参数为队列名称，其余后续会提到。
+
+  std::string message;
+  std::cin &gt;&gt; message;
+
+  channel-&gt;BasicPublish(&quot;&quot;, queue_name,
+                        AmqpClient::BasicMessage::Create(message));
+  //第一个是exchange名称，第二个参数是routing_key（此处可理解为消息会被送往的队列）。
+
+  qDebug() &lt;&lt; &quot;[x] send &quot; &lt;&lt; QString::fromStdString(message);
+}
+</code></pre>
+<p>Recv.cpp</p>
+<pre><code>#include &lt;SimpleAmqpClient/SimpleAmqpClient.h&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  std::string queue_name = &quot;hello&quot;;
+
+  AmqpClient::Channel::ptr_t channel = AmqpClient::Channel::Create(&quot;localhost&quot;);
+
+  channel-&gt;DeclareQueue(queue_name, false, true, false, false);
+
+  std::string consumer_tag = channel-&gt;BasicConsume(queue_name, &quot;&quot;);
+  //第二个参数为消费者名称，返回值也是消费者名称。
+
+  while (1) {
+
+    qDebug() &lt;&lt; &quot;[y] receve &quot; &lt;&lt; QString::fromStdString(buffer);
+
+    AmqpClient::Envelope::ptr_t envelope =
+        channel-&gt;BasicConsumeMessage(consumer_tag);
+
+    std::string buffer = envelope-&gt;Message()-&gt;Body();
+    //消息放在信封里，需要解析
+
+    std::cout &lt;&lt; &quot;[y] receve &quot; &lt;&lt; buffer &lt;&lt; std::endl;
+  }
+
+  channel-&gt;BasicCancel(consumer_tag);
+  //关闭消费者。
+}
+</code></pre>
+<h1 id="参考博文">参考博文</h1>
+<ul>
+<li><a href="https://blog.csdn.net/lixiang987654321/article/details/81155299">https://blog.csdn.net/lixiang987654321/article/details/81155299</a></li>
+<li><a href="https://blog.csdn.net/weixin_39735923/article/details/79288578">https://blog.csdn.net/weixin_39735923/article/details/79288578</a></li>
+<li><a href="https://www.zhihu.com/question/20428371">https://www.zhihu.com/question/20428371</a></li>
+<li><a href="https://blog.csdn.net/csm201314/article/category/7023771">https://blog.csdn.net/csm201314/article/category/7023771</a></li>
+<li><a href="https://www.jianshu.com/p/79ca08116d57">https://www.jianshu.com/p/79ca08116d57</a></li>
+</ul>
+<h1 id="踩坑记录">踩坑记录</h1>
+<ol>
+<li>VS生成库时，提示找不到定义接入点，这是因为没有main函数，不是生成exe而是生成库<a href="https://blog.csdn.net/wushao126/article/details/51785505">https://blog.csdn.net/wushao126/article/details/51785505</a></li>
+<li>在win10上编译第三方库时，可以采用CMake配置生成sln对应的文件，然后用VS打开sln进行编译</li>
+<li>opencv3.0 &quot;ACCESS_MASK&quot; ambiguous symbol<a href="https://blog.csdn.net/xu20082100226/article/details/45482387">https://blog.csdn.net/xu20082100226/article/details/45482387</a></li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zxpzhong.github.io//tag/Y0XIWBfe0" class="tag">
+                    c++
+                  </a>
+                
+                  <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
+                    工具
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zxpzhong.github.io//post/win10-xia-vsqt-hun-he-bian-cheng">
+                  <h3 class="post-title">
+                    win10下VS+QT混合编程
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '83c4a343274b5d1b37bc',
+        clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
+        repo: 'zxpzhong.github.io',
+        owner: 'zxpzhong',
+        admin: ['zxpzhong'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

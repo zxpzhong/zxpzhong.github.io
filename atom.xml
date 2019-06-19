@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zxpzhong.github.io/</id>
     <title>Felix计算机视觉小屋</title>
-    <updated>2019-06-19T14:29:15.313Z</updated>
+    <updated>2019-06-19T15:30:15.503Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zxpzhong.github.io/"/>
     <link rel="self" href="https://zxpzhong.github.io//atom.xml"/>
@@ -10,6 +10,740 @@
     <logo>https://zxpzhong.github.io//images/avatar.png</logo>
     <icon>https://zxpzhong.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Felix计算机视觉小屋</rights>
+    <entry>
+        <title type="html"><![CDATA[pytorch多GPU并行运算]]></title>
+        <id>https://zxpzhong.github.io//post/pytorch-duo-gpu-bing-xing-yun-suan</id>
+        <link href="https://zxpzhong.github.io//post/pytorch-duo-gpu-bing-xing-yun-suan">
+        </link>
+        <updated>2019-06-19T15:09:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>pytorch使用多块GPU并行运算</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>pytorch使用多块GPU并行运算</p>
+<!-- more --> 
+<h1 id="pytorch多gpu运行">Pytorch多GPU运行</h1>
+<ol>
+<li>设置可用GPU环境变量。例如，使用0号和1号GPU'
+<code>os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = '0,1'</code></li>
+<li>设置模型参数放置到多个GPU上。在pytorch1.0之后的版本中，多GPU运行变得十分方便，先将模型的参数设置并行</li>
+</ol>
+<pre><code>        if torch.cuda.device_count() &gt; 1:
+            print(&quot;Let's use&quot;, torch.cuda.device_count(), &quot;GPUs!&quot;)
+            model = nn.DataParallel(model)
+</code></pre>
+<ol start="3">
+<li>将模型参数设置使用GPU运行</li>
+</ol>
+<pre><code>        if torch.cuda.is_available():
+            model.cuda()
+</code></pre>
+<h1 id="踩坑记录">踩坑记录</h1>
+<ol>
+<li>在训练中，需要使用验证集/测试集对目前的准确率进行测试，验证集/测试集的加载也会占用部分显存，所以在训练开始时，不要将所有显存都几乎占满，稍微留一些显存给训练过程中的测试环节</li>
+<li>pytorch并行后，假设batchsize设置为64，表示每张并行使用的GPU都使用batchsize=64来计算（单张卡使用时，使用batchsize=64比较合适时，多张卡并行时，batchsize仍为64比较合适，而不是64*并行卡数）。</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://www.zhihu.com/question/67726969">https://www.zhihu.com/question/67726969</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[天池Docker提交]]></title>
+        <id>https://zxpzhong.github.io//post/tian-chi-docker-ti-jiao</id>
+        <link href="https://zxpzhong.github.io//post/tian-chi-docker-ti-jiao">
+        </link>
+        <updated>2019-06-19T15:07:49.000Z</updated>
+        <summary type="html"><![CDATA[<p>天池竞赛提交如何提交Docker镜像？相信很多小伙伴容易倒在第一步上~~</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>天池竞赛提交如何提交Docker镜像？相信很多小伙伴容易倒在第一步上~~</p>
+<!-- more -->
+<h1 id="天池竞赛简介">天池竞赛简介</h1>
+<ul>
+<li>天池大数据竞赛是由阿里巴巴集团主办，面向全球科研工作者的高端算法竞赛。通过开放海量数据和分布式计算资源，大赛让所有参与者有机会运用其设计的算法解决各类社会问题或业务问题。特别优秀的解决方案将有机会直接上线阿里巴巴旗下各电商网站（含淘宝、天猫等）或第三方合作伙伴平台，服务中国乃至世界数以亿计的用户。</li>
+<li>这个竞赛在国内的地位可以比肩Kaggle，在竞赛中拿到好的成绩可以直接写上简历，加分还是很足的，具体优点我就不列举了，现在体会还那么深刻，但是前人的经验告诉我们，参加这个百利而无一害！！！！</li>
+<li>B乎问答“参加天池对校招的作用”：
+<a href="https://www.zhihu.com/question/41449961" title="参加天池大数据竞赛对校园招聘有帮助吗？">https://www.zhihu.com/question/41449961</a></li>
+</ul>
+<h1 id="docker简介">Docker简介</h1>
+<p>参加天池竞赛不可避免得要碰到一个问题，那就是最基本得提交赛题，本次我遇到的是通过提交<strong>阿里容器镜像服务</strong>的地址，竞赛刚看完题目后，第一遍提交应该是使用赛题提供的Demo文件提交，这样可以熟悉一遍赛题，熟悉提交流程。所以一定要先对Docker进行一个科普性了解。</p>
+<h2 id="docker是什么">Docker是什么？</h2>
+<ul>
+<li>Docker是一个虚拟环境容器，可以将你的开发环境、代码、配置文件等一并打包到这个容器中，并发布和应用到任意平台中。比如，你在本地用Python开发网站后台，开发测试完成后，就可以将Python3及其依赖包、Flask及其各种插件、Mysql、Nginx等打包到一个容器中，然后部署到任意你想部署到的环境。<img src="http://qiniu.aicv.club/image/20190619/Bwmm22yG9MYj.png?imageslim" alt="mark"></li>
+<li>大家从github上拉下来的代码，能直接运行么？往往不能，因为：</li>
+<li>代码运行系统环境不同</li>
+<li>数据集的文件夹路径不同</li>
+<li>python依赖不同，可能你的环境中没装，可能你的版本过高或者过低</li>
+<li>版本差别比较大的深度学习框架，有些函数有差异，是修改当前python的框架版本？还是新建虚拟环境重新装一个？</li>
+<li>所以从github上拉下来的代码，多多少少还是要经过修改后才能正常运行，修改少的十分钟可以运行起来，多的需要一个小时以上，但是赛题方不可能帮你把你提交的代码全部修改后，然你的代码能够在赛题方的环境中运行，所以这种要求<strong>程序跨环境运行</strong>的要求就需要靠Docker来解决！！</li>
+</ul>
+<h2 id="docker基本概念">Docker基本概念</h2>
+<p>说白了，Docker就是一个能够把你的运行环境也打包的容器，这样才能够让你的提交给赛题方的容器，可以不经过任何修改而直接运行，得出你的成绩。真正使用前还需要了解一些基本概念：镜像、容器、仓库。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">打包后大小</th>
+<th style="text-align:center">运行底层</th>
+<th style="text-align:center">响应时间（包含修改）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">代码打包</td>
+<td style="text-align:center">MB级别</td>
+<td style="text-align:center">python+本机操作系统</td>
+<td style="text-align:center">小时级别</td>
+</tr>
+<tr>
+<td style="text-align:center">虚拟机</td>
+<td style="text-align:center">10G级别</td>
+<td style="text-align:center">虚拟化硬件+虚拟机</td>
+<td style="text-align:center">开机5分钟</td>
+</tr>
+<tr>
+<td style="text-align:center">Docker</td>
+<td style="text-align:center">5G级别</td>
+<td style="text-align:center">操作系统的Docker引擎</td>
+<td style="text-align:center">秒级</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://qiniu.aicv.club/image/20190619/PXrH6q4SnK2i.png?imageslim" alt="mark"></p>
+<ol>
+<li>Docker的gitbook地址，有时间的话建议还是把这个全部看完。<a href="https://yeasy.gitbooks.io/docker_practice/">https://yeasy.gitbooks.io/docker_practice/</a></li>
+<li><strong>镜像</strong>：镜像就像面向对象程序中的类，镜像是静态的定义，镜像可以被修改，增删内容，但是镜像的运行必须通过生成容器实体</li>
+<li><strong>容器</strong>：容器就像面向对象程序中的示例，容器是镜像运行时的实体，容器可以被创建、启动、停止、删除、暂停</li>
+<li><strong>仓库</strong>：这个仓库就类似git仓库，但是git仓库是储存代码，而docker仓库是储存docker镜像
+<ul>
+<li><code>Docker Registry</code>：Docker Registry就像是一个仓库基地，里面可以有很多独立的仓库（Repository）</li>
+<li><code>Repository</code>：每个仓库中只能存放一个镜像，同一镜像的不同版本（tag）都放在同一仓库中</li>
+<li><code>tag</code>：仓库中镜像的标签（tag）就对应于镜像的版本，取名一般为0.0/2.4等</li>
+<li><code>jwilder/nginx-proxy:2.03</code>：表示Docker Registry为jwilder，Repository为nginx-proxy，版本为2.03</li>
+</ul>
+</li>
+</ol>
+<h1 id="如何在天池中提交docker成功拿到自己的分数精炼版">如何在天池中提交Docker成功拿到自己的分数（精炼版）</h1>
+<h2 id="本地准备好代码">本地准备好代码</h2>
+<p>按照赛题方要求，写好python代码的输入输出，做好输入参数检查，这里推荐使用<code>argparse</code>，使用demo</p>
+<pre><code class="language-python">import argparse
+# 获取参数
+parser = argparse.ArgumentParser()
+parser.add_argument('--arg1', dest='arg1', type=str, default=None, help='接受--arg1=的参数为变量arg1，类型为str,缺省值为None，参数对应的帮助文档为help的内容')
+args = parser.parse_args()
+# 执行python **.py --arg1=SSS 后args.arg1的值为'SSS'
+</code></pre>
+<h2 id="编写requirementstxt">编写requirements.txt</h2>
+<p>检查你的代码中所有的import,然后使用pip list查看你本地使用的版本，在同级目录中添加requirements.txt</p>
+<pre><code>Pillow==5.3.0
+tqdm==4.19.2
+torchnet==0.0.4
+</code></pre>
+<h2 id="编写docker文件">编写Docker文件</h2>
+<p>这一步其实是<strong>最难也是最关键的</strong>，但是我们是为了使用Docker而使用，所以这一步简化再简化，这里直接提供一个可以使用的制作cuda8.0+pytorch1.0.1镜像的Docker文件，使用该文件可以直接生成cuda8.0+pytorch1.0.1镜像</p>
+<pre><code># Modify from source: https://hub.docker.com/r/nvidia/cuda
+# This Docker build is 3.1G
+# -----------------------------------------------------------------------------
+FROM ubuntu:16.04
+LABEL maintainer &quot;NVIDIA CORPORATION &lt;cudatools@nvidia.com&gt;&quot;
+
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends ca-certificates apt-transport-https bzip2 gnupg-curl wget &amp;&amp; \
+    rm -rf /var/lib/apt/lists/* &amp;&amp; \
+    NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 &amp;&amp; \
+    NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 &amp;&amp; \
+    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub &amp;&amp; \
+    apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +5 &gt; cudasign.pub &amp;&amp; \
+    echo &quot;$NVIDIA_GPGKEY_SUM  cudasign.pub&quot; | sha256sum -c --strict - &amp;&amp; rm cudasign.pub &amp;&amp; \
+    echo &quot;deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64 /&quot; &gt; /etc/apt/sources.list.d/cuda.list
+
+
+ENV CUDA_VERSION 8.0.61
+
+ENV CUDA_PKG_VERSION 8-0=$CUDA_VERSION-1
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+        cuda-nvrtc-$CUDA_PKG_VERSION \
+        cuda-nvgraph-$CUDA_PKG_VERSION \
+        cuda-cusolver-$CUDA_PKG_VERSION \
+        cuda-cublas-8-0=8.0.61.2-1 \
+        cuda-cufft-$CUDA_PKG_VERSION \
+        cuda-curand-$CUDA_PKG_VERSION \
+        cuda-cusparse-$CUDA_PKG_VERSION \
+        cuda-npp-$CUDA_PKG_VERSION \
+        cuda-cudart-$CUDA_PKG_VERSION &amp;&amp; \
+    ln -s cuda-8.0 /usr/local/cuda &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# nvidia-docker 1.0
+LABEL com.nvidia.volumes.needed=&quot;nvidia_driver&quot;
+LABEL com.nvidia.cuda.version=&quot;${CUDA_VERSION}&quot;
+
+RUN echo &quot;/usr/local/nvidia/lib&quot; &gt;&gt; /etc/ld.so.conf.d/nvidia.conf &amp;&amp; \
+    echo &quot;/usr/local/nvidia/lib64&quot; &gt;&gt; /etc/ld.so.conf.d/nvidia.conf
+
+ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+
+# nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA &quot;cuda&gt;=8.0&quot;
+#-----------------------------------------------------------------------------
+
+
+#MiniConda Install
+RUN wget &quot;https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh&quot; &amp;&amp; \
+    bash ./Miniconda3-latest-Linux-x86_64.sh* -b -p &amp;&amp; \
+    rm Miniconda3* 
+ENV PATH=&quot;/root/miniconda3/bin:${PATH}&quot;
+
+#Add Requirement Packages 
+RUN conda install pytorch torchvision cudatoolkit=8.0 -c pytorch &amp;&amp; \
+    conda clean -all --yes
+</code></pre>
+<p>执行完成后，将对应的Docker镜像push到阿里云Docker镜像服务，这样相当于有了一个自己的cuda8+pythch镜像，在这个镜像的基础上，再进行后续操作</p>
+<pre><code>#Above image
+FROM $你的阿里镜像地址
+LABEL maintainer &quot;容器名称&quot;
+#设置工作目录
+WORKDIR /competition
+#添加工作目录下的所有文件
+ADD [^p^u]* /competition/
+</code></pre>
+<h2 id="编写runsh文件">编写run.sh文件</h2>
+<p>run.sh文件是docker运行的入口，所以你的python执行文件命令必须在run.sh中写完整，<code>$1</code>在脚本中表示脚本接收到的第一个参数（也相当于docker运行的第一个参数），我们需要把这个参数传递给python执行</p>
+<pre><code>#!/bin/bash
+#
+# run.sh is the entry point of the submission.
+# nvidia-docker run -v ${INPUT_DIR}:/input_images -v ${OUTPUT_DIR}:/output_data
+#       -w /competition ${DOCKER_IMAGE_NAME} sh ./run.sh /input_images /output_data/result.csv
+# where:
+#   INPUT_DIR - directory with input png images
+#   OUTPUT_FILE - the classification result for each image
+#
+
+INPUT_DIR=$1
+OUTPUT_FILE=$2
+
+python main.py \
+  --input_dir=&quot;${INPUT_DIR}&quot; \
+  --output_file=&quot;${OUTPUT_FILE}&quot; \
+</code></pre>
+<h2 id="拉取官方私有docker基础镜像并且制作自己的镜像">拉取官方/私有Docker基础镜像，并且制作自己的镜像</h2>
+<p>做好上述工作后，使用命令<code>sudo docker build -t $docker_name .</code>制作新的docker镜像，这时系统会拉取Docker文件中FROM地址对应的镜像，并且执行后续的修改，并且将其打包成新的镜像，镜像名称为<code>$docker_name</code>，</p>
+<h2 id="自己的镜像添加改名版本号">自己的镜像添加改名版本号</h2>
+<p>使用<code>sudo docker images</code>查看刚才自己制作的docker的$ID，并且使用如下命令对docker重命名，为后续的push设置仓库地址和版本号
+<code>sudo docker tag $ID registry.cn-shenzhen.aliyuncs.com/$你的阿里容器仓库地址:$版本号</code></p>
+<h2 id="push自己的镜像">Push自己的镜像</h2>
+<p>使用如下命令push自己的本地镜像到阿里云
+<code>sudo docker push registry.cn-shenzhen.aliyuncs.com/felix1/$你的阿里容器仓库地址:$版本号</code>
+执行完毕后，可以在自己镜像仓库的镜像版本中看到自己推送的镜像，即完成了整个Docker的制作与推送</p>
+<h1 id="感想">感想</h1>
+<p>这也是我本人第一次用Docker，感觉Docker是在纯代码和虚拟机之间的一种折衷，既想方设法得保证所有环境都可以正常迁移到新的环境，又相比于虚拟机减少冗余部分，而只保留了程序运行所必须的部分，而且实测，新制作的Docker拉取到一台陌生的机器上时，可以完美直接运行，性能也基本没有下降，而且支持Docker直接使用本机显卡，这对深度学习使用Docker简直是福音。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ncnn c++模型测试]]></title>
+        <id>https://zxpzhong.github.io//post/ncnn-cmo-xing-ce-shi</id>
+        <link href="https://zxpzhong.github.io//post/ncnn-cmo-xing-ce-shi">
+        </link>
+        <updated>2019-06-19T15:06:41.000Z</updated>
+        <summary type="html"><![CDATA[<p>ncnn模型c++代码测试</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>ncnn模型c++代码测试</p>
+<!-- more -->
+<h1 id="ncnn-c测试">ncnn c++测试</h1>
+<p>在模型转换完成后，紧接着就要真正在移动端上运行啦，不过在正式放到嵌入式设备上运行时（这一步也不属于我做），还是在PC上拿c++测试一下，确认没问题了才能说明模型的正确性</p>
+<h1 id="ncnn安装">ncnn安装</h1>
+<p>先使用git命令拉取ncnn源码</p>
+<pre><code>git clone https://github.com/Tencent/ncnn
+</code></pre>
+<p>对ncnn进行编译、安装</p>
+<pre><code>cd ncnn
+mkdir build &amp;&amp; cd build
+cmake ..
+make -j
+make install
+</code></pre>
+<p>执行完毕后，在$ncnn_dir/build/install/文件夹下会产生安装文件</p>
+<ul>
+<li>$ncnn_dir/build/install/lib/libncnn.a为链接库</li>
+<li>$ncnn_dir/build/install/include/为头文件包含路径</li>
+</ul>
+<h1 id="cmake配置工程">Cmake配置工程</h1>
+<p>在CMakeLists.txt中，加入如下代码，来添加ncnn的链接库和头文件路径</p>
+<pre><code># 设置ncnn的链接库和头文件路径
+include_directories($ncnn_dir/build/install/include/)
+target_link_libraries($ncnn_dir/build/install/lib/libncnn.a)
+</code></pre>
+<p>由于本人模型输入为图片，因此还需要配置OpenCV,这里就不啰嗦了，直接参考如下链接安装：</p>
+<p>Ubuntu16.04安装opencv for c++：<a href="https://blog.csdn.net/qq_33591712/article/details/83279982">https://blog.csdn.net/qq_33591712/article/details/83279982</a></p>
+<p>其他Cmake基本配置，比如工程名、增加需要输出的可执行文件、链接OpenCV等等，在这里就不啰嗦了，参考如下链接
+<a href="https://www.cnblogs.com/lidabo/p/7359422.html">https://www.cnblogs.com/lidabo/p/7359422.html</a></p>
+<h1 id="ncnn模型文件netparamsnetbin文件解析">ncnn模型文件net.params,net.bin文件解析</h1>
+<ol>
+<li>params包含了网络结构</li>
+<li>bin包含了网络参数</li>
+<li>对于使用该模型，最重要的是从这个网络结构中找到你要的输入输出节点名称，下面是一个网络结构的例子</li>
+</ol>
+<pre><code>7767517
+60 63
+Input            data             0 1 data 0=3 1=180 2=550
+Convolution      ConvNd_1         1 1 data ConvNd_1 0=32 1=3 2=1 3=2 4=1 5=0 6=864
+........................
+....... 中间省略.........
+........................
+Dropout          Dropout_2        1 1 Addmm_1 Dropout_2
+InnerProduct     Addmm_2          1 1 Dropout_2 Addmm_2 0=130 1=1 2=33280
+Softmax          Softmax_1        1 1 Addmm_2 Softmax_1 0=0
+</code></pre>
+<ul>
+<li>其中第一行的7767517是ncnn magic numger(幻数)，</li>
+<li>第二行的60 63。60为layer number（网络层数），63为blob number（参数块数）</li>
+<li>剩余的为Input            data             0 1 data 0=3 1=180 2=550，我们只关心中间的<code>data</code>,<code>Softmax_1</code>等，这是网络的节点名称，不论是输入还是输出节点，都必须在代码中指定输入输出节点名称</li>
+</ul>
+<h1 id="c代码">C++代码</h1>
+<ol>
+<li>包含ncnn头文件</li>
+</ol>
+<pre><code>#include &quot;net.h&quot;
+</code></pre>
+<ol start="2">
+<li>读取输入图片</li>
+</ol>
+<pre><code>string img_path = &quot;$IMG_PATH&quot;;
+cv::Mat img = cv::imread(img_path, CV_LOAD_IMAGE_COLOR);
+cv::Mat img2;
+//这里一定要检查你图片的大小和训练网络时的图片输入大小，要一样，否则到全连接层时会出现矩阵维数无法相乘
+//input_width：网络输入图片宽度
+//input_height：网络输入图片高度
+cv::resize(img, img2, cv::Size(input_width, input_height));
+</code></pre>
+<ol start="3">
+<li>加载ncnn模型和参数</li>
+</ol>
+<pre><code>// 加载模型和参数
+ncnn::Net DeepNet;
+DeepNet.load_param(&quot;$param_path&quot;);
+DeepNet.load_model(&quot;$bin_path&quot;);
+</code></pre>
+<ol start="4">
+<li>将读取的输入图片转化为ncnn::Mat input数据类型，通过ncnn自带的从图像像素转换函数</li>
+</ol>
+<pre><code>ncnn::Mat input = ncnn::Mat::from_pixels(img2.data, ncnn::Mat::PIXEL_BGR, img2.cols, img2.rows);
+</code></pre>
+<ol start="5">
+<li>经输入Mat送入网络并定义输出节点获取结果</li>
+</ol>
+<pre><code>ncnn::Extractor extractor = DeepNet.create_extractor();
+//    将'data'节点名称和ncnn::Mat input对应起来
+extractor.input(&quot;data&quot;, input);
+//    将'Addmm_1'节点名称和ncnn::Mat output对应起来
+ncnn::Mat output;
+extractor.extract(&quot;Addmm_1&quot;, output);
+</code></pre>
+<ol start="6">
+<li>将ncnn::Mat类型的输出结果转化为std::vector<float></li>
+</ol>
+<pre><code>std::vector&lt;float&gt; &amp; cls_scores
+//    网络输出为output,将output转化到cls_scores中输出
+cls_scores.resize(output.cstep);
+for(int j=0; j&lt;output.cstep; j++)
+{
+    const float* prob = (float*)output.data + output.c * j;
+    cls_scores[j] = prob[0];
+}
+//Debug打印输出
+for(int j = 0;j &lt; cls_scores.size();j++)
+{
+    cout &lt;&lt; cls_scores[j] ;
+}
+</code></pre>
+<h1 id="调试trick">调试trick</h1>
+<ol>
+<li>对于输出节点，可以使用如下代码来打印节点的通道数和长宽，来判断该节点是否为你需要的那个输出节点（比如你要的输出为1<em>512</em>1,那么你可以根据你自己的网络结构大概定位到哪部分，然后挨个使用这种方法打印输出，观察输出节点的维度来判断是否为你需要的输出节点）</li>
+</ol>
+<pre><code>    cout &lt;&lt; &quot;output.c: &quot; &lt;&lt; output.c &lt;&lt; endl;
+    cout &lt;&lt; &quot;output.w: &quot; &lt;&lt; output.w &lt;&lt; endl;
+    cout &lt;&lt; &quot;output.h: &quot; &lt;&lt; output.h &lt;&lt; endl;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[win10使用RabbitMQ实现消息队列]]></title>
+        <id>https://zxpzhong.github.io//post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie</id>
+        <link href="https://zxpzhong.github.io//post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie">
+        </link>
+        <updated>2019-06-19T15:05:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>熟悉了linux下使用消息队列实现进程异步，转到win10下该怎么办？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>熟悉了linux下使用消息队列实现进程异步，转到win10下该怎么办？</p>
+<!-- more -->
+<h1 id="第三方消息队列服务rabbitmq">第三方消息队列服务RabbitMQ</h1>
+<h2 id="rabbitmq简介">RabbitMQ简介</h2>
+<ol>
+<li>可靠性（Reliability）:RabbitMQ 使用一些机制来保证可靠性，如持久化、传输确认、发布确认。</li>
+<li>灵活的路由（Flexible Routing）:在消息进入队列之前，通过 Exchange 来路由消息的。对于典型的路由功能，RabbitMQ 已经提供了一些内置的 Exchange 来实现。针对更复杂的路由功能，可以将多个 Exchange 绑定在一起，也通过插件机制实现自己的 Exchange 。</li>
+<li>消息集群（Clustering）:多个 RabbitMQ 服务器可以组成一个集群，形成一个逻辑 Broker 。</li>
+<li>高可用（Highly Available Queues）:队列可以在集群中的机器上进行镜像，使得在部分节点出问题的情况下队列仍然可用。</li>
+<li>多种协议（Multi-protocol）:RabbitMQ 支持多种消息队列协议，比如 STOMP、MQTT 等等。</li>
+<li>多语言客户端（Many Clients）:RabbitMQ 几乎支持所有常用语言，比如 Java、.NET、Ruby 等等。</li>
+<li>管理界面（Management UI）:RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息 Broker 的许多方面。</li>
+<li>跟踪机制（Tracing）:如果消息异常，RabbitMQ 提供了消息跟踪机制，使用者可以找出发生了什么。</li>
+<li>插件机制（Plugin System）:RabbitMQ 提供了许多插件，来从多方面进行扩展，也可以编写自己的插件。</li>
+</ol>
+<h2 id="rabbitmq-server安装">RabbitMQ  server安装</h2>
+<ol>
+<li>RabbitMQ服务端代码是使用并发式语言Erlang，所以先安装Erlang
+<ul>
+<li>Erlang官网<a href="http://www.erlang.org/downloads">http://www.erlang.org/downloads</a>，下载对应版本后，安装
+<img src="http://qiniu.aicv.club/image/20190619/2JcHlNvzH25r.png?imageslim" alt="mark"></li>
+<li>安装位置任意，安装过程中会自动把安装位置的bin目录加入PATH环境变量</li>
+</ul>
+</li>
+<li>官网<a href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a>，下载对应的安装文件exe，安装
+<img src="http://qiniu.aicv.club/image/20190619/tKtVPAestNIv.png?imageslim" alt="mark"></li>
+<li>进入安装目录的sbin目录
+<img src="http://qiniu.aicv.club/image/20190619/SX5IIvRiAATq.png?imageslim" alt="mark"></li>
+<li>输入<code>rabbitmq-plugins enable rabbitmq_management</code>安装rabbitmq对应的web管理界面</li>
+<li>rabbitmq安装后会在操作系统中注册为系统服务，并且自动启动。在浏览器中输入<a href="http://127.0.0.1:15672">http://127.0.0.1:15672</a>,如果正确显示rabbitmq的web界面，则安装正确
+<img src="http://qiniu.aicv.club/image/20190619/6DekMfUYqC52.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="rabbitmq-c安装">RabbitMQ-c安装</h2>
+<ol>
+<li>环境：
+<ul>
+<li>PC：win10 64位</li>
+<li>VS版本：VS2015 msvc14 64bit编译器</li>
+<li>RabbitMQ-c版本：v0.9.0</li>
+</ul>
+</li>
+<li>拉取RabbitMQ-c源码：<code>git clone https://github.com/alanxz/rabbitmq-c.git</code></li>
+<li>进入RabbitMQ-c目录<code>cd $RabbitMQ-c_PATH/</code>，创建build文件夹<code>mkdir build</code></li>
+<li>打开cmake-gui，设置src与build目录为<code>$RabbitMQ-c_PATH/</code>和<code>$RabbitMQ-c_PATH/build</code></li>
+<li>编译器选择msvc2014 64bit，如果没有弹出让你选择编译器，则可以点击file-&gt;delete cache来删除缓存，重新选择编译器
+<img src="http://qiniu.aicv.club/image/20190619/JmfPHGIPtFIB.png?imageslim" alt="mark"></li>
+<li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目
+<img src="http://qiniu.aicv.club/image/20190619/NCK73VINqqVf.png?imageslim" alt="mark"></li>
+<li>VS中设置64bit release版本
+<img src="http://qiniu.aicv.club/image/20190619/DIqQa49DMxvO.png?imageslim" alt="mark"></li>
+<li>生成解决方案
+<img src="http://qiniu.aicv.club/image/20190619/hKYm7kIkxEe9.png?imageslim" alt="mark"></li>
+<li>在对应目录下生成库文件
+<img src="http://qiniu.aicv.club/image/20190619/HzzXQth56qoX.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="rabbitmq-c封装库simpleamqpclient安装">RabbitMQ-c封装库SimpleAmqpClient安装</h2>
+<ol>
+<li>安装boost
+<ul>
+<li><strong>注意，一定要安装二进制安装文件，不要下载源码自己编译</strong>,自己编译可能出现很多问题</li>
+<li>下载地址<a href="https://sourceforge.net/projects/boost/files/boost-binaries/">https://sourceforge.net/projects/boost/files/boost-binaries/</a></li>
+<li>安装后，include路径为<img src="http://qiniu.aicv.club/image/20190619/0b1uBG96BtpO.png?imageslim" alt="mark">，lib路径为<img src="http://qiniu.aicv.club/image/20190619/32HVtJKWMTCb.png?imageslim" alt="mark"></li>
+</ul>
+</li>
+<li>安装doxygen（这一步是为了生成API Document，可以不做）
+<ul>
+<li>下载地址<a href="http://www.doxygen.nl/download.html">http://www.doxygen.nl/download.html</a></li>
+<li><img src="http://qiniu.aicv.club/image/20190619/rE5bl6Y8RgH9.png?imageslim" alt="mark">直接下载对应的安装文件，安装后会自动加入PATH环境变量</li>
+</ul>
+</li>
+<li>git拉取SimpleAmqpClient源码,在SimpleAmqpClient源码下创建build目录</li>
+<li>cmake设置src目录和build目录</li>
+<li>取消ENABLE_SSL_SUPPORT，手动添加Boost_USE_STATIC_LIBS二进制类型
+<img src="http://qiniu.aicv.club/image/20190619/aWFbGl667pmP.png?imageslim" alt="mark"></li>
+<li>手动添加BOOST_ROOT，填入BOOST的安装根目录；手动添加BOOST_LIBRARY，填入BOOST库目录</li>
+<li>手动添加Rabbitmqc_INCLUDE_DIR,填入Rabbitmqc的头文件路径，手动添加Rabbitmqc_LIBRARY,填入Rabbitmqc的库路径</li>
+<li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目</li>
+<li>VS中设置64bit release版本</li>
+<li>在项目属性中添加Rabbitmqc的头文件路径、boost头文件路径，Rabbitmqc的库路径、boost库路径，和对应的lib名称</li>
+<li>右键点击项目中的SimpleAmqpClient，点击重新生成，编译成功后，会在build/release目录下生成对应的库
+<img src="http://qiniu.aicv.club/image/20190619/kuMowCtwyrwk.png?imageslim" alt="mark"></li>
+</ol>
+<h2 id="simpleamqpclient-demo测试">SimpleAmqpClient   Demo测试</h2>
+<ul>
+<li>VS中新建项目</li>
+<li>添加<strong>Rabbitmqc</strong>的头文件和库文件；添加<strong>boost</strong>的头文件和库文件；添加<strong>SimpleAmqpClient</strong>的头文件和库文件（怎么添加不详述了）</li>
+<li>分别编译下列两个程序，执行后，可以在Send.cpp对应的console中输入任意字符，回车，在Recv.cpp对应的console中可以接收到输入，同时在Rabbitmq的web管理界面可以看到有两个连接接入，并且消息队列的数据流情况都可以看到</li>
+</ul>
+<p>Send.cpp</p>
+<pre><code>#include &lt;SimpleAmqpClient/SimpleAmqpClient.h&gt;
+#include &lt;iostream&gt;
+int main() {
+  std::string queue_name = &quot;hello&quot;;
+
+  AmqpClient::Channel::ptr_t channel = AmqpClient::Channel::Create(&quot;localhost&quot;);
+  //创建channel
+
+  channel-&gt;DeclareQueue(queue_name, false, true, false, false);
+  //创建队列，第一个参数为队列名称，其余后续会提到。
+
+  std::string message;
+  std::cin &gt;&gt; message;
+
+  channel-&gt;BasicPublish(&quot;&quot;, queue_name,
+                        AmqpClient::BasicMessage::Create(message));
+  //第一个是exchange名称，第二个参数是routing_key（此处可理解为消息会被送往的队列）。
+
+  qDebug() &lt;&lt; &quot;[x] send &quot; &lt;&lt; QString::fromStdString(message);
+}
+</code></pre>
+<p>Recv.cpp</p>
+<pre><code>#include &lt;SimpleAmqpClient/SimpleAmqpClient.h&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  std::string queue_name = &quot;hello&quot;;
+
+  AmqpClient::Channel::ptr_t channel = AmqpClient::Channel::Create(&quot;localhost&quot;);
+
+  channel-&gt;DeclareQueue(queue_name, false, true, false, false);
+
+  std::string consumer_tag = channel-&gt;BasicConsume(queue_name, &quot;&quot;);
+  //第二个参数为消费者名称，返回值也是消费者名称。
+
+  while (1) {
+
+    qDebug() &lt;&lt; &quot;[y] receve &quot; &lt;&lt; QString::fromStdString(buffer);
+
+    AmqpClient::Envelope::ptr_t envelope =
+        channel-&gt;BasicConsumeMessage(consumer_tag);
+
+    std::string buffer = envelope-&gt;Message()-&gt;Body();
+    //消息放在信封里，需要解析
+
+    std::cout &lt;&lt; &quot;[y] receve &quot; &lt;&lt; buffer &lt;&lt; std::endl;
+  }
+
+  channel-&gt;BasicCancel(consumer_tag);
+  //关闭消费者。
+}
+</code></pre>
+<h1 id="参考博文">参考博文</h1>
+<ul>
+<li><a href="https://blog.csdn.net/lixiang987654321/article/details/81155299">https://blog.csdn.net/lixiang987654321/article/details/81155299</a></li>
+<li><a href="https://blog.csdn.net/weixin_39735923/article/details/79288578">https://blog.csdn.net/weixin_39735923/article/details/79288578</a></li>
+<li><a href="https://www.zhihu.com/question/20428371">https://www.zhihu.com/question/20428371</a></li>
+<li><a href="https://blog.csdn.net/csm201314/article/category/7023771">https://blog.csdn.net/csm201314/article/category/7023771</a></li>
+<li><a href="https://www.jianshu.com/p/79ca08116d57">https://www.jianshu.com/p/79ca08116d57</a></li>
+</ul>
+<h1 id="踩坑记录">踩坑记录</h1>
+<ol>
+<li>VS生成库时，提示找不到定义接入点，这是因为没有main函数，不是生成exe而是生成库<a href="https://blog.csdn.net/wushao126/article/details/51785505">https://blog.csdn.net/wushao126/article/details/51785505</a></li>
+<li>在win10上编译第三方库时，可以采用CMake配置生成sln对应的文件，然后用VS打开sln进行编译</li>
+<li>opencv3.0 &quot;ACCESS_MASK&quot; ambiguous symbol<a href="https://blog.csdn.net/xu20082100226/article/details/45482387">https://blog.csdn.net/xu20082100226/article/details/45482387</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[win10下VS+QT混合编程]]></title>
+        <id>https://zxpzhong.github.io//post/win10-xia-vsqt-hun-he-bian-cheng</id>
+        <link href="https://zxpzhong.github.io//post/win10-xia-vsqt-hun-he-bian-cheng">
+        </link>
+        <updated>2019-06-19T15:01:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>厌倦了windows系统API？但是又没脱离VS进行环境配置？何不试试windows下的VS+QT混合编程</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>厌倦了windows系统API？但是又没脱离VS进行环境配置？何不试试windows下的VS+QT混合编程</p>
+<!-- more --> 
+<h1 id="visiual-studio与qt对比">Visiual Studio与QT对比</h1>
+<h2 id="win10下vs进行c编程的痛点">Win10下VS进行c++编程的痛点</h2>
+<ul>
+<li>功能没有整合，变量名、类名都贼长（是见名知义了，但是每次看都要半天，而且这么长的变名字导致程序密集，看的眼疼）</li>
+<li>总是需要大段大段复制粘贴（为什么不把一大段功能整合？）</li>
+<li>MFC界面功能完善但是外观老套布局难（相比之下QtCreator就好很多，这也是QtCreator+QT类库用来做界面程序最大的优势了）</li>
+</ul>
+<h2 id="qt的优点">QT的优点</h2>
+<ul>
+<li>功能集成度高、功能分类明确、编程时逻辑清晰</li>
+<li>跨平台，在linux和win下基本不用考虑操作系统差异</li>
+</ul>
+<h2 id="qt的缺点">QT的缺点</h2>
+<ul>
+<li>环境配置远远不如Visual Studio，QtCreator配置环境全部放到.pro文件中，默认使用qmake配置工程，而不是cmake，原意应该是想更加简化cmake适应qt的环境，但是明明在qmake配置过（不论是头文件还是库文件），但是重新构建就是不管用，无解</li>
+<li>编译时，常常出现symbol not found错误，一个简单的程序，又没有用到自己外部的库，却老是出现这种莫名其妙的错误</li>
+<li>我的熟练的Ctrl+Z技能应该就是大二那会用QT练起来的，明明只是简单的加了几个回车，编译后缺出现symbol not found错误，赶紧回退回退，有时候万一不小心存盘了又找不到旧版，出现symbol not found后然后就完全没办法让程序通过编译，然后又要新建工程，然后把文件都拷贝过来，改来改去</li>
+</ul>
+<h1 id="vsqt取长补短">VS+QT取长补短</h1>
+<p>上面说到了，VS在win下做c++开发天下无敌的有点就是完全可视化的环境配置，所有的头文件、库等等配置全部通过工程的属性中可以设置，相比于Qt Creator为了满足跨平台的需求，必须通过qmake文件（cmake也一样）配置，这种手动输入的方法，对于非常熟练、经验十足的大佬来说没有问题，但是对于一般人来说，要了解所有的qmake中特殊变量名比直接鼠标点点难得多，而且在windows下运行的程序，依赖的环境变量、还有很多我也不知道的东西，感觉比linux下多很多，如果全部都通过手敲代码的形式配置，又麻烦又难记。
+所以<strong>综合这两者的优缺点</strong>，采用VS作为IDE用来配置工程依赖+QT类库进行开发，这种方法可行，很大程度上是自称宇宙第一无敌IDE Visual Stidio的功劳，完美得QT插件使得Qt、QtCreator等都可以完美集成到VS中来做（人家QT并不想鸟你而你却强行把人家包含进来干什么！），事实正面，VS在这方面做的确实很好，试了下，基本上不费事，可以完美在VS中开发QT，而且再也不用管qmake文件得编辑了</p>
+<h1 id="vsqt安装">VS+QT安装</h1>
+<h2 id="qt安装">QT安装</h2>
+<ul>
+<li>qt版本：5.9.3</li>
+<li>下载地址：http://download.qt.io/archive/qt/5.9/5.9.3/</li>
+<li>安装注意事项，编译器一定要选择msvc2015-64bit选项，其他可以都不用选择（msvc是win下专用的c++编译器，微软出品；工业相机的SDK程序出厂测试编译器是msvc；VS对msvc的支持性最好）</li>
+</ul>
+<h2 id="vs安装">VS安装</h2>
+<ul>
+<li>VS版本：2015 专业版</li>
+<li>下载地址：http://download.microsoft.com/download/B/8/9/B898E46E-CBAE-4045-A8E2-2D33DD36F3C4/vs2015.pro_chs.iso</li>
+<li>该版本是官方的专业版，不用担心中毒什么的，激活密钥：HMGNV-WCYXV-X7G9W-YCX63-B98R2</li>
+<li>安装过程中，选择编译器为msvc2015-x64、msvc2015-x86、MFC支持（以防万一要用）</li>
+</ul>
+<h2 id="qt与vs完美融合">QT与VS完美融合</h2>
+<p>教程地址：<a href="https://blog.csdn.net/yzy_1996/article/details/81939610">https://blog.csdn.net/yzy_1996/article/details/81939610</a></p>
+<h2 id="opencv安装">OPENCV安装</h2>
+<ul>
+<li>opencv版本：3.2</li>
+<li>下载地址：https://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.2.0/opencv-3.2.0-vc14.exe/download</li>
+<li>不需要安装网上的编译，直接下载opencv win的编译好的包，直接解压后</li>
+<li>lib路径：$OPENCV_DIR/build/x64/vc14/lib/opencv_world320.lib</li>
+<li>include路径：$OPENCV_DIR/build/include/</li>
+</ul>
+<h2 id="大恒相机sdk安装">大恒相机SDK安装</h2>
+<ul>
+<li>版本：V18.06.25.01</li>
+<li>下载地址：http://gb.daheng-imaging.com/CN/Software/Cameras/Windows/Galaxy_V18.06.25.01_X86_Win_cn.zip</li>
+<li>lib路径：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>D</mi><msub><mi>K</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi><mi mathvariant="normal">/</mi><mi>S</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>C</mi><mo>+</mo><mo>+</mo><mi>S</mi><mi>D</mi><mi>K</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>i</mi><mi>b</mi><mi mathvariant="normal">/</mi><mi>x</mi><mn>64</mn><mi mathvariant="normal">/</mi><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">SDK_DIR/Samples/C++ SDK/lib/x64/;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">b</span><span class="mord">/</span><span class="mord mathdefault">x</span><span class="mord">6</span><span class="mord">4</span><span class="mord">/</span><span class="mpunct">;</span></span></span></span>SDK_DIR/Samples/VC SDK/lib/x64/;</li>
+<li>include路径：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mi>D</mi><msub><mi>K</mi><mi>D</mi></msub><mi>I</mi><mi>R</mi><mi mathvariant="normal">/</mi><mi>S</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mi>C</mi><mo>+</mo><mo>+</mo><mi>S</mi><mi>D</mi><mi>K</mi><mi mathvariant="normal">/</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi mathvariant="normal">/</mi><mo separator="true">;</mo></mrow><annotation encoding="application/x-tex">SDK_DIR/Samples/C++ SDK/inc/;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord">/</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord">/</span><span class="mpunct">;</span></span></span></span>SDK_DIR/Samples/VC SDK/inc/;</li>
+</ul>
+<h1 id="采坑记录">采坑记录</h1>
+<h2 id="无法解析的外部符号-winmain">无法解析的外部符号 WinMain</h2>
+<p>这是因为windows应用程序分为两种，一种是console（控制台），另一种是windwos（窗口），QT相对于VS的分类属于console，需要将项目/属性/链接器/子系统一栏设置为：(/SUBSYSTEM:CONSOLE)，如果设置为(/SUBSYSTEM:WINDOWS)则会找不到WinMain符号</p>
+<h2 id="stdafxh-not-found">stdafx.h not found</h2>
+<p>将程序中的这一句话注释，然后将项目/属性/c/c++/预编译头/预编译头一栏修改为不使用预编译头</p>
+<h2 id="include-qlabel-qlabel-not-found">#include &quot;QLabel&quot; QLabel not found</h2>
+<p>这是因为Qt5.9.3中，将QT加入VS后，默认只添加了<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;#&#039; at position 78: …gets路径下，因此要改为使用#̲include &quot;QtWidg…'>QT_DIR/msvc2015_64/include/为include路径，但是QLabel文件再include/QtWidgets路径下，因此要改为使用#include &quot;QtWidgets/QLabel&quot;，或者手动将</span>QT_DIR/msvc2015_64/include/QtWidgets添加到include路径中</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[pytorch模型转ncnn]]></title>
+        <id>https://zxpzhong.github.io//post/pytorch-mo-xing-zhuan-ncnn</id>
+        <link href="https://zxpzhong.github.io//post/pytorch-mo-xing-zhuan-ncnn">
+        </link>
+        <updated>2019-06-19T14:57:26.000Z</updated>
+        <summary type="html"><![CDATA[<p>pytorch模型转ncnn，加速模型运算，在底层运行</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>pytorch模型转ncnn，加速模型运算，在底层运行</p>
+<!-- more -->
+<h1 id="pytorch模型转ncnn">pytorch模型转ncnn</h1>
+<ul>
+<li>ncnn是腾讯公司发布的一款深度学习框架，ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架。</li>
+<li>虽然ncnn对于底层CPU运算加速十分明显，尤其是ARM内核的处理器，但是对于大部分深度学习任务来说，使用python+深度学习框架来进行深度模型探索、训练时间性价比更高。</li>
+<li>但是最终将模型转到移动端计算时，还是要考虑到移动端的算力，可以从轻量化模型（MobileNet、ShuffleNet等）、权值量化、并行计算、GPU加速、计算框架等去考虑移动端加速</li>
+<li>使用pytorch训练模型，再将模型转换为ncnn</li>
+</ul>
+<hr>
+<h1 id="转换的几个思路">转换的几个思路</h1>
+<h2 id="pytorch转onnx转ncnn">pytorch转onnx转ncnn</h2>
+<p>第一种方式最容易想到，onnx全称Open Neural Network Exchange，本身设计的目的就是用来进行模型之间的相互转换，但是目前不支持ncnn转换。github地址：<a href="https://github.com/onnx/onnx">https://github.com/onnx/onnx</a>
+<img src="http://qiniu.aicv.club/image/20190619/98n00kYiXeLt.png?imageslim" alt="mark"></p>
+<h2 id="pytorch转caffe转ncnn">pytorch转caffe转ncnn</h2>
+<p>ncnn官方似乎对caffe模型情有独钟，师兄在找我要模型的时候，都是直接说要caffe模型而不是ncnn模型，由此可见caffe与ncnn的亲密程度了，不过这也极有可能是因为caffe模型在移动端的优化做的也比较好。
+其他pytorch转caffe工具，比如pytorch2caffe，github地址：<a href="https://github.com/longcw/pytorch2caffe">https://github.com/longcw/pytorch2caffe</a>，但是实际测试后感觉效果不理想</p>
+<h2 id="pytorch直接转ncnn">pytorch直接转ncnn</h2>
+<p>ncnn官方的源码中，pytorch转ncnn的推荐方法是使用PytorchConverter github地址：<a href="https://github.com/starimeL/PytorchConverter">https://github.com/starimeL/PytorchConverter</a>，经过多种方案测试无数次次后验证该方法可行
+<img src="http://qiniu.aicv.club/image/20190619/Lsn7diagEfIJ.png?imageslim" alt="mark"></p>
+<h1 id="pytorchconverter将pytorch转换为ncnn过程">PytorchConverter将Pytorch转换为ncnn过程</h1>
+<h2 id="版本要求训练和转换时都必须满足这个版本要求">版本要求(训练和转换时都必须满足这个版本要求)</h2>
+<ul>
+<li>pytorch : torch==0.2</li>
+<li>torchvision==0.1.8</li>
+</ul>
+<h2 id="转换过程">转换过程</h2>
+<ol>
+<li>将PytorchConverter源码通过git克隆到本地</li>
+<li>打开run.py，可以看到其代码中内置了ResNet、MobileNet等，通过模仿其转换MobileNet的过程，可以写出自己的转换代码</li>
+<li>运行run.py将自己的pytorch模型转换为ncnn模型</li>
+</ol>
+<h2 id="踩坑记录">踩坑记录</h2>
+<ol>
+<li>pytorch版本不要太高，否则生成的模型的层名和ncnn转换时无法对应上，导致转换出错</li>
+<li>nn.logsoftmax()函数不支持，~~因此将NLL LOSS+logsoftmax转用CrossEntropy+softmax。~~参考：<a href="https://blog.csdn.net/hao5335156/article/details/80607732">https://blog.csdn.net/hao5335156/article/details/80607732</a>。再次验证后，发现能够得到正常结果的是NLL + logsoftmax，虽然在模型转换时，logsoftmax不支持，但是由于logsoftmax只在训练时起作用，<strong>所以可以在训练测试正常使用Logsoftmax，在模型转换时再换为softmax</strong>，因为softmax没有参数，所以原来保存的参数仍然你可以正常加载，且不影响最终<strong>特征层</strong>的输出。</li>
+<li>pytorch的pooling函数对奇数特征图长宽处理时，会将最外一层去掉，强制将特征图转换为偶数；而ncnn在处理时，会将奇数长宽强制+1后再处理。如果不注意这个问题，会导致最终进入全连接层时矩阵维度不对导致无法相乘，在ncnn c++模型测试代码中会出现其他层都有输出，但是一到全连接层时，程序直接崩溃。解决办法是在pooling函数的参数列表中加入 <code>ceil_mode=True</code>。参考：<a href="https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045">https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045</a>
+<img src="http://qiniu.aicv.club/image/20190619/Uq6UEAVWOY5O.png?imageslim" alt="mark"></li>
+<li>pytorch中的ReLU6激活函数PytorchConverter不支持转换，可以改用RuLU或者LeakyReLU</li>
+<li>PytorchConverter工具对python版本貌似没有要求，我测试过python2.7和3.6版本都可以正常使用，但是torch和torchvision的版本必须控制</li>
+<li>还是推荐使用python3.x版本，python2.7中整数除以整数<strong>只会整除</strong>，本人被这个问题卡了一整个上午；而python3中整数除以整数自动得到小数（不得不说太贴心了~）</li>
+<li>torch==0.2中，softmax和logsoftmax函数都不支持dim参数，直接去掉即可，因为最终到全连接层这儿的时候，只有一个维度了，所以做softmax的时候，也只有一个维度可以使用</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Github做图床]]></title>
+        <id>https://zxpzhong.github.io//post/github-zuo-tu-chuang</id>
+        <link href="https://zxpzhong.github.io//post/github-zuo-tu-chuang">
+        </link>
+        <updated>2019-06-19T14:54:34.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="markdown相比于word-txt文本的优缺点">MarkDown相比于word txt文本的优缺点</h1>
+<p>在写个人记录、个人博客时，MarkDown是一种比较好的选择</p>
+<ul>
+<li>相比于work文档，MD编辑起来更加轻量化，占用系统资源小，不容易卡死。当你工作的时候，电脑打开大量的软件，这时如果你想编辑一一个word文档，打开word后，呕吼，完蛋，电脑卡死了或者word卡死了，虽然说word卡死一般也不会导致文件内容丢失，但是让你卡几分钟也是很难受的</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227162425.png" alt=""></p>
+<ul>
+<li>相比于纯txt文档，其编辑时候的方式都是一样，使用纯键盘输入即可，但是加入MarkDown特有的标识符，MD文档可以渲染成一个带有格式的可展示文档，输入的难度不增加，且可展示性大大提高，不仅可以作为自己的个人记录，还可以直接发在CSDN、GITPAGE上，而且越来越多的博客系统也开始支持MarkDown语法了
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227162319.png" alt=""></li>
+</ul>
+<h1 id="markdown基本语法">MarkDown基本语法</h1>
+<p>这里就不赘述了，直接出门左转谷歌即可</p>
+<p><a href="https://www.jianshu.com/p/191d1e21f7ed">https://www.jianshu.com/p/191d1e21f7ed</a></p>
+<h1 id="markdown中的图片链接">MarkDown中的图片链接</h1>
+<ul>
+<li>在MarkDown中可以很快速得表示标题级数、有序无序列表、链接、代码段等等，最让人头痛的应该就是图片了，因为图片无法直接作为MD文本源码的一部分插入，只能插入图片的地址，这个地址可以是相对MD文件的相对路径，也可以是网络图片地址</li>
+<li><strong>如果将图片作为MD的相对路径插入MD文件中</strong>，在移动文件时，需要将图片与MD保持相对路径不变一起移动（比较好的办法是压缩打包后一起移动），否则极有可能出现访问图片无法正常加载</li>
+<li>为了能够将MD文件作为一个独立的文件移动，且其中的图片不丢失，比较好的一个解决办法是将网络图片地址插入MD文档中，这种办法虽然依赖于网络，但是连个网对于9102年应该不是什么难事吧~</li>
+</ul>
+<h1 id="如何将图片保存在网络上且获得图片的直链地址">如何将图片保存在网络上且获得图片的直链地址</h1>
+<p>这里直接把各类网盘（百度云、GDrive、OneDrive等等）排除在外了，因为网盘虽然上传图片比较方便，但是网盘中的图片无法获取到直链，或者获取到直链后很快就无法使用了</p>
+<h2 id="自建图片服务器">自建图片服务器</h2>
+<p>自建图片服务器的话，可以使用ftp、nginx、开源图床、网盘程序等等，但是费用较贵，而且你会忍不住去维护，最后不仅仅浪费了钱，还浪费了生命，血亏!</p>
+<h2 id="云储存对象">云储存对象</h2>
+<p>腾讯云、阿里云、等等云都提供云储存对象，虽然前几个月有免费额度，但是后面还是要收费滴，而且储存要收费、上传流量要收费、下载流量要收费、CDN回源要收费，请问看了这么多收费项后，谁还敢用啊~~~~其次还有七牛云、又拍云等有免费的储存空间，流量每个月也有免费，是一个不错的选择</p>
+<h2 id="第三方图床">第三方图床</h2>
+<p>感觉比较好用的有：</p>
+<ul>
+<li><a href="https://sm.ms/">https://sm.ms/</a></li>
+<li><a href="https://imgchr.com/">https://imgchr.com/</a></li>
+<li>第三方图床速度快，储存限制也比较小，比如每小时上传20张，每张大小小于10M之类的，对于写MD远远够了，主要是怕服务商跑路，跑路后图片消失没有了，除非你付费</li>
+</ul>
+<h2 id="github-repo图床">Github repo图床</h2>
+<p>Github的repo也可以储存东西，最直接的就是程序的版本控制，当然也可以用来当作备份储存，用来储存图片（github官方回复是：该行为不构成abuse，如果把github当图床算滥用，那么那么多人把微博当图床怎么就理所应当捏）。其实github对于国内的响应速度并不快，而且时不时被block，所以用github当图床完全是出于储存个人用途的自创图片，并不能当CDN使用。github自从被微软收购后，我对github的信心大增，代码以前只敢用git管理保存在本地，现在可以放心大胆上传到github了（很多是private，所以不可见），github图床主要就是图个稳定，也并不是想恶意刷github服务器的流量，恶意影响大家的体验。</p>
+<ol>
+<li>
+<p>新建repo，名称任意</p>
+</li>
+<li>
+<p>打开账户/Settings/Developer settings/Personal access tokens,点击Generate new token
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227200955.png" alt="">
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201039.png" alt=""></p>
+</li>
+<li>
+<p>在弹出的产生token页面，Token description随意填写，但是一定要勾选上这几项
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201200.png" alt=""></p>
+</li>
+<li>
+<p>下载PicGo客户端对应的版本并安装，github地址：<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a></p>
+</li>
+<li>
+<p>启动PicGo后，打开设置界面，点击
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201523.png" alt="">
+在第一栏填入你的github名称/repo名称；在第二栏填入你的分支名称，默认为master；在第三栏填入你刚才申请到的Token；第四栏填入你的repo中的储存路径；最后点击确认，再点击设为默认图床</p>
+</li>
+<li>
+<p>使用QQ截图Ctrl+Alt+A或者微信的Alt+A截图后，按下Ctrl+Shiht+P快捷键即可自动上传到github对应的repo中，上传完成后，会有提示，自动将对应的图片地址送入剪贴板中，直接Ctrl+V即可粘贴对应的地址出来了~~</p>
+</li>
+</ol>
+<h2 id="picgo中使用其他图床">PicGo中使用其他图床</h2>
+<p>PicGo一共支持多种图床：
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227202119.png" alt=""></p>
+<ul>
+<li>其中SM.MS图床是免费且不需要账号的图床，缺点是无法查看历史上传的图片，因此每次使用同一张图片都需要重新上传一张一样的获取新的地址，或者是拷贝之前上传过的地址</li>
+<li><s>微博图床，我设置好账号和密码后，并不能正常上传，原因应该是微博限制了必须加上验证码才能登陆，所以微博图床对于这款程序并不太友好，应该说微博图床上传图片都很麻烦，登录过程就很麻烦，如果手动上传，感觉更麻烦，所以还是不推荐用微博图床</s>      经过再次测试后，发现<strong>微博第一次在某台电脑上登陆</strong>时，验证比较复杂，需要输入验证码，还有可能需要验证手机号，所以可以使用浏览器在网页中打开微博，然后登陆自己的微博，登陆成功后，在使用PicGo选择微博图床，进行上传测试，这时就可以正常上传了<img src="https://ws1.sinaimg.cn/large/006hYrYngy1g0nhxp4k10j305v05q40e.jpg" alt=""></li>
+<li>腾讯、阿里的对象储存，上面说了，免费都有时间，过了免费时间后，可能需要付费，主要优势就是CDN加速了，超快，当然如果你的博客看的人多了，那么流量也多，费用也贵</li>
+<li>七牛云和又拍云可以申请免费储存空间，是不错的选择，但是也要小心流量被刷导致扣费、封号，具体可以看看别人的前车之鉴</li>
+</ul>
+<hr>
+<p><img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227203223.png" alt=""></p>
+<ul>
+<li>Imgur也是免费的图床，是国外网站，相对国内速度不太理想，还是SM.MS速度快些</li>
+</ul>
+<h1 id="github图床缺点">Github图床缺点</h1>
+<ol>
+<li>对应储存图片的repo必须是public，如果是pravite，那么图片地址会带有一个随时刷新token，这样虽然repo他人不可见，但是也没法作为图床用</li>
+<li>图床每添加一张，那么会提交一次commit，这样会导致你的github动向表部分一片绿。。。。。虽然这样显得你很活跃，但是真正点进去会发现你的代码更新并没有你真正提交commit的频率高。</li>
+</ol>
+<h1 id="禁止滥用">禁止滥用</h1>
+<p>对于个人MD使用来说，Github是一个相对稳定（微软收购后更加稳定了）、不用付费、可以查看历史、速度还行的图床。但是绝对不适用于大流量的场所，只限于个人小流量使用！！！！！！！！！！！！！！！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Gridea对接github page]]></title>
         <id>https://zxpzhong.github.io//post/gridea-dui-jie-github-page</id>
@@ -29,6 +763,7 @@
 <li>可以把Gridea源位置设置在onedrive文件夹，这样还可以动态备份，就算换电脑，换软件，把文件夹下载下来还可以继续编辑</li>
 </ol>
 <h2 id="部署流程">部署流程</h2>
+<p>具体细节可以搜索github page部署教程，这里只写Gridea软件如何设置</p>
 <h3 id="安装gridea">安装Gridea</h3>
 <p>从Gridea网站下载软件，然后在下图中，设置好自己的github page域名，仓库名称，用户名（github用户名），邮箱，Token生成方法自行搜索
 <img src="http://qiniu.aicv.club/image/20190619/Lw4tYW9d8aYH.png?imageslim" alt="mark"></p>
