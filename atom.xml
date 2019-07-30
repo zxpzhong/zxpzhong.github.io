@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zxpzhong.github.io/</id>
     <title>Felix计算机视觉小屋</title>
-    <updated>2019-07-30T05:23:15.682Z</updated>
+    <updated>2019-07-30T06:06:30.704Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zxpzhong.github.io/"/>
     <link rel="self" href="https://zxpzhong.github.io//atom.xml"/>
@@ -68,7 +68,7 @@
 <p>参加天池竞赛不可避免得要碰到一个问题，那就是最基本得提交赛题，本次我遇到的是通过提交<strong>阿里容器镜像服务</strong>的地址，竞赛刚看完题目后，第一遍提交应该是使用赛题提供的Demo文件提交，这样可以熟悉一遍赛题，熟悉提交流程。所以一定要先对Docker进行一个科普性了解。</p>
 <h2 id="docker是什么">Docker是什么？</h2>
 <ul>
-<li>Docker是一个虚拟环境容器，可以将你的开发环境、代码、配置文件等一并打包到这个容器中，并发布和应用到任意平台中。比如，你在本地用Python开发网站后台，开发测试完成后，就可以将Python3及其依赖包、Flask及其各种插件、Mysql、Nginx等打包到一个容器中，然后部署到任意你想部署到的环境。<img src="http://qiniu.aicv.club/image/20190619/Bwmm22yG9MYj.png?imageslim" alt="mark"></li>
+<li>Docker是一个虚拟环境容器，可以将你的开发环境、代码、配置文件等一并打包到这个容器中，并发布和应用到任意平台中。比如，你在本地用Python开发网站后台，开发测试完成后，就可以将Python3及其依赖包、Flask及其各种插件、Mysql、Nginx等打包到一个容器中，然后部署到任意你想部署到的环境。<img src="https://s2.ax1x.com/2019/07/30/eGRf8e.png" alt="mark"></li>
 <li>大家从github上拉下来的代码，能直接运行么？往往不能，因为：</li>
 <li>代码运行系统环境不同</li>
 <li>数据集的文件夹路径不同</li>
@@ -108,7 +108,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="http://qiniu.aicv.club/image/20190619/PXrH6q4SnK2i.png?imageslim" alt="mark"></p>
+<p><img src="https://s2.ax1x.com/2019/07/30/eGRhgH.png" alt="mark"></p>
 <ol>
 <li>Docker的gitbook地址，有时间的话建议还是把这个全部看完。<a href="https://yeasy.gitbooks.io/docker_practice/">https://yeasy.gitbooks.io/docker_practice/</a></li>
 <li><strong>镜像</strong>：镜像就像面向对象程序中的类，镜像是静态的定义，镜像可以被修改，增删内容，但是镜像的运行必须通过生成容器实体</li>
