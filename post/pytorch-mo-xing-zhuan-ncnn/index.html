@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1560994815633">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1564464169959">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://zxpzhong.github.io/">
-        <img src="https://zxpzhong.github.io//images/avatar.png?v=1560994815633" class="site-logo">
+        <img src="https://zxpzhong.github.io//images/avatar.png?v=1564464169959" class="site-logo">
         <h1 class="site-title">Felix计算机视觉小屋</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -114,7 +114,7 @@
             <h2 class="post-title">pytorch模型转ncnn</h2>
             <div class="post-date">2019-06-19</div>
             
-              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/mA1WEHcs3pHT.png?imageslim')">
+              <div class="feature-container" style="background-image: url('https://s2.ax1x.com/2019/07/30/eG0ok9.png')">
               </div>
             
             <div class="post-content">
@@ -131,13 +131,13 @@
 <h1 id="转换的几个思路">转换的几个思路</h1>
 <h2 id="pytorch转onnx转ncnn">pytorch转onnx转ncnn</h2>
 <p>第一种方式最容易想到，onnx全称Open Neural Network Exchange，本身设计的目的就是用来进行模型之间的相互转换，但是目前不支持ncnn转换。github地址：<a href="https://github.com/onnx/onnx">https://github.com/onnx/onnx</a>
-<img src="http://qiniu.aicv.club/image/20190619/98n00kYiXeLt.png?imageslim" alt="mark"></p>
+<img src="https://s2.ax1x.com/2019/07/30/eG0NSP.png" alt="mark"></p>
 <h2 id="pytorch转caffe转ncnn">pytorch转caffe转ncnn</h2>
 <p>ncnn官方似乎对caffe模型情有独钟，师兄在找我要模型的时候，都是直接说要caffe模型而不是ncnn模型，由此可见caffe与ncnn的亲密程度了，不过这也极有可能是因为caffe模型在移动端的优化做的也比较好。
 其他pytorch转caffe工具，比如pytorch2caffe，github地址：<a href="https://github.com/longcw/pytorch2caffe">https://github.com/longcw/pytorch2caffe</a>，但是实际测试后感觉效果不理想</p>
 <h2 id="pytorch直接转ncnn">pytorch直接转ncnn</h2>
 <p>ncnn官方的源码中，pytorch转ncnn的推荐方法是使用PytorchConverter github地址：<a href="https://github.com/starimeL/PytorchConverter">https://github.com/starimeL/PytorchConverter</a>，经过多种方案测试无数次次后验证该方法可行
-<img src="http://qiniu.aicv.club/image/20190619/Lsn7diagEfIJ.png?imageslim" alt="mark"></p>
+<img src="https://s2.ax1x.com/2019/07/30/eG0UQf.png" alt="mark"></p>
 <h1 id="pytorchconverter将pytorch转换为ncnn过程">PytorchConverter将Pytorch转换为ncnn过程</h1>
 <h2 id="版本要求训练和转换时都必须满足这个版本要求">版本要求(训练和转换时都必须满足这个版本要求)</h2>
 <ul>
@@ -155,7 +155,7 @@
 <li>pytorch版本不要太高，否则生成的模型的层名和ncnn转换时无法对应上，导致转换出错</li>
 <li>nn.logsoftmax()函数不支持，~~因此将NLL LOSS+logsoftmax转用CrossEntropy+softmax。~~参考：<a href="https://blog.csdn.net/hao5335156/article/details/80607732">https://blog.csdn.net/hao5335156/article/details/80607732</a>。再次验证后，发现能够得到正常结果的是NLL + logsoftmax，虽然在模型转换时，logsoftmax不支持，但是由于logsoftmax只在训练时起作用，<strong>所以可以在训练测试正常使用Logsoftmax，在模型转换时再换为softmax</strong>，因为softmax没有参数，所以原来保存的参数仍然你可以正常加载，且不影响最终<strong>特征层</strong>的输出。</li>
 <li>pytorch的pooling函数对奇数特征图长宽处理时，会将最外一层去掉，强制将特征图转换为偶数；而ncnn在处理时，会将奇数长宽强制+1后再处理。如果不注意这个问题，会导致最终进入全连接层时矩阵维度不对导致无法相乘，在ncnn c++模型测试代码中会出现其他层都有输出，但是一到全连接层时，程序直接崩溃。解决办法是在pooling函数的参数列表中加入 <code>ceil_mode=True</code>。参考：<a href="https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045">https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045</a>
-<img src="http://qiniu.aicv.club/image/20190619/Uq6UEAVWOY5O.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eG0yYn.png" alt="mark"></li>
 <li>pytorch中的ReLU6激活函数PytorchConverter不支持转换，可以改用RuLU或者LeakyReLU</li>
 <li>PytorchConverter工具对python版本貌似没有要求，我测试过python2.7和3.6版本都可以正常使用，但是torch和torchvision的版本必须控制</li>
 <li>还是推荐使用python3.x版本，python2.7中整数除以整数<strong>只会整除</strong>，本人被这个问题卡了一整个上午；而python3中整数除以整数自动得到小数（不得不说太贴心了~）</li>

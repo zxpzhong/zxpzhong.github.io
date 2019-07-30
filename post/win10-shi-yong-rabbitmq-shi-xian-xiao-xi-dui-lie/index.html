@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1560994815633">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1564464169959">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://zxpzhong.github.io/">
-        <img src="https://zxpzhong.github.io//images/avatar.png?v=1560994815633" class="site-logo">
+        <img src="https://zxpzhong.github.io//images/avatar.png?v=1564464169959" class="site-logo">
         <h1 class="site-title">Felix计算机视觉小屋</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -114,7 +114,7 @@
             <h2 class="post-title">win10使用RabbitMQ实现消息队列</h2>
             <div class="post-date">2019-06-19</div>
             
-              <div class="feature-container" style="background-image: url('http://qiniu.aicv.club/image/20190619/C36x2uskVWan.png?imageslim')">
+              <div class="feature-container" style="background-image: url('https://s2.ax1x.com/2019/07/30/eGBUhR.png')">
               </div>
             
             <div class="post-content">
@@ -138,17 +138,17 @@
 <li>RabbitMQ服务端代码是使用并发式语言Erlang，所以先安装Erlang
 <ul>
 <li>Erlang官网<a href="http://www.erlang.org/downloads">http://www.erlang.org/downloads</a>，下载对应版本后，安装
-<img src="http://qiniu.aicv.club/image/20190619/2JcHlNvzH25r.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGDgqU.png" alt="mark"></li>
 <li>安装位置任意，安装过程中会自动把安装位置的bin目录加入PATH环境变量</li>
 </ul>
 </li>
 <li>官网<a href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a>，下载对应的安装文件exe，安装
-<img src="http://qiniu.aicv.club/image/20190619/tKtVPAestNIv.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGBw1x.png" alt="mark"></li>
 <li>进入安装目录的sbin目录
-<img src="http://qiniu.aicv.club/image/20190619/SX5IIvRiAATq.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGB0c6.png" alt="mark"></li>
 <li>输入<code>rabbitmq-plugins enable rabbitmq_management</code>安装rabbitmq对应的web管理界面</li>
 <li>rabbitmq安装后会在操作系统中注册为系统服务，并且自动启动。在浏览器中输入<a href="http://127.0.0.1:15672">http://127.0.0.1:15672</a>,如果正确显示rabbitmq的web界面，则安装正确
-<img src="http://qiniu.aicv.club/image/20190619/6DekMfUYqC52.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGBBjK.png" alt="mark"></li>
 </ol>
 <h2 id="rabbitmq-c安装">RabbitMQ-c安装</h2>
 <ol>
@@ -163,15 +163,15 @@
 <li>进入RabbitMQ-c目录<code>cd $RabbitMQ-c_PATH/</code>，创建build文件夹<code>mkdir build</code></li>
 <li>打开cmake-gui，设置src与build目录为<code>$RabbitMQ-c_PATH/</code>和<code>$RabbitMQ-c_PATH/build</code></li>
 <li>编译器选择msvc2014 64bit，如果没有弹出让你选择编译器，则可以点击file-&gt;delete cache来删除缓存，重新选择编译器
-<img src="http://qiniu.aicv.club/image/20190619/JmfPHGIPtFIB.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGBrnO.png" alt="mark"></li>
 <li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目
-<img src="http://qiniu.aicv.club/image/20190619/NCK73VINqqVf.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGByHe.png" alt="mark"></li>
 <li>VS中设置64bit release版本
-<img src="http://qiniu.aicv.club/image/20190619/DIqQa49DMxvO.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGBgNd.png" alt="mark"></li>
 <li>生成解决方案
-<img src="http://qiniu.aicv.club/image/20190619/hKYm7kIkxEe9.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGDEgx.png" alt="mark"></li>
 <li>在对应目录下生成库文件
-<img src="http://qiniu.aicv.club/image/20190619/HzzXQth56qoX.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGDNqS.png" alt="mark"></li>
 </ol>
 <h2 id="rabbitmq-c封装库simpleamqpclient安装">RabbitMQ-c封装库SimpleAmqpClient安装</h2>
 <ol>
@@ -179,26 +179,26 @@
 <ul>
 <li><strong>注意，一定要安装二进制安装文件，不要下载源码自己编译</strong>,自己编译可能出现很多问题</li>
 <li>下载地址<a href="https://sourceforge.net/projects/boost/files/boost-binaries/">https://sourceforge.net/projects/boost/files/boost-binaries/</a></li>
-<li>安装后，include路径为<img src="http://qiniu.aicv.club/image/20190619/0b1uBG96BtpO.png?imageslim" alt="mark">，lib路径为<img src="http://qiniu.aicv.club/image/20190619/32HVtJKWMTCb.png?imageslim" alt="mark"></li>
+<li>安装后，include路径为<img src="https://s2.ax1x.com/2019/07/30/eGDdaQ.png" alt="mark">，lib路径为<img src="https://s2.ax1x.com/2019/07/30/eGDw5j.png" alt="mark"></li>
 </ul>
 </li>
 <li>安装doxygen（这一步是为了生成API Document，可以不做）
 <ul>
 <li>下载地址<a href="http://www.doxygen.nl/download.html">http://www.doxygen.nl/download.html</a></li>
-<li><img src="http://qiniu.aicv.club/image/20190619/rE5bl6Y8RgH9.png?imageslim" alt="mark">直接下载对应的安装文件，安装后会自动加入PATH环境变量</li>
+<li><img src="https://s2.ax1x.com/2019/07/30/eGDBPs.png" alt="mark">直接下载对应的安装文件，安装后会自动加入PATH环境变量</li>
 </ul>
 </li>
 <li>git拉取SimpleAmqpClient源码,在SimpleAmqpClient源码下创建build目录</li>
 <li>cmake设置src目录和build目录</li>
 <li>取消ENABLE_SSL_SUPPORT，手动添加Boost_USE_STATIC_LIBS二进制类型
-<img src="http://qiniu.aicv.club/image/20190619/aWFbGl667pmP.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGDDGn.png" alt="mark"></li>
 <li>手动添加BOOST_ROOT，填入BOOST的安装根目录；手动添加BOOST_LIBRARY，填入BOOST库目录</li>
 <li>手动添加Rabbitmqc_INCLUDE_DIR,填入Rabbitmqc的头文件路径，手动添加Rabbitmqc_LIBRARY,填入Rabbitmqc的库路径</li>
 <li>取消勾选ENABLE_SSL_SUPPORT,依次按下configure-&gt;generate-&gt;open project，在VS2015中打开项目</li>
 <li>VS中设置64bit release版本</li>
 <li>在项目属性中添加Rabbitmqc的头文件路径、boost头文件路径，Rabbitmqc的库路径、boost库路径，和对应的lib名称</li>
 <li>右键点击项目中的SimpleAmqpClient，点击重新生成，编译成功后，会在build/release目录下生成对应的库
-<img src="http://qiniu.aicv.club/image/20190619/kuMowCtwyrwk.png?imageslim" alt="mark"></li>
+<img src="https://s2.ax1x.com/2019/07/30/eGDsx0.png" alt="mark"></li>
 </ol>
 <h2 id="simpleamqpclient-demo测试">SimpleAmqpClient   Demo测试</h2>
 <ul>
