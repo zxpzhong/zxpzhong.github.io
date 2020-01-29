@@ -1,132 +1,517 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Github做图床 | Felix计算机视觉小屋</title>
+<meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="念念不忘必有回响：&lt;a href=&#34;https://github.com/zxpzhong&#34; target=&#34;_blank&#34;&gt;我的github&lt;/a&gt;;&lt;a href=&#34;http://aicv.club/&#34; target=&#34;_blank&#34;&gt;我的博客&lt;/a&gt;">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1569229880494">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1580231526995">
 <link rel="stylesheet" href="https://zxpzhong.github.io//styles/main.css">
 
+<link rel="stylesheet" href="/media/css/gemini.css">
 
-  
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
-  
+<link rel="stylesheet" href="/media/fonts/font-awesome.css">
+<link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
-  
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.ui.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135106908-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-135106908-1');
-</script>
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+    <meta name="description" content="Github做图床" />
+    <meta name="keywords" content="工具" />
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://zxpzhong.github.io/">
-        <img src="https://zxpzhong.github.io//images/avatar.png?v=1569229880494" class="site-logo">
-        <h1 class="site-title">Felix计算机视觉小屋</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
+    <div class="head-top-line"></div>
+    <div class="header-box">
+      
+<div class=" gemini">
+  <header class="header bg-color ">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
+      <div class="nav-toggle" id="nav_toggle">
+        <div class="toggle-box">
+          <div class="line line-top"></div>
+          <div class="line line-center"></div>
+          <div class="line line-bottom"></div>
+        </div>
       </div>
+      <div class="site-meta">       
+        <div class="site-title">
+          
+            <a href="/" class="brand">
+              <span>Felix计算机视觉小屋</span>
+            </a>  
+          
+        </div>
+        
+          <p class="subtitle">精于心，简于形</p>
+        
+      </div>
+      <nav class="site-nav" id="site_nav">
+        <ul id="nav_ul">
+          
+            <li class="nav-item ">
+              
+                <a href="/">
+                  <i class="fa fa-home"></i> 首页
+                </a>
+              
+            </li>
+          
+            <li class="nav-item ">
+              
+                <a href="/archives">
+                  <i class="fa fa-archive"></i> 归档
+                </a>
+              
+            </li>
+          
+            <li class="nav-item ">
+              
+                <a href="/tags">
+                  <i class="fa fa-tags"></i> 标签
+                </a>
+              
+            </li>
+          
+            <li class="nav-item ">
+              
+                <a href="/post/about">
+                  <i class="fa fa-user"></i> 关于
+                </a>
+              
+            </li>
+          
+          <li class="nav-item">
+            <a>
+              <i class="fa fa-search"></i> 搜索
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <div>
+  </header>
+</div>
+
+<script type="text/javascript"> 
+ 
+  let showNav = true;
+
+  let navToggle = document.querySelector('#nav_toggle'),
+  siteNav = document.querySelector('#site_nav');
+  
+  function navClick() {
+    let sideBar = document.querySelector('.sidebar');
+    let navUl = document.querySelector('#nav_ul');
+    navToggle.classList.toggle('nav-toggle-active');
+    siteNav.classList.toggle('nav-menu-active');
+    if (siteNav.classList.contains('nav-menu-active')) {
+      siteNav.style = "height: " + (navUl.children.length * 42) +"px !important";
+    } else {
+      siteNav.style = "";
+    }
+  }
+
+  navToggle.addEventListener('click',navClick);  
+</script>
+    </div>
+    <div class="main-continer">
       
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
+      <div class="section-layout gemini ">
+        <div class="section-layout-wrapper">
+          
+
+<div class="sidebar">
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
       
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
       
+      <div class="sidebar-body gemini" id="sidebar_body">
         
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
+          <div class="post-side-meta" id="post_side_meta">
+            
+<div class="sidebar-wrapper box-shadow-wrapper bg-color">
+  <div class="sidebar-item">
+    <img class="site-author-image right-motion" src="https://zxpzhong.github.io//images/avatar.png"/>
+    <p class="site-author-name">Felix计算机视觉小屋</p>
+    <p class="site-description right-motion">这个人很懒，什么都不想写...</p>
+  </div>
+  <div class="sidebar-item side-item-stat right-motion">
+    <div class="sidebar-item-box">
+      <a href="/archives/">
         
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
+        <span class="site-item-stat-count">9</span>
+        <span class="site-item-stat-name">文章</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="">
+        <span class="site-item-stat-count">5</span>
+        <span class="site-item-stat-name">分类</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="/tags/">
+        <span class="site-item-stat-count">5</span>
+        <span class="site-item-stat-name">标签</span>
+      </a>
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/zxpzhong" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
+  
+    
+      <div class="sidebar-item">
+        <span class="site-item-rss">
+            <i class="fa fa-rss"></i>
+            <a href="https://zxpzhong.github.io//atom.xml" target="_blank">RSS</a>
+        </span>
+      </div>
+    
+  
+  
+    <div class="sidebar-item sidebar-item-social">
+      <div class="social-item">
+          
+            <a href="https://github.com/zxpzhong">
+              <i class="fa fa-github-alt"></i> Github
+            </a>
+          
+          
+          
+          
+          
+          
+          
+      </div>
     </div>
-    <div class="site-description">
-      念念不忘必有回响：<a href="https://github.com/zxpzhong" target="_blank">我的github</a>;<a href="http://aicv.club/" target="_blank">我的博客</a>
-    </div>
-    <div class="site-footer">
-      念念不忘必有回响：<a href="https://github.com/zxpzhong" target="_blank">我的github</a>;<a href="http://aicv.club/" target="_blank">我的博客</a> | <a class="rss" href="https://zxpzhong.github.io//atom.xml" target="_blank">RSS</a>
-    </div>
+  
+
+</div>
+          </div>
+          <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+            <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto" id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#markdown%E7%9B%B8%E6%AF%94%E4%BA%8Eword-txt%E6%96%87%E6%9C%AC%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">MarkDown相比于word txt文本的优缺点</a></li>
+<li><a href="#markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">MarkDown基本语法</a></li>
+<li><a href="#markdown%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5">MarkDown中的图片链接</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%B0%86%E5%9B%BE%E7%89%87%E4%BF%9D%E5%AD%98%E5%9C%A8%E7%BD%91%E7%BB%9C%E4%B8%8A%E4%B8%94%E8%8E%B7%E5%BE%97%E5%9B%BE%E7%89%87%E7%9A%84%E7%9B%B4%E9%93%BE%E5%9C%B0%E5%9D%80">如何将图片保存在网络上且获得图片的直链地址</a>
+<ul>
+<li><a href="#%E8%87%AA%E5%BB%BA%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8">自建图片服务器</a></li>
+<li><a href="#%E4%BA%91%E5%82%A8%E5%AD%98%E5%AF%B9%E8%B1%A1">云储存对象</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%9B%BE%E5%BA%8A">第三方图床</a></li>
+<li><a href="#github-repo%E5%9B%BE%E5%BA%8A">Github repo图床</a></li>
+<li><a href="#picgo%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E5%9B%BE%E5%BA%8A">PicGo中使用其他图床</a></li>
+</ul>
+</li>
+<li><a href="#github%E5%9B%BE%E5%BA%8A%E7%BC%BA%E7%82%B9">Github图床缺点</a></li>
+<li><a href="#%E7%A6%81%E6%AD%A2%E6%BB%A5%E7%94%A8">禁止滥用</a></li>
+</ul>
+
   </div>
 </div>
 
+<script>
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Github做图床</h2>
-            <div class="post-date">2019-06-19</div>
-            
-              <div class="feature-container" style="background-image: url('https://s2.ax1x.com/2019/07/30/eG04w4.png')">
-              </div>
-            
-            <div class="post-content">
-              <h1 id="markdown相比于word-txt文本的优缺点">MarkDown相比于word txt文本的优缺点</h1>
+let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1; 
+let active = 'active-show', activeClass = 'active-current';
+let tocWrapper = document.querySelector('#toc_wrapper');
+let tocContent = tocWrapper.children[0];
+let autoNumber = tocWrapper&&tocWrapper.classList.contains('auto-number');
+
+function addTocNumber(elem, deep) {
+  if (!elem) {
+    return;
+  }
+  let prop = elem.__proto__;
+
+  if (prop === HTMLUListElement.prototype) {
+    for (let i = 0; i < elem.children.length; i++) {
+      addTocNumber(elem.children[i], deep + (i + 1) + '.');
+    }
+  } else if (prop === HTMLLIElement.prototype) {
+    // 保存li元素
+    lList.push(elem);
+    for (let i = 0; i < elem.children.length; i++) {
+      let cur = elem.children[i];
+      if (cur.__proto__ === HTMLAnchorElement.prototype) {
+        if (autoNumber) {
+          cur.text =  deep + ' ' + cur.text;
+        }
+      } else if (cur.__proto__ === HTMLUListElement.prototype) {
+        addTocNumber(cur, deep);
+      }
+    }
+  }
+}
+
+
+document.addEventListener('scroll', function(e) {
+  if (lList.length <= 0) {
+    return;
+  }
+  let scrollTop = document.scrollingElement.scrollTop;
+  let dir;
+
+  if (lastTop - scrollTop > 0) {
+    dir = 'up';
+  } else {
+    dir = 'down';
+  }
+
+  lastTop = scrollTop;
+  if (scrollTop <= 0) {
+    if (lastIndex >= 0 && lastIndex < hList.length) {
+      lList[lastIndex].classList.remove(activeClass);
+    }
+    return;
+  }
+
+  let current = 0, hasFind = false;
+  for (let i = 0; i < hList.length; i++) {
+    if (hList[i].offsetTop > scrollTop) {
+      current = i;
+      hasFind = true;
+      break;
+    }
+  }
+  if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+    current = hList.length - 1;
+  } else {
+    current--;
+  }
+  if (dir === 'down') {
+    if (current > lastIndex) {
+      addActiveClass(current);
+      removeActiveClass(lastIndex) 
+      lastIndex = current;
+      removeParentActiveClass();
+      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
+    }
+  } else {
+    if (current < lastIndex) {
+      addActiveClass(current);
+      removeActiveClass(lastIndex);
+      lastIndex = current;
+      removeParentActiveClass();
+      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
+    }
+  }
+});
+
+function removeParentActiveClass() {
+  let parents = tocContent.querySelectorAll('.'+active)
+  parents.forEach(function(elem) {
+    elem.classList.remove(active);
+  });
+}
+
+function addActiveClass(index) {
+  if (index >= 0 && index < hList.length) {
+    lList[index].classList.add(activeClass);
+  }
+}
+
+function removeActiveClass(index) {
+  if (index >= 0 && index < hList.length) {
+    lList[index].classList.remove(activeClass);
+  }
+}
+
+function addActiveLiElemment(elem, parent) {
+  if (!elem || elem === parent) {
+    return;
+  } else {
+    if (elem.__proto__ === HTMLLIElement.prototype) {
+      elem.classList.add(active);
+    }
+    addActiveLiElemment(elem.parentElement, parent);
+  }
+}
+
+function showToc() {
+  if (tocWrapper) {
+    postBody = document.querySelector('#post_body');
+    for (let i = 0; i < postBody.children.length; i++) {
+      if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+        hList.push(postBody.children[i]);
+      }
+    }
+    if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+    } else if (tocWrapper.classList.contains('no_compress')){
+      tocContent.classList.add('expanded');
+    } else {
+      if (hList.length > 10) {
+        active = 'active-hidden'
+        tocContent.classList.add('closed');
+      } else {
+        tocContent.classList.add('expanded');
+      }
+    }
+  }
+}
+addTocNumber(tocContent, '');
+
+window.addEventListener('load', function() {
+  showToc();
+  document.querySelector('#sidebar').style='display: block;';
+  tocWrapper.classList.add('toc-active');
+  setTimeout(function() {
+    if ("createEvent" in document) {
+      let evt = document.createEvent("HTMLEvents");
+      evt.initEvent("scroll", false, true);
+      document.dispatchEvent(evt);
+    }
+    else {
+      document.fireEvent("scroll");
+    }
+  }, 500)
+})
+
+</script>
+          </div>
+        
+      </div>
+    </div>
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+
+  if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+    let hasFix = false;
+    let scrollEl = document.querySelector('.main-continer');
+    let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+    window.addEventListener('scroll', function(e) {
+    if (document.scrollingElement.scrollTop >= limitTop) {
+      if (!hasFix) {
+        sidebar.classList.add('sidebar-fixed');
+        hasFix = true;
+      }
+    } else {
+      if (hasFix) {
+        sidebar.classList.remove('sidebar-fixed');
+        hasFix = false;
+      }
+    }
+  });
+  }
+  
+</script>
+          <div class="section-box box-shadow-wrapper">
+            <div class="section bg-color post post-page">
+              <div class="article-box">
+    <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://zxpzhong.github.io/post/github-zuo-tu-chuang">
+      Github做图床
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2019-06-19</span>
+    </span>
+    
+      <span class="meta-item">
+        <span class="post-meta-divider pc-show">|</span>
+        <i class="fa fa-folder-o"></i>
+        <span class="pc-show">分类于</span>
+        
+          
+            <a href="https://zxpzhong.github.io/tag/fSlHkHK3n">
+              <span>工具</span>
+            </a>
+          
+        
+      </span>
+      <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>8分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>2021<span class="pc-show">字数</span></span>
+    </span>
+  </div>
+</header>
+</div>
+              <div class="post-body next-md-body" id="post_body">
+                <h1 id="markdown相比于word-txt文本的优缺点">MarkDown相比于word txt文本的优缺点</h1>
 <p>在写个人记录、个人博客时，MarkDown是一种比较好的选择</p>
 <ul>
 <li>相比于work文档，MD编辑起来更加轻量化，占用系统资源小，不容易卡死。当你工作的时候，电脑打开大量的软件，这时如果你想编辑一一个word文档，打开word后，呕吼，完蛋，电脑卡死了或者word卡死了，虽然说word卡死一般也不会导致文件内容丢失，但是让你卡几分钟也是很难受的</li>
 </ul>
-<p><img src="https://s2.ax1x.com/2019/07/30/eG0kdJ.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://s2.ax1x.com/2019/07/30/eG0kdJ.png" alt="" loading="lazy"></figure>
 <ul>
-<li>相比于纯txt文档，其编辑时候的方式都是一样，使用纯键盘输入即可，但是加入MarkDown特有的标识符，MD文档可以渲染成一个带有格式的可展示文档，输入的难度不增加，且可展示性大大提高，不仅可以作为自己的个人记录，还可以直接发在CSDN、GITPAGE上，而且越来越多的博客系统也开始支持MarkDown语法了
-<img src="https://s2.ax1x.com/2019/07/30/eG0ZJ1.png" alt=""></li>
+<li>相比于纯txt文档，其编辑时候的方式都是一样，使用纯键盘输入即可，但是加入MarkDown特有的标识符，MD文档可以渲染成一个带有格式的可展示文档，输入的难度不增加，且可展示性大大提高，不仅可以作为自己的个人记录，还可以直接发在CSDN、GITPAGE上，而且越来越多的博客系统也开始支持MarkDown语法了<br>
+<img src="https://s2.ax1x.com/2019/07/30/eG0ZJ1.png" alt="" loading="lazy"></li>
 </ul>
 <h1 id="markdown基本语法">MarkDown基本语法</h1>
 <p>这里就不赘述了，直接出门左转谷歌即可</p>
@@ -157,20 +542,20 @@
 <p>新建repo，名称任意</p>
 </li>
 <li>
-<p>打开账户/Settings/Developer settings/Personal access tokens,点击Generate new token
-<img src="https://s2.ax1x.com/2019/07/30/eG0uQK.png" alt="">
-<img src="https://s2.ax1x.com/2019/07/30/eG0KsO.png" alt=""></p>
+<p>打开账户/Settings/Developer settings/Personal access tokens,点击Generate new token<br>
+<img src="https://s2.ax1x.com/2019/07/30/eG0uQK.png" alt="" loading="lazy"><br>
+<img src="https://s2.ax1x.com/2019/07/30/eG0KsO.png" alt="" loading="lazy"></p>
 </li>
 <li>
-<p>在弹出的产生token页面，Token description随意填写，但是一定要勾选上这几项
-<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201200.png" alt=""></p>
+<p>在弹出的产生token页面，Token description随意填写，但是一定要勾选上这几项<br>
+<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201200.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>下载PicGo客户端对应的版本并安装，github地址：<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a></p>
 </li>
 <li>
-<p>启动PicGo后，打开设置界面，点击
-<img src="https://s2.ax1x.com/2019/07/30/eG0lee.png" alt="">
+<p>启动PicGo后，打开设置界面，点击<br>
+<img src="https://s2.ax1x.com/2019/07/30/eG0lee.png" alt="" loading="lazy"><br>
 在第一栏填入你的github名称/repo名称；在第二栏填入你的分支名称，默认为master；在第三栏填入你刚才申请到的Token；第四栏填入你的repo中的储存路径；最后点击确认，再点击设为默认图床</p>
 </li>
 <li>
@@ -178,16 +563,16 @@
 </li>
 </ol>
 <h2 id="picgo中使用其他图床">PicGo中使用其他图床</h2>
-<p>PicGo一共支持多种图床：
-<img src="https://s2.ax1x.com/2019/07/30/eG03od.png" alt=""></p>
+<p>PicGo一共支持多种图床：<br>
+<img src="https://s2.ax1x.com/2019/07/30/eG03od.png" alt="" loading="lazy"></p>
 <ul>
 <li>其中SM.MS图床是免费且不需要账号的图床，缺点是无法查看历史上传的图片，因此每次使用同一张图片都需要重新上传一张一样的获取新的地址，或者是拷贝之前上传过的地址</li>
-<li><s>微博图床，我设置好账号和密码后，并不能正常上传，原因应该是微博限制了必须加上验证码才能登陆，所以微博图床对于这款程序并不太友好，应该说微博图床上传图片都很麻烦，登录过程就很麻烦，如果手动上传，感觉更麻烦，所以还是不推荐用微博图床</s>      经过再次测试后，发现<strong>微博第一次在某台电脑上登陆</strong>时，验证比较复杂，需要输入验证码，还有可能需要验证手机号，所以可以使用浏览器在网页中打开微博，然后登陆自己的微博，登陆成功后，在使用PicGo选择微博图床，进行上传测试，这时就可以正常上传了<img src="https://ws1.sinaimg.cn/large/006hYrYngy1g0nhxp4k10j305v05q40e.jpg" alt=""></li>
+<li><s>微博图床，我设置好账号和密码后，并不能正常上传，原因应该是微博限制了必须加上验证码才能登陆，所以微博图床对于这款程序并不太友好，应该说微博图床上传图片都很麻烦，登录过程就很麻烦，如果手动上传，感觉更麻烦，所以还是不推荐用微博图床</s>      经过再次测试后，发现<strong>微博第一次在某台电脑上登陆</strong>时，验证比较复杂，需要输入验证码，还有可能需要验证手机号，所以可以使用浏览器在网页中打开微博，然后登陆自己的微博，登陆成功后，在使用PicGo选择微博图床，进行上传测试，这时就可以正常上传了<img src="https://ws1.sinaimg.cn/large/006hYrYngy1g0nhxp4k10j305v05q40e.jpg" alt="" loading="lazy"></li>
 <li>腾讯、阿里的对象储存，上面说了，免费都有时间，过了免费时间后，可能需要付费，主要优势就是CDN加速了，超快，当然如果你的博客看的人多了，那么流量也多，费用也贵</li>
 <li>七牛云和又拍云可以申请免费储存空间，是不错的选择，但是也要小心流量被刷导致扣费、封号，具体可以看看别人的前车之鉴</li>
 </ul>
 <hr>
-<p><img src="https://s2.ax1x.com/2019/07/30/eG0GFA.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://s2.ax1x.com/2019/07/30/eG0GFA.png" alt="" loading="lazy"></figure>
 <ul>
 <li>Imgur也是免费的图床，是国外网站，相对国内速度不太理想，还是SM.MS速度快些</li>
 </ul>
@@ -199,83 +584,264 @@
 <h1 id="禁止滥用">禁止滥用</h1>
 <p>对于个人MD使用来说，Github是一个相对稳定（微软收购后更加稳定了）、不用付费、可以查看历史、速度还行的图床。但是绝对不适用于大流量的场所，只限于个人小流量使用！！！！！！！！！！！！！！！</p>
 
+              </div>
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Felix计算机视觉小屋
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://zxpzhong.github.io/post/github-zuo-tu-chuang" title="Github做图床">Github做图床</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://zxpzhong.github.io/tag/fSlHkHK3n"># 工具</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="pytorch模型转ncnn" href="https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn">pytorch模型转ncnn</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="pytorch模型转ncnn" href="https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Gridea对接github page" href="https://zxpzhong.github.io/post/gridea-dui-jie-github-page">Gridea对接github page</a>
+        <a class="nav-mobile-next" title="Gridea对接github page" href="https://zxpzhong.github.io/post/gridea-dui-jie-github-page">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+              
+                
+                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '83c4a343274b5d1b37bc',
+    clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
+    repo: 'zxpzhong.github.io',
+    owner: 'zxpzhong',
+    admin: ['zxpzhong'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+                
+                
+              
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://zxpzhong.github.io//tag/fSlHkHK3n" class="tag">
-                    工具
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://zxpzhong.github.io//post/gridea-dui-jie-github-page">
-                  <h3 class="post-title">
-                    Gridea对接github page
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-                <div id="gitalk-container" data-aos="fade-in"></div>
-              
-
-              
-            
-
           </div>
-
         </div>
       </div>
+      <div class="footer-box">
+  <footer class="footer">
+    <div class="copyright">
+      © 2019-2020 <i class="fa fa-heart"></i> HsxyHao
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-<script type="application/javascript">
-
-AOS.init();
-
-hljs.initHighlightingOnLoad()
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
+    <div class="poweredby">
+      念念不忘必有回响：<a href="https://github.com/zxpzhong" target="_blank">我的github</a>;<a href="http://aicv.club/" target="_blank">我的博客</a>
+    </div>
+  </footer>
+  
+  
+  <div class="gemini back-to-top" id="back_to_top">
+    <i class="fa fa-arrow-up"></i>
+    
+    <span class="scrollpercent">
+      <span id="back_to_top_text">0</span>%
+    </span>
+    
+  </div>
+  
+  
+    <link rel="stylesheet" href="/media/live2d/histoire/css/live2d.css" />
+<div class="box-scale">
+  <div id="landlord" style="left:5px;bottom:0px;" data-key="">
+    <div class="message" style="opacity:0"></div>
+    <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+    <div class="live_talk_input_body">
+      <div class="live_talk_input_name_body">
+        <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off" placeholder="你的名字" />
+      </div>
+      <div class="live_talk_input_text_body">
+        <input name="talk" type="text" class="live_talk_talk white_input" id="AIuserText" autocomplete="off" placeholder="要和我聊什么呀？"/>
+        <button type="button" class="live_talk_send_btn" id="talk_send">发送</button>
+      </div>
+    </div>
+    <input name="live_talk" id="live_talk" value="1" type="hidden" />
+    <div class="live_ico_box">
+      <div class="live_ico_item type_info" id="showInfoBtn"></div>
+      <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+      
+      <div class="live_ico_item type_youdu" id="youduButton"></div>
+      <div class="live_ico_item type_quit" id="hideButton"></div>
+      <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
+      <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
+      <input id="duType" value="douqilai" type="hidden">
+      
+    </div>
+  </div>
+</div>
+<div id="open_live2d">召唤伊斯特瓦尔</div>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+var message_Path = '/media/live2d/histoire/';
+let landlord = document.querySelector('#landlord');
+var apiKey = landlord.dataset.key;
 </script>
+<script type="text/javascript" src="/media/live2d/histoire/js/live2d.js"></script>
+<script type="text/javascript" src="/media/live2d/histoire/js/message.js"></script>
+  
+</div>
+<script>
 
+  let sideBarOpen = 'sidebar-open';
+  let body = document.body;
+  let back2Top = document.querySelector('#back_to_top'),
+  back2TopText = document.querySelector('#back_to_top_text'),
+  drawerBox = document.querySelector('#drawer_box'),
+  rightSideBar = document.querySelector('.sidebar'),
+  viewport = document.querySelector('body');
 
+  function scrollAnimation(currentY, targetY) {
+   
+    let needScrollTop = targetY - currentY
+    let _currentY = currentY
+    setTimeout(() => {
+      const dist = Math.ceil(needScrollTop / 10)
+      _currentY += dist
+      window.scrollTo(_currentY, currentY)
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        scrollAnimation(_currentY, targetY)
+      } else {
+        window.scrollTo(_currentY, targetY)
+      }
+    }, 1)
+  }
+
+  back2Top.addEventListener("click", function(e) {
+    scrollAnimation(document.scrollingElement.scrollTop, 0);
+    e.stopPropagation();
+    return false;
+  });
+  
+  window.addEventListener('scroll', function(e) {
+    let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+    if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+      back2Top.classList.add('back-top-active');
+    }
+    if (percent == 0) {
+      back2Top.classList.remove('back-top-active');
+    }
+    if (back2TopText) {
+      back2TopText.textContent = Math.floor(percent);
+    }
+  });
 
   
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script>
+  let hasCacu = false;
+  window.onresize = function() {
+    if (window.width > 991) {
+      calcuHeight();
+    } else {
+      hasCacu = false;
+    }
+  }
 
-      var gitalk = new Gitalk({
-        clientID: '83c4a343274b5d1b37bc',
-        clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
-        repo: 'zxpzhong.github.io',
-        owner: 'zxpzhong',
-        admin: ['zxpzhong'],
-        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-        distractionFreeMode: false  // Facebook-like distraction free mode
-      })
-
-      gitalk.render('gitalk-container')
-
-    </script>
+  function calcuHeight() {
+    // 动态调整站点概览高度
+    if (!hasCacu && back2Top.classList.contains('pisces') || back2Top.classList.contains('gemini')) {
+      let sideBar = document.querySelector('.sidebar');
+      let navUl = document.querySelector('#site_nav');
+      sideBar.style = 'margin-top:' + (navUl.offsetHeight + navUl.offsetTop + 15) + 'px;';
+      hasCacu = true;
+    }
+  }
+  calcuHeight();
   
+  let open = false, MOTION_TIME = 300, RIGHT_MOVE_DIS = '320px';
 
-  
+  if (drawerBox) {
+    let rightMotions = document.querySelectorAll('.right-motion');
+    let right = drawerBox.classList.contains('right');
 
+    let transitionDir = right ? "transition.slideRightIn" : "transition.slideLeftIn";
 
+    let openProp, closeProp;
+    if (right) {
+      openProp = {
+        paddingRight: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingRight: '0px'
+      };
+    } else {
+      openProp = {
+        paddingLeft: RIGHT_MOVE_DIS 
+      };
+      closeProp = {
+        paddingLeft: '0px'
+      };
+    }
 
+    drawerBox.onclick = function() {
+      open = !open;
+      window.Velocity(rightSideBar, 'stop');
+      window.Velocity(viewport, 'stop');
+      window.Velocity(rightMotions, 'stop');
+      if (open) {
+        window.Velocity(rightSideBar, {
+          width: RIGHT_MOVE_DIS
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, transitionDir,{ });
+          }
+        })
+        window.Velocity(viewport, openProp,{
+          duration: MOTION_TIME
+        });
+      } else {
+        window.Velocity(rightSideBar, {
+          width: '0px'
+        }, {
+          duration: MOTION_TIME,
+          begin: function() {
+            window.Velocity(rightMotions, {
+              opacity: 0
+            });
+          }
+        })
+        window.Velocity(viewport, closeProp ,{
+          duration: MOTION_TIME
+        });
+      }
+      for (let i = 0; i < drawerBox.children.length; i++) {
+        drawerBox.children[i].classList.toggle('muse-line');
+      }
+      drawerBox.classList.toggle(sideBarOpen);
+    }
+  }
 
+  // 代码高亮
+  hljs.initHighlightingOnLoad();
+</script>
+    </div>
   </body>
+  <script src="/media/js/motion.js"></script>
 </html>
