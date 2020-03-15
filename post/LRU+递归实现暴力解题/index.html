@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Hello Gridea | Felix计算机视觉小屋</title>
+<title>LRU+递归实现暴力解题 | Felix计算机视觉小屋</title>
 <meta name="keywords" content="Felix,计算机视觉,深度学习,华南理工大学,机器学习,生物特征识别">
 <meta name="description" content="念念不忘必有回响：&lt;a href=&#34;https://github.com/zxpzhong&#34; target=&#34;_blank&#34;&gt;我的github&lt;/a&gt;;&lt;a href=&#34;http://aicv.club/&#34; target=&#34;_blank&#34;&gt;我的博客&lt;/a&gt;">
 <link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1584266801456">
@@ -22,8 +22,8 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
     onload="renderMathInElement(document.body);"></script>
-    <meta name="description" content="Hello Gridea" />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="LRU+递归实现暴力解题" />
+    <meta name="keywords" content="算法" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -200,9 +200,11 @@
             <div class="toc-box right-motion">
   <div class="toc-wrapper auto-number auto" id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#lru%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E6%9A%B4%E5%8A%9B%E8%A7%A3%E9%A2%98">LRU+递归实现暴力解题</a>
 <ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
+<li><a href="#%E9%80%92%E5%BD%92">递归</a></li>
+<li><a href="#%E9%80%92%E5%BD%92%E8%B6%85%E6%97%B6%E7%9A%84%E5%8E%9F%E5%9B%A0">递归超时的原因</a></li>
+<li><a href="#%E5%88%A9%E7%94%A8lru%E5%87%8F%E5%B0%91%E9%80%92%E5%BD%92%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E8%AE%A1%E7%AE%97">利用LRU减少递归中的重复计算</a></li>
 </ul>
 </li>
 </ul>
@@ -455,8 +457,8 @@ window.addEventListener('load', function() {
               <div class="article-box">
     <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://zxpzhong.github.io/post/hello-gridea">
-      Hello Gridea
+    <a class="post-title-link" href="https://zxpzhong.github.io/post/LRU+递归实现暴力解题">
+      LRU+递归实现暴力解题
     </a>
   </h1>
   <div class="post-meta">
@@ -464,7 +466,7 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2018-12-12</span>
+      <span>2020-03-15</span>
     </span>
     
       <span class="meta-item">
@@ -473,8 +475,8 @@ window.addEventListener('load', function() {
         <span class="pc-show">分类于</span>
         
           
-            <a href="https://zxpzhong.github.io/tag/gridea">
-              <span>Gridea</span>
+            <a href="https://zxpzhong.github.io/tag/suan-fa">
+              <span>算法</span>
             </a>
           
         
@@ -483,39 +485,102 @@ window.addEventListener('load', function() {
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>5分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>295<span class="pc-show">字数</span></span>
+      <span>1231<span class="pc-show">字数</span></span>
     </span>
   </div>
 </header>
 </div>
               <div class="post-body next-md-body" id="post_body">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+                <p>LRU+递归实现暴力解题</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h1 id="lru递归实现暴力解题">LRU+递归实现暴力解题</h1>
+<h2 id="递归">递归</h2>
+<p>递归是一种将问题串行分解为多个完全相同的子问题的方法，递归方法的流程如下：</p>
+<ol>
+<li>分析整个问题能否分解为多个完全一样的的<mark>串行解决</mark>的子问题（能否递归）</li>
+<li>每个串行解决的子问题如何<mark>递归</mark>得到下一个串行解决的子问题（子问题分解）</li>
+<li>初始条件和终止条件，结果的汇总一般使用全局变量接收（初始条件和终止条件）</li>
+</ol>
+<p>但是如果简单只用递归，会造成大量的重复计算。比如Leetcode第91题，”解码方法“中：</p>
+<img src="https://s1.ax1x.com/2020/03/15/83WtYR.png" alt="Leetcode 91题" style="zoom:38%;" />
+<p>将一个数字字符串解码为A到Z的英文单词。由于解码时，需要考虑”12“是”1“+”2“，得到”AB“；还是”12“，得到”L“，所以后续有很多情况。这题的最优解是采用<mark>动态规划</mark>，为了防止误导大家，我先把这题的一个较好的题解放出来：</p>
+<pre><code class="language-python">class Solution(object):
+	def numDecodings(self, s):
+		length = len(s)
+		# 上次结果
+		pre = 1
+		# 当前结果
+		cur = 1
+		if s[0] == '0':
+			return 0
+		ans = 0
+		for i in range(1,length):
+			temp = cur * (1 if not s[i] == '0' else 0) + pre * (1 if 9&lt;int(s[i-1:i+1]) &lt;= 26 else 0)
+			pre = cur
+			cur = temp
+		return cur
+</code></pre>
+<p>应用上面的递归思路，将解码一整个字符串分解为多个串行执行的相同子任务，即每次针对输入的字符串，只解码第一个可以正确解码字符组（'1'~'26'），然后递归继续解码，每次递归到剩余字符长度为0，则说明解码方法多出一种，对结果变量进行累加即可。代码如下：</p>
+<pre><code class="language-python">class Solution(object):
+    def numDecodings(self, s):
+        return self.split_one(s)
+    def split_one(self,cur_str):
+        length = len(cur_str)
+        ans = 0
+        if length == 0:
+            # 分解完毕
+            return 1
+        if not cur_str[0] == '0':
+            ans+=self.split_one(cur_str[1:])
+            if length &gt;= 2 and int(cur_str[:2]) &lt;= 26:
+                # 两位也可以拿出来解释
+                ans+=self.split_one(cur_str[2:])
+        return ans
+</code></pre>
+<p>当然这样是超时了：</p>
+<img src="https://s1.ax1x.com/2020/03/15/83oKp9.png" alt="递归超时" style="zoom:50%;" />
+<h2 id="递归超时的原因">递归超时的原因</h2>
+<p>一般而言对于题目最暴力的解法是穷举所有的可能，递归就是穷举法的一种相对还比较优雅的实现，没有改进或者剪枝的递归和暴力穷举的复杂度是相同的。递归超时的主要原因在于：算法经过不同路径到达同一个状态后，虽然这是同一个状态且后续路径即使完全相同，这也算是完全不同的两种解法，后续的路径会被反复重复计算。</p>
+<p>比如上题中，对于字符串”1121“，如果使用暴力解法穷举，则：</p>
+<pre><code class="language-python">'1'	-&gt; '1'	-&gt; '2'	-&gt; '1'
+						-&gt; '21'
+		-&gt; '12'	-&gt; '1'
+'11'-&gt; '2'	-&gt; '1'
+		-&gt; '21'
+</code></pre>
+<p>对于上述第一行和第四行中，使用'1'+'1'和使用'11'后，剩余字符都是'21'，也就是通过不同路径到达同一状态，但是暴力递归对于后续相同的'21'分解，完全重复了两遍运算，并且随着问题的输入规模增大，重复计算量将非常的大，导致程序运行超时。</p>
+<h2 id="利用lru减少递归中的重复计算">利用LRU减少递归中的重复计算</h2>
+<p>根据上面的分析，我们找到了重复计算的根源，并且某个子问题的输出只与其输入有关，理所应当会想到，我们将所有的输入和输出通过字典储存，在每次运算时，都去字典查找是否计算过相同输入的输出，如果是则直接取输出，否则才计算。这种方法叫做==<a href="https://zh.wikipedia.org/wiki/%E8%AE%B0%E5%BF%86%E5%8C%96">Memoization（记忆化）</a>==。记忆化是一种提高程序运行速度的优化技术。通过储存大计算量函数的返回值，当这个结果再次被需要时将其从缓存提取，而不用再次计算来节省计算时间。 记忆化是一种典型的时间存储平衡方案。</p>
+<p>某个方法很多次，在这很多次的调用中，部分计算是完全可重用的，则可以设计一个缓存机制，将中间的一些重要中间结果缓存下来，如果后续的运算命中了之前的缓存，则可以减少重复计算，提升程序效率。</p>
+<p>python的LRU(Least Recently Used)为我们提供了这样一种缓存机制，只需要在函数前面加上<code>@functools.lru_cache()</code>就可以实现。我们使用上面递归超时的例子：</p>
+<pre><code class="language-python">import functools
+class Solution(object):
+    def numDecodings(self, s):
+    # 尝试加入LRU cache来让原来超时的解法通过
+        self.ans = 0
+        return self.split_one(s)
+    @functools.lru_cache()
+    def split_one(self,cur_str):
+        length = len(cur_str)
+        ans = 0
+        if length == 0:
+            # 分解完毕
+            return 1
+        if not cur_str[0] == '0':
+            ans+=self.split_one(cur_str[1:])
+            if length &gt;= 2 and int(cur_str[:2]) &lt;= 26:
+                # 两位也可以拿出来解释
+                ans+=self.split_one(cur_str[2:])
+        return ans
 
+</code></pre>
+<p>结果：</p>
+<img src="https://s1.ax1x.com/2020/03/15/83oghQ.png" alt="LRU结果" style="zoom:50%;" />
               </div>
               <div class="post-footer">
   <ul class="post-copyright">
@@ -525,7 +590,7 @@ window.addEventListener('load', function() {
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://zxpzhong.github.io/post/hello-gridea" title="Hello Gridea">Hello Gridea</a>
+      <a href="https://zxpzhong.github.io/post/LRU+递归实现暴力解题" title="LRU+递归实现暴力解题">LRU+递归实现暴力解题</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -534,18 +599,18 @@ window.addEventListener('load', function() {
   </ul>
   <div class="tags">
     
-      <a href="https://zxpzhong.github.io/tag/gridea"># Gridea</a>
+      <a href="https://zxpzhong.github.io/tag/suan-fa"># 算法</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Hello Gridea" href="https://zxpzhong.github.io/post/hello-gridea 2">Hello Gridea</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Hello Gridea" href="https://zxpzhong.github.io/post/hello-gridea 2">上一篇</a>
-      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Leetcode标签含义汇总" href="https://zxpzhong.github.io/post/leetcode算法题标签含义汇总">Leetcode标签含义汇总</a>
+        <a class="nav-mobile-next" title="Leetcode标签含义汇总" href="https://zxpzhong.github.io/post/leetcode算法题标签含义汇总">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
