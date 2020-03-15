@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8"/>
+      <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Gridea对接github page | Felix计算机视觉小屋</title>
+<title>Felix计算机视觉小屋</title>
 <meta name="keywords" content="Felix,计算机视觉,深度学习,华南理工大学,机器学习,生物特征识别">
 <meta name="description" content="念念不忘必有回响：&lt;a href=&#34;https://github.com/zxpzhong&#34; target=&#34;_blank&#34;&gt;我的github&lt;/a&gt;;&lt;a href=&#34;http://aicv.club/&#34; target=&#34;_blank&#34;&gt;我的博客&lt;/a&gt;">
 <link rel="shortcut icon" href="https://zxpzhong.github.io//favicon.ico?v=1584255398583">
@@ -22,8 +22,6 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
     onload="renderMathInElement(document.body);"></script>
-    <meta name="description" content="Gridea对接github page" />
-    <meta name="keywords" content="工具" />
   </head>
   <body>
     <div class="head-top-line"></div>
@@ -54,7 +52,7 @@
       <nav class="site-nav" id="site_nav">
         <ul id="nav_ul">
           
-            <li class="nav-item ">
+            <li class="nav-item nav-item-active">
               
                 <a href="/">
                   <i class="fa fa-home"></i> 首页
@@ -123,22 +121,8 @@
       
       <div class="section-layout gemini ">
         <div class="section-layout-wrapper">
-          
-
-<div class="sidebar">
-    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
-      
-        <div class="post-list-sidebar">
-          <div class="sidebar-title">
-            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
-            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
-          </div>
-        </div>
-      
-      <div class="sidebar-body gemini" id="sidebar_body">
-        
-          <div class="post-side-meta" id="post_side_meta">
-            
+          <div class="sidebar">
+    
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="https://zxpzhong.github.io//images/avatar.png"/>
@@ -195,275 +179,16 @@
   
 
 </div>
-          </div>
-          <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
-            <div class="toc-box right-motion">
-  <div class="toc-wrapper auto-number auto" id="toc_wrapper">
-    <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#hexo%E9%83%A8%E7%BD%B2github-page%E7%9A%84%E7%BC%BA%E7%82%B9">hexo部署github page的缺点</a></li>
-<li><a href="#%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B">部署流程</a>
-<ul>
-<li><a href="#%E5%AE%89%E8%A3%85gridea">安装Gridea</a></li>
-<li><a href="#gitalk%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE">gitalk评论系统配置</a></li>
-<li><a href="#%E5%85%B6%E4%BB%96%E8%AE%BE%E7%BD%AE">其他设置</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  </div>
 </div>
-
-<script>
-
-let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1; 
-let active = 'active-show', activeClass = 'active-current';
-let tocWrapper = document.querySelector('#toc_wrapper');
-let tocContent = tocWrapper.children[0];
-let autoNumber = tocWrapper&&tocWrapper.classList.contains('auto-number');
-
-function addTocNumber(elem, deep) {
-  if (!elem) {
-    return;
-  }
-  let prop = elem.__proto__;
-
-  if (prop === HTMLUListElement.prototype) {
-    for (let i = 0; i < elem.children.length; i++) {
-      addTocNumber(elem.children[i], deep + (i + 1) + '.');
-    }
-  } else if (prop === HTMLLIElement.prototype) {
-    // 保存li元素
-    lList.push(elem);
-    for (let i = 0; i < elem.children.length; i++) {
-      let cur = elem.children[i];
-      if (cur.__proto__ === HTMLAnchorElement.prototype) {
-        if (autoNumber) {
-          cur.text =  deep + ' ' + cur.text;
-        }
-      } else if (cur.__proto__ === HTMLUListElement.prototype) {
-        addTocNumber(cur, deep);
-      }
-    }
-  }
-}
-
-
-document.addEventListener('scroll', function(e) {
-  if (lList.length <= 0) {
-    return;
-  }
-  let scrollTop = document.scrollingElement.scrollTop;
-  let dir;
-
-  if (lastTop - scrollTop > 0) {
-    dir = 'up';
-  } else {
-    dir = 'down';
-  }
-
-  lastTop = scrollTop;
-  if (scrollTop <= 0) {
-    if (lastIndex >= 0 && lastIndex < hList.length) {
-      lList[lastIndex].classList.remove(activeClass);
-    }
-    return;
-  }
-
-  let current = 0, hasFind = false;
-  for (let i = 0; i < hList.length; i++) {
-    if (hList[i].offsetTop > scrollTop) {
-      current = i;
-      hasFind = true;
-      break;
-    }
-  }
-  if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
-    current = hList.length - 1;
-  } else {
-    current--;
-  }
-  if (dir === 'down') {
-    if (current > lastIndex) {
-      addActiveClass(current);
-      removeActiveClass(lastIndex) 
-      lastIndex = current;
-      removeParentActiveClass();
-      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
-    }
-  } else {
-    if (current < lastIndex) {
-      addActiveClass(current);
-      removeActiveClass(lastIndex);
-      lastIndex = current;
-      removeParentActiveClass();
-      lList[current] && addActiveLiElemment(lList[current].parentElement,tocContent);
-    }
-  }
-});
-
-function removeParentActiveClass() {
-  let parents = tocContent.querySelectorAll('.'+active)
-  parents.forEach(function(elem) {
-    elem.classList.remove(active);
-  });
-}
-
-function addActiveClass(index) {
-  if (index >= 0 && index < hList.length) {
-    lList[index].classList.add(activeClass);
-  }
-}
-
-function removeActiveClass(index) {
-  if (index >= 0 && index < hList.length) {
-    lList[index].classList.remove(activeClass);
-  }
-}
-
-function addActiveLiElemment(elem, parent) {
-  if (!elem || elem === parent) {
-    return;
-  } else {
-    if (elem.__proto__ === HTMLLIElement.prototype) {
-      elem.classList.add(active);
-    }
-    addActiveLiElemment(elem.parentElement, parent);
-  }
-}
-
-function showToc() {
-  if (tocWrapper) {
-    postBody = document.querySelector('#post_body');
-    for (let i = 0; i < postBody.children.length; i++) {
-      if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
-        hList.push(postBody.children[i]);
-      }
-    }
-    if (tocWrapper.classList.contains('compress')) {
-        tocContent.classList.add('closed');
-    } else if (tocWrapper.classList.contains('no_compress')){
-      tocContent.classList.add('expanded');
-    } else {
-      if (hList.length > 10) {
-        active = 'active-hidden'
-        tocContent.classList.add('closed');
-      } else {
-        tocContent.classList.add('expanded');
-      }
-    }
-  }
-}
-addTocNumber(tocContent, '');
-
-window.addEventListener('load', function() {
-  showToc();
-  document.querySelector('#sidebar').style='display: block;';
-  tocWrapper.classList.add('toc-active');
-  setTimeout(function() {
-    if ("createEvent" in document) {
-      let evt = document.createEvent("HTMLEvents");
-      evt.initEvent("scroll", false, true);
-      document.dispatchEvent(evt);
-    }
-    else {
-      document.fireEvent("scroll");
-    }
-  }, 500)
-})
-
-</script>
-          </div>
-        
-      </div>
-    </div>
-</div>
-<script>
-  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
-  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
-  const SLIDE_UP_IN = 'slide-up-in';
-
-  let sidebar = document.querySelector('#sidebar'),
-  tocSideBar = document.querySelector('#tocSideBar'),
-  metaSideBar = document.querySelector('#metaSideBar'),
-  postToc = document.querySelector('#post_toc'),
-  postSiteMeta = document.querySelector('#post_side_meta'),
-  sidebarTitle = document.querySelector('.sidebar-title'),
-  sidebarBody = document.querySelector('#sidebar_body');
-
-  tocSideBar && tocSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  metaSideBar && metaSideBar.addEventListener('click', (e) => {
-    toggleSidebar(e);
-  });
-
-  function toggleSidebar(e) {
-    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
-    if (currentTitle == e.srcElement) {
-      return ;
-    }
-    let current, showElement, hideElement;
-    if (e.srcElement == metaSideBar) {
-      showElement = postSiteMeta;
-      hideElement = postToc;
-    } else if (e.srcElement == tocSideBar){
-      showElement = postToc;
-      hideElement = postSiteMeta;
-    }
-    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
-    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
-
-    window.Velocity(hideElement, 'stop');
-    window.Velocity(hideElement, 'transition.slideUpOut', {
-      display: 'none',
-      duration: 200,
-      complete: function () {
-        window.Velocity(showElement, 'transition.slideDownIn', {
-          duration: 200
-        });
-      }
-    })
-    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
-    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
-  }
-
-  postToc.addEventListener('transitionend', function() {
-    this.classList.remove(SLIDE_UP_IN);
-  });
-
-
-  if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
-    let hasFix = false;
-    let scrollEl = document.querySelector('.main-continer');
-    let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
-    window.addEventListener('scroll', function(e) {
-    if (document.scrollingElement.scrollTop >= limitTop) {
-      if (!hasFix) {
-        sidebar.classList.add('sidebar-fixed');
-        hasFix = true;
-      }
-    } else {
-      if (hasFix) {
-        sidebar.classList.remove('sidebar-fixed');
-        hasFix = false;
-      }
-    }
-  });
-  }
-  
-</script>
-          <div class="section-box box-shadow-wrapper">
-            <div class="section bg-color post post-page">
-              <div class="article-box">
-    <header class="post-header">
+          <div class="section-box gemini">
+            <section class="section  posts-expand slide-down-in">
+              
+  <article class="post-list-box  post box-shadow-wrapper">
+    <div class="article-wrapper bg-color">
+      <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://zxpzhong.github.io/post/gridea-dui-jie-github-page">
-      Gridea对接github page
+    <a class="post-title-link" href="https://zxpzhong.github.io/post/hello-gridea">
+      Hello Gridea
     </a>
   </h1>
   <div class="post-meta">
@@ -471,7 +196,7 @@ window.addEventListener('load', function() {
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-06-19</span>
+      <span>2018-12-12</span>
     </span>
     
       <span class="meta-item">
@@ -480,8 +205,8 @@ window.addEventListener('load', function() {
         <span class="pc-show">分类于</span>
         
           
-            <a href="https://zxpzhong.github.io/tag/fSlHkHK3n">
-              <span>工具</span>
+            <a href="https://zxpzhong.github.io/tag/gridea">
+              <span>Gridea</span>
             </a>
           
         
@@ -495,97 +220,69 @@ window.addEventListener('load', function() {
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>456<span class="pc-show">字数</span></span>
+      <span>295<span class="pc-show">字数</span></span>
     </span>
   </div>
 </header>
-</div>
-              <div class="post-body next-md-body" id="post_body">
-                <p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
-<!-- more -->
-<h2 id="hexo部署github-page的缺点">hexo部署github page的缺点</h2>
-<ol>
-<li>hexo主题虽然多但是一般自己只会喜欢一两个，尤其是hexo的自定义程度高，可以用来玩（一玩玩一天的那种- - ！）但是对于我这种对于前端完全是小白的代码搬运工，并不是很想用可玩性这么高的，因为不自己配置没有特色，自己配置又搞不来</li>
-<li>hexo文章的属性在MD文件的开头，需要手动设置，Gridea把这几项都集成到了软件中，使用起来比较人性化!<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0FZ4.png" alt="mark" loading="lazy"></li>
-<li>编辑界面集成到了Gridea中，编辑发布一体化，适合小白使用</li>
-<li>可以把Gridea源位置设置在onedrive文件夹，这样还可以动态备份，就算换电脑，换软件，把文件夹下载下来还可以继续编辑</li>
-</ol>
-<h2 id="部署流程">部署流程</h2>
-<p>具体细节可以搜索github page部署教程，这里只写Gridea软件如何设置</p>
-<h3 id="安装gridea">安装Gridea</h3>
-<p>从Gridea网站下载软件，然后在下图中，设置好自己的github page域名，仓库名称，用户名（github用户名），邮箱，Token生成方法自行搜索<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0CsU.png" alt="mark" loading="lazy"></p>
-<h3 id="gitalk评论系统配置">gitalk评论系统配置</h3>
-<p><img src="https://s2.ax1x.com/2019/07/30/eGwzR0.png" alt="mark" loading="lazy"><br>
-在自己的github设置页面内-&gt;Developer settings-&gt;OAuth Apps-&gt;new OAuth App,新建一个，然后会返回一个client ID和一个Client Seceret<br>
-<img src="https://s2.ax1x.com/2019/07/30/eGw7M8.png" alt="mark" loading="lazy"><br>
-将这个client ID和Client Seceret填入Gridea中</p>
-<h3 id="其他设置">其他设置</h3>
-<p>可以直接可视化设置头像、主题、一些样式、显示内容、标签等，这点是我最喜欢的<br>
-<strong>完成设置后，可以发布测试一下，输入你的github page域名，即可看到对应的页面</strong></p>
+      <div class="post-body">
+        
+          
+            
+            
+              <p>
+              
+            
+              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-              </div>
-              <div class="post-footer">
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-      <strong>本文作者：</strong>
-      Felix计算机视觉小屋
-    </li>
-    <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="https://zxpzhong.github.io/post/gridea-dui-jie-github-page" title="Gridea对接github page">Gridea对接github page</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong>
-      本博客所有文章除特别声明外，转载请注明出处！
-    </li>
+              
+                <img src="https://zxpzhong.github.io//post-images/hello-gridea.png" />
+              
+            
+          
+        
+        
+        <div class="post-button text-center">
+          <a class="btn" href="https://zxpzhong.github.io/post/hello-gridea" rel="contents">
+            阅读全文 »
+          </a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </article>
+  
+              
+              
+<div class="page bg-color">
+  <ul class="pagination-ul">
+    
+      <li class="pagination-dir">
+        <a href="https://zxpzhong.github.io/">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      </li>
+    
+    
+      
+        <li class="pagination-li ">
+            <a href="/page/../">
+              1
+            </a>
+        </li>
+      
+        <li class="pagination-li pagination-active">
+            <a href="/page/2">
+              2
+            </a>
+        </li>
+      
+    
+    
   </ul>
-  <div class="tags">
-    
-      <a href="https://zxpzhong.github.io/tag/fSlHkHK3n"># 工具</a>
-    
-  </div>
-  <div class="nav">
-    <div class="nav-prev">
-      
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="Github做图床" href="https://zxpzhong.github.io/post/github-zuo-tu-chuang">Github做图床</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="Github做图床" href="https://zxpzhong.github.io/post/github-zuo-tu-chuang">上一篇</a>
-      
-    </div>
-    <div class="nav-next">
-      
-        <a class="nav-pc-next" title="Hello Gridea" href="https://zxpzhong.github.io/post/hello-gridea 2">Hello Gridea</a>
-        <a class="nav-mobile-next" title="Hello Gridea" href="https://zxpzhong.github.io/post/hello-gridea 2">下一篇</a>
-        <i class="fa fa-chevron-right"></i>
-      
-    </div>
-  </div>
 </div>
-              
-                
-                  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-<div id="gitalk-container"></div>
-
-<script>
-  var gitalk = new Gitalk({
-    clientID: '83c4a343274b5d1b37bc',
-    clientSecret: '3eaac3d4234ecb08cd5c2072af6ce7e69e52e980',
-    repo: 'zxpzhong.github.io',
-    owner: 'zxpzhong',
-    admin: ['zxpzhong'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
-  gitalk.render('gitalk-container')
-</script>
-                
-                
-              
-            </div>
+            </section>
           </div>
         </div>
       </div>
