@@ -1936,11 +1936,11 @@ body {
       background: #f9f9f9;
       color: rgba(0, 0, 0, 0.98);
     }.markdownIt-TOC a {
-      color: #eee;
-      border-bottom-color: #eee;
+      color: #ae3ec9;
+      border-bottom-color: #ae3ec9;
     }.markdownIt-TOC a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
+      color: #66d9e8;
+      border-bottom-color: #66d9e8;
     }.active-current > a {
       color: #fc6423 !important;
       border-bottom-color: #fc6423 !important;
