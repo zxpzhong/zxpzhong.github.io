@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zxpzhong.github.io/</id>
     <title>Felix计算机视觉小屋</title>
-    <updated>2020-03-15T14:50:29.497Z</updated>
+    <updated>2020-03-22T16:08:55.852Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zxpzhong.github.io/"/>
     <link rel="self" href="https://zxpzhong.github.io/atom.xml"/>
@@ -11,9 +11,918 @@
     <icon>https://zxpzhong.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Felix计算机视觉小屋</rights>
     <entry>
+        <title type="html"><![CDATA[腾讯笔试题汇总]]></title>
+        <id>https://zxpzhong.github.io/post/腾讯笔试题汇总/</id>
+        <link href="https://zxpzhong.github.io/post/腾讯笔试题汇总/">
+        </link>
+        <updated>2020-03-22T16:04:41.000Z</updated>
+        <summary type="html"><![CDATA[<p>腾讯笔试题汇总</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>腾讯笔试题汇总</p>
+<!-- more -->
+<h1 id="写在前面">写在前面</h1>
+<p>其实这个只是一个简单的汇总而已，不论是哪家厂，算法方法就那些，只要leetcode、剑指多刷一刷，哪家厂都没问题！！！</p>
+<p>文中所有的题目都来自于牛客网及acwing！！！</p>
+<h1 id="腾讯16年研发笔试题评测地址">腾讯16年研发笔试题(<a href="https://www.nowcoder.com/test/710813/summary">评测地址</a>)</h1>
+<h2 id="编程题生成格雷码">[编程题]生成格雷码</h2>
+<h4 id="题目">题目</h4>
+<p>在一组数的编码中，若任意两个相邻的代码只有一位二进制数不同， 则称这种编码为格雷码(Gray Code)，请编写一个函数，使用递归的方法生成N位的格雷码。给定一个整数<strong>n</strong>，请返回n位的格雷码，顺序为从0开始。</p>
+<p>测试样例：</p>
+<pre><code class="language-python">1
+返回：[&quot;0&quot;,&quot;1&quot;]
+</code></pre>
+<h4 id="解答">解答</h4>
+<p>格雷码是一种经典的位操作（Bit Manipulation）题目，格雷码的生成方法有两种（<mark>必背</mark>）：</p>
+<ol>
+<li>按位数生成序列：已知两位的格雷码为：<code>00 01 11 10</code>,从三位的格雷码开始，先在二位的格雷码<strong>前</strong>添加0得到：<code>000 001 011 010</code>，再添加<code>1</code>并且调换两个的顺序得到：<code>110 111 101 100</code>，拼接后得到三位格雷码为：<code>000 001 011 010 110 111 101 100</code>，以此类推可以得到四位，五位。。。</li>
+<li>（推荐）直接生成第n位格雷码：<code>Gray(n) = n XOR n/2</code></li>
+</ol>
+<p>通过第一种或者第二种都可以生成格雷码，题目中要求我们返回N位的格雷码，因此采用第一种方法。</p>
+<pre><code class="language-python">class GrayCode:
+    def getGray(self, n):
+        # 定义初始1位格雷码
+        base = ['0','1']
+        for i in range(n-1):
+            add_0 = []
+            add_1 = []
+            # 左侧补0
+            for item in base:
+                add_0.append('0'+item)
+            # 左侧补1
+            for item in base:
+                add_1.append('1'+item)
+            # 颠倒
+            add_1 = add_1[::-1]
+            base = add_0+add_1
+        return base
+</code></pre>
+<h2 id="编程题微信红包">[编程题]微信红包</h2>
+<h4 id="题目-2">题目</h4>
+<p>春节期间小明使用微信收到很多个红包，非常开心。在查看领取红包记录时发现，某个红包金额出现的次数超过了红包总数的一半。请帮小明找到该红包金额。写出具体算法思路和代码实现，要求算法尽可能高效。</p>
+<p>给定一个红包的金额数组<strong>gifts</strong>及它的大小<strong>n</strong>，请返回所求红包的金额。</p>
+<p>若没有金额超过总数的一半，返回0。</p>
+<p>测试样例：</p>
+<pre><code>[1,2,3,2,2],5
+返回：2
+</code></pre>
+<h4 id="解答-2">解答</h4>
+<p>题中要求找到某个金额出现次数超过红包总数的一半（其实就是最大出现次数超过一半，因为超过一半一定是最大出现次数），返回该金额值。由于需要找到超过次数，需要对前面所有出现过的红包金额进行计数，单次遍历所有红包复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>，为某金额的计数器累加，这里很明显应该采用<mark>哈希编码</mark>，使得每次查找金额计数器的复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，为了方便直接使用python内置的<code>collections.Counter</code>模块（当然可以自己构建，但是解题思想应该就是哈希）。</p>
+<pre><code class="language-python">from collections import Counter
+class Gift:
+    def getValue(self, gifts, n):
+        a = Counter(gifts)
+        if max(a.values()) &gt; n/2:
+       			# 根据值返回键
+            return  list (a.keys()) [list (a.values()).index (max(a.values()))]
+        else:
+            return 0
+</code></pre>
+<h1 id="腾讯17年秋招笔试题评测地址">腾讯17年秋招笔试题(<a href="https://www.nowcoder.com/test/5582994/summary">评测地址</a>)</h1>
+<h2 id="编程题编码">[编程题]编码</h2>
+<h4 id="题目-3">题目</h4>
+<p>假定一种编码的编码范围是a ~ y的25个字母，从1位到4位的编码，如果我们把该编码按字典序排序，形成一个数组如下： a, aa, aaa, aaaa, aaab, aaac, … …, b, ba, baa, baaa, baab, baac … …, yyyw, yyyx, yyyy 其中a的Index为0，aa的Index为1，aaa的Index为2，以此类推。 编写一个函数，输入是任意一个编码，输出这个编码对应的Index.</p>
+<p><strong>输入描述</strong>：输入一个待编码的字符串,字符串长度小于等于100.</p>
+<p><strong>输出描述</strong>：输出这个编码的index</p>
+<p><strong>输入例子1</strong>：<code>baca</code></p>
+<p><strong>输出例子1</strong>：<code>16331</code></p>
+<h4 id="解答-3">解答</h4>
+<p>按照题意，该编码的值范围为<code>0~(25^4-1)</code>，而且编码顺序按字典序排序。对于四位编码<code>****</code>的第一位，以<code>a</code>开头的包含<code>25^0+25^1+25^2+25^3</code>个编码，则以<code>a</code>开头的编码index在<code>0~25^0+25^1+25^2+25^3</code>之间，以b开头的编码index在<code>0+a的范围~a的范围+25^0+25^1+25^2+25^3</code>之间，依次类推。同样的对于三位编码<code>***</code>的第一位，以<code>a</code>开头的包含<code>25^0+25^1+25^2</code>个编码。对于二位编码<code>**</code>的第一位，以<code>a</code>开头的包含``25<sup>0+25</sup>1`个编码，最后对于一位编码以a开头的只有1中（就是a本身）。因此可以采用按序号顺序诸位求范围的方法。</p>
+<pre><code class="language-python">import sys
+s = sys.stdin.readline().strip()
+length = len(s)
+candi = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y']
+ans = 0
+for i in range(length):
+    temp = [25**j for j in range(4-i)]
+    base = sum(temp)
+    ans+=candi.index(s[i]) * base
+print(ans+length-1)
+</code></pre>
+<h2 id="编程题游戏任务标记">[编程题]游戏任务标记</h2>
+<h4 id="题目-4">题目</h4>
+<p>游戏里面有很多各式各样的任务，其中有一种任务玩家只能做一次，这类任务一共有1024个，任务ID范围[1,1024]。请用32个unsigned int类型来记录着1024个任务是否已经完成。初始状态都是未完成。 输入两个参数，都是任务ID，需要设置第一个ID的任务为已经完成；并检查第二个ID的任务是否已经完成。 输出一个参数，如果第二个ID的任务已经完成输出1，如果未完成输出0。如果第一或第二个ID不在[1,1024]范围，则输出-1。</p>
+<p><strong>输入描述</strong>：输入包括一行,两个整数表示人物ID.</p>
+<p><strong>输出描述</strong>：输出是否完成</p>
+<p><strong>输入例子1</strong>：1024 1024</p>
+<p><strong>输出例子1</strong>：1</p>
+<h4 id="解答-4">解答</h4>
+<p>初始状态都是未完成，设置一个ID完成，检查第二个ID是否完成，如果不加思考的话，直接一句话就可以做完。</p>
+<pre><code class="language-python">import sys
+t1, t2 = list(map(int, sys.stdin.readline().strip().split()))
+if not 1 &lt;= t1 &lt;= 1024 or not 1 &lt;= t2 &lt;= 1024:
+    print(-1)
+elif t1 == t2:
+    print(1)
+else:
+    print(0)
+</code></pre>
+<p>但是如果任务数目特别大且初始状态不一定为未完成，就不能简单直接判断返回了。对于大数某一位的快速置位复位可以采用位运算：</p>
+<ul>
+<li>对a的第b位置位：a+1&lt;&lt;b</li>
+<li>对a的第b位复位：a and ~(1&lt;&lt;b)</li>
+<li>取出a的第b位：a&amp;(1&lt;&lt;b)</li>
+</ul>
+<pre><code class="language-python">import sys
+t1, t2 = list(map(int, sys.stdin.readline().strip().split()))
+task = [0] * 32
+if t1 in range(1, 1025) and t2 in range(1, 1025):
+    index1 = int((t1-1)/32)
+    index2 = (t1-1)%32
+    if not task[index1] &amp; (1&lt;&lt;index2): 
+        task[index1] = task[index1] + 1&lt;&lt;index2
+    index1 = int((t2-1)/32)
+    index2 = (t2-1)%32
+    if task[index1]&amp;(1&lt;&lt;index2):
+        print(1)
+    else:
+        print(0)
+else:
+    print(-1)
+</code></pre>
+<h2 id="编程题素数对">[编程题]素数对</h2>
+<h4 id="题目-5">题目</h4>
+<p>给定一个正整数，编写程序计算有多少对质数的和等于输入的这个正整数，并输出结果。输入值小于1000。<br>
+如，输入为10, 程序应该输出结果为2。（共有两对质数的和为10,分别为(5,5),(3,7)）</p>
+<p><strong>输入描述</strong>：输入包括一个整数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo separator="true">,</mo><mo>(</mo><mn>3</mn><mo>≤</mo><mi>n</mi><mo>&lt;</mo><mn>1000</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">n,(3 ≤ n &lt; 1000)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mclose">)</span></span></span></span></p>
+<p><strong>输出描述</strong>：输出对数</p>
+<p><strong>输入例子1</strong>：10</p>
+<p><strong>输出例子1</strong>：2</p>
+<h4 id="解答-5">解答</h4>
+<p>直接遍历可以AC，质数的出现也没有规律，只能挨个判断</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+def isOK(num):
+    # 判断是否为质数
+    for i in range(2,num):
+        if num%i == 0:
+            return False
+    return True
+ans = 0
+for i in range(2,n//2 + 1):
+    if isOK(i) and isOK(n-i):
+        ans +=1
+        # print(i,'OK')
+    else:
+        pass
+        # print(i,'not OK')
+print(ans)
+</code></pre>
+<h2 id="编程题geohash编码">[编程题]geohash编码</h2>
+<h4 id="题目-6">题目</h4>
+<p>geohash编码：geohash常用于将二维的经纬度转换为字符串，分为两步：第一步是经纬度的二进制编码，第二步是base32转码。<br>
+此题考察纬度的二进制编码：算法对纬度[-90, 90]通过二分法进行无限逼近（取决于所需精度，本题精度为6）。注意，本题进行二分法逼近过程中只采用向下取整来进行二分，针对二分中间值属于右区间。算法举例如下： 针对纬度为80进行二进制编码过程：</p>
+<ol>
+<li>区间[-90, 90]进行二分为[-90, 0),[0, 90]，成为左右区间，可以确定80为右区间，标记为1；</li>
+<li>针对上一步的右区间[0, 90]进行二分为[0, 45),[45, 90]，可以确定80是右区间，标记为1；</li>
+<li>针对[45, 90]进行二分为[45, 67),[67,90],可以确定80为右区间，标记为1；</li>
+<li>针对[67,90]进行二分为[67, 78),[78,90]，可以确定80为右区间，标记为1；</li>
+<li>针对[78, 90]进行二分为[78, 84),[84, 90]，可以确定80为左区间，标记为0；</li>
+<li>针对[78, 84)进行二分为[78, 81), [81, 84)，可以确定80为左区间，标记为0；</li>
+</ol>
+<p><strong>输入描述</strong>：输入包括一个整数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo separator="true">,</mo><mo>(</mo><mo>−</mo><mn>90</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>90</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">n,(-90 ≤ n ≤ 90)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord">−</span><span class="mord">9</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">9</span><span class="mord">0</span><span class="mclose">)</span></span></span></span></p>
+<p><strong>输出描述</strong>：输出二进制编码</p>
+<p><strong>输入例子1</strong>：80</p>
+<p><strong>输出例子1</strong>：111100</p>
+<h4 id="解答-6">解答</h4>
+<p>跟二分法的思想一样不断二分即可，到达指定层级，本题精度为6，直接返回即可</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+left = -90
+right = 90
+middle = int((left+right)/2)
+ans = ''
+for i in range(6):
+    # print(middle)
+    # 本题的精度为6
+    if n &lt; middle:
+        ans+='0'
+        right = middle
+    elif n &gt;= middle:
+        ans+='1'
+        left = middle
+    # 更新边界和中值
+    middle = int((left+right)/2)
+print(ans)
+</code></pre>
+<h1 id="腾讯18年春招笔试题评测地址">腾讯18年春招笔试题(<a href="https://www.nowcoder.com/test/10611931/summary">评测地址</a>)</h1>
+<h2 id="编程题翻转数列">[编程题]翻转数列</h2>
+<h4 id="题目-7">题目</h4>
+<p>小Q定义了一种数列称为翻转数列:<br>
+给定整数n和m, 满足n能被2m整除。对于一串连续递增整数数列1, 2, 3, 4..., 每隔m个符号翻转一次, 最初符号为'-';。<br>
+例如n = 8, m = 2, 数列就是: -1, -2, +3, +4, -5, -6, +7, +8.<br>
+而n = 4, m = 1, 数列就是: -1, +2, -3, + 4.<br>
+小Q现在希望你能帮他算算前n项和为多少。</p>
+<p><strong>输入描述</strong>：输入包括两个整数n和m(2 &lt;= n &lt;= 109, 1 &lt;= m), 并且满足n能被2m整除。</p>
+<p><strong>输出描述</strong>：输出一个整数, 表示前n项和。</p>
+<p><strong>输入例子1</strong>：8 2</p>
+<p><strong>输出例子1</strong>：8</p>
+<h4 id="解答-7">解答</h4>
+<p>送分题，<code>2m</code>个数为一组，一共<code>n/2m</code>组，每组和为<code>m*m</code>，和为<code>m*n/2</code></p>
+<pre><code class="language-python">import sys
+n,m = list(map(int,sys.stdin.readline().strip().split()))
+print(int(n*m/2))
+</code></pre>
+<h2 id="编程题纸牌游戏">[编程题]纸牌游戏</h2>
+<h4 id="题目-8">题目</h4>
+<p>牛牛和羊羊正在玩一个纸牌游戏。这个游戏一共有n张纸牌, 第i张纸牌上写着数字ai。<br>
+牛牛和羊羊轮流抽牌, 牛牛先抽, 每次抽牌他们可以从纸牌堆中任意选择一张抽出, 直到纸牌被抽完。<br>
+他们的得分等于他们抽到的纸牌数字总和。<br>
+现在假设牛牛和羊羊都采用最优策略, 请你计算出游戏结束后牛牛得分减去羊羊得分等于多少。</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>输入包括两行。
+第一行包括一个正整数n(1 &lt;= n &lt;= 105),表示纸牌的数量。
+第二行包括n个正整数ai(1 &lt;= ai &lt;= 109),表示每张纸牌上的数字。
+</code></pre>
+<p><strong>输出描述</strong>：输出一个整数, 表示游戏结束后牛牛得分减去羊羊得分等于多少。</p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>3
+2 7 4
+</code></pre>
+<p><strong>输出例子1</strong>：5</p>
+<h4 id="解答-8">解答</h4>
+<p>送分题，降序排序后，直接奇数项-偶数项和</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+a = list(map(int,sys.stdin.readline().strip().split()))
+a.sort()
+a = a[::-1]
+print(sum(a[::2])-sum(a[1::2]))
+</code></pre>
+<h2 id="编程题贪吃的小q">[编程题]贪吃的小Q</h2>
+<h4 id="题目-9">题目</h4>
+<p>小Q的父母要出差N天，走之前给小Q留下了M块巧克力。小Q决定每天吃的巧克力数量不少于前一天吃的一半，但是他又不想在父母回来之前的某一天没有巧克力吃，请问他第一天最多能吃多少块巧克力</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>每个输入包含一个测试用例。
+每个测试用例的第一行包含两个正整数，表示父母出差的天数N(N&lt;=50000)和巧克力的数量M(N&lt;=M&lt;=100000)。
+</code></pre>
+<p><strong>输出描述</strong>：输出一个数表示小Q第一天最多能吃多少块巧克力。</p>
+<p><strong>输入例子1</strong>：3 7</p>
+<p><strong>输出例子1</strong>：4</p>
+<h4 id="解答非最优解">解答【非最优解】</h4>
+<p>如果解除”一半“的限制，小Q第一天能吃的最多的巧克力为M-N+1，最少能吃的块数为1块，在``1~M-N+1`之间找到最大的块数。可以采用二分查找，找出最大的满足”一半“限制的巧克力块数。这种方法还是暴力解法，只不过套了一个二分查找，外层复杂度由O(n)降为O(logn)，但是对于每个第一天，还是要计算所有天数的巧克力块数，因此应该不是最优解，但是也能AC。</p>
+<pre><code class="language-python">import sys 
+N,M = list(map(int,sys.stdin.readline().strip().split()))
+def isOK(first):
+    # 吃掉的计数器
+    eat_all = 0
+    # 当天可以吃掉的最多
+    max_day = first
+    for i in range(N):
+        eat_all+=max_day
+        max_day = max_day//2 + (1 if max_day%2 else 0)
+    if eat_all &lt;= M:
+        return True
+    else:
+        return False
+# 二分法，类似二分排序
+# 第一天吃的
+min_first = 1
+max_first = M
+max_ = 0
+first = 0
+while max_first-min_first &gt;1:
+    # 取二分中点
+    first = (max_first+min_first)//2
+    if isOK(first):
+        # 吃得掉
+        max_ = max(max_,first)
+        min_first = first
+    else:
+        # 吃不掉
+        max_first = first
+if isOK(max_+1):
+    print(max_+1)
+else:
+    print(max_)
+</code></pre>
+<h2 id="编程题小q的歌单">[编程题]小Q的歌单</h2>
+<h4 id="题目-10">题目</h4>
+<p>小Q有X首长度为A的不同的歌和Y首长度为B的不同的歌，现在小Q想用这些歌组成一个总长度正好为K的歌单，每首歌最多只能在歌单中出现一次，在不考虑歌单内歌曲的先后顺序的情况下，请问有多少种组成歌单的方法。</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>每个输入包含一个测试用例。
+每个测试用例的第一行包含一个整数，表示歌单的总长度K(1&lt;=K&lt;=1000)。
+接下来的一行包含四个正整数，分别表示歌的第一种长度A(A&lt;=10)和数量X(X&lt;=100)以及歌的第二种长度B(B&lt;=10)和数量Y(Y&lt;=100)。保证A不等于B。
+</code></pre>
+<p><strong>输出描述</strong>：输出一个整数,表示组成歌单的方法取模。因为答案可能会很大,输出对1000000007取模的结果。</p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>5
+2 3 3 3
+</code></pre>
+<p><strong>输出例子1</strong>：9</p>
+<h4 id="解答-9">解答</h4>
+<p><mark>略</mark></p>
+<h2 id="编程题安排机器">[编程题]安排机器</h2>
+<h4 id="题目-11">题目</h4>
+<p>小Q的公司最近接到m个任务, 第i个任务需要xi的时间去完成, 难度等级为yi。<br>
+小Q拥有n台机器, 每台机器最长工作时间zi, 机器等级wi。<br>
+对于一个任务,它只能交由一台机器来完成, 如果安排给它的机器的最长工作时间小于任务需要的时间, 则不能完成,如果完成这个任务将获得200 * xi + 3 * yi收益。</p>
+<p>对于一台机器,它一天只能完成一个任务, 如果它的机器等级小于安排给它的任务难度等级, 则不能完成。</p>
+<p>小Q想在今天尽可能的去完成任务, 即完成的任务数量最大。如果有多种安排方案,小Q还想找到收益最大的那个方案。小Q需要你来帮助他计算一下。</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>输入包括N + M + 1行,
+输入的第一行为两个正整数n和m(1 &lt;= n, m &lt;= 100000), 表示机器的数量和任务的数量。
+接下来n行,每行两个整数zi和wi(0 &lt; zi &lt; 1000, 0 &lt;= wi &lt;= 100), 表示每台机器的最大工作时间和机器等级。
+接下来的m行,每行两个整数xi和yi(0 &lt; xi &lt; 1000, 0 &lt;= yi&lt;= 100), 表示每个任务需要的完成时间和任务的难度等级。
+</code></pre>
+<p><strong>输出描述</strong>：输出两个整数, 分别表示最大能完成的任务数量和获取的收益。</p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>1 2
+100 3
+100 2
+100 1
+</code></pre>
+<p><strong>输出例子1</strong>：1 20006</p>
+<h4 id="解答-10">解答</h4>
+<p><mark>略</mark></p>
+<h2 id="编程题画家小q">[编程题]画家小Q</h2>
+<h4 id="题目-12">题目</h4>
+<p>画家小Q又开始他的艺术创作。小Q拿出了一块有NxM像素格的画板, 画板初始状态是空白的,用'X'表示。<br>
+小Q有他独特的绘画技巧,每次小Q会选择一条斜线, 如果斜线的方向形如'/',即斜率为1,小Q会选择这条斜线中的一段格子,都涂画为蓝色,用'B'表示;如果对角线的方向形如'',即斜率为-1,小Q会选择这条斜线中的一段格子,都涂画为黄色,用'Y'表示。<br>
+如果一个格子既被蓝色涂画过又被黄色涂画过,那么这个格子就会变成绿色,用'G'表示。小Q已经有想画出的作品的样子, 请你帮他计算一下他最少需要多少次操作完成这幅画。</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>每个输入包含一个测试用例。
+每个测试用例的第一行包含两个正整数N和M(1 &lt;= N, M &lt;= 50), 表示画板的长宽。
+接下来的N行包含N个长度为M的字符串, 其中包含字符'B','Y','G','X',分别表示蓝色,黄色,绿色,空白。整个表示小Q要完成的作品。
+</code></pre>
+<p><strong>输出描述</strong>：输出一个正整数, 表示小Q最少需要多少次操作完成绘画。</p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>4 4
+YXXB
+XYGX
+XBYY
+BXXY
+</code></pre>
+<p><strong>输出例子1</strong>：3</p>
+<p><strong>例子说明1</strong>：</p>
+<pre><code>XXXX
+XXXX
+XXXX
+XXXX
+-&gt;
+YXXX
+XYXX
+XXYX
+XXXY
+-&gt;
+YXXB
+XYBX
+XBYX
+BXXY
+-&gt;
+YXXB
+XYGX
+XBYY
+BXXY
+</code></pre>
+<h4 id="解答-11">解答</h4>
+<p><mark>略</mark></p>
+<h1 id="腾讯19年暑期实习笔试题">腾讯19年暑期实习笔试题</h1>
+<h2 id="编程题01串评测地址">[编程题]01串(<a href="https://www.acwing.com/problem/content/604/">评测地址</a>)</h2>
+<h4 id="题目-13">题目</h4>
+<p>给定一个仅包含0或1的字符串，现在可以对其进行一种操作：当有两个相邻的字符其中有一个是0另外一个是1的时候，可以消除掉这两个字符。这样的操作可以一直进行下去直到找不到相邻的0和1为止。问这个字符串经历了操作以后的最短长度。</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>第一行包含一个整数 n，表示字符串的初始长度。
+第二行为所给字符串。
+</code></pre>
+<p><strong>输出描述</strong>：输出共一行，包含一个整数，表示问题的解。</p>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>2</mn><mi mathvariant="normal">∗</mi><mn>105</mn></mrow><annotation encoding="application/x-tex">1≤n≤2∗105</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">∗</span><span class="mord">1</span><span class="mord">0</span><span class="mord">5</span></span></span></span></p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>4
+1100
+</code></pre>
+<p><strong>输出例子1</strong>：0</p>
+<p><strong>输入例子2</strong>：</p>
+<pre><code>5
+01010
+</code></pre>
+<p><strong>输出例子2</strong>：1</p>
+<h4 id="解答-12">解答</h4>
+<p>输入例子1中，<code>1100</code>中间两个0和1相邻消去后为<code>10</code>，可以再次消去剩余0字符。由此分析，某个<mark>仅包含01</mark>的字符串中，如果0和1都存在，则一定存在0和1相邻可以消去，由此得最终剩余的字符串仅包含0或者1，也就是原始字符串中<code>abs(0的个数-1的个数)</code>。</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+s = sys.stdin.readline().strip()
+from collections import Counter
+temp = Counter(s)
+print(abs(temp['1']-temp['0']))
+</code></pre>
+<h2 id="编程题硬币评测地址">[编程题]硬币(<a href="https://www.acwing.com/problem/content/569/">评测地址</a>)</h2>
+<h4 id="题目-14">题目</h4>
+<p>牛家村的货币是一种很神奇的连续货币。他们货币的最大面额是n，并且一共有面额为1，面额为2.....面额为n，n种面额的货币。牛牛每次购买商品都会带上所有面额的货币，支付时会选择给出硬币数量最小的方案。</p>
+<p>现在告诉你牛牛将要购买的商品的价格，你能算出牛牛支付的硬币数量吗？ (假设牛牛每种面额的货币都拥有无限个。)</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>共一行，包含两个整数n和m，分别表示货币的最大面额以及商品的价格。
+</code></pre>
+<p><strong>输出描述</strong>：一个整数表示牛牛支付的硬币数量。</p>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>105</mn><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mn>109</mn></mrow><annotation encoding="application/x-tex">1≤n≤105,1≤m≤109</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">9</span></span></span></span></p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>6 7
+</code></pre>
+<p><strong>输出例子1</strong>：2</p>
+<p><strong>输入例子2</strong>：</p>
+<pre><code>4 10
+</code></pre>
+<p><strong>输出例子2</strong>：3</p>
+<h4 id="解答-13">解答</h4>
+<p>🐂🐂有1,2,....,n的所有面额的货币，且数量不限。要拼出总价为m的商品价格。典型的贪心算法，按面额大小依次取走最大数量的硬币数量即可。比如输入例子1中，7元不存在，6元存在取走7//6=1个，剩余1元，当剩余面额小于或等于n时，直接取走对应的剩余面额即可，所以答案是两个。</p>
+<pre><code class="language-python">import sys
+n,m = list(map(int,sys.stdin.readline().strip().split()))
+ans = m//n
+print(ans if m%n == 0 else ans+1)
+</code></pre>
+<h2 id="编程题奇妙的数列评测地址">[编程题]奇妙的数列(<a href="https://www.acwing.com/problem/content/570/">评测地址</a>)</h2>
+<p>妞妞最近迷上了王者荣耀。</p>
+<p>小Q得到了一个奇妙的数列，这个数列有无限多项，数列中的第 i 个数字为i∗(−1)ii∗(−1)i，比如数列的前几项为-1，2，-3，4，-5…</p>
+<p>小Q兴奋把这个数列拿去给妞妞看，并希望借此邀请妞妞吃饭。</p>
+<p>妞妞想了想，对小Q说：“对于这个数列，我每次询问你一个区间，你在1秒内把这个区间里的数字的和告诉我，如果你答得上来我就跟你一起去吃饭。”</p>
+<p>由于妞妞最近沉迷王者荣耀，已经很久都没理过小Q了，所以小Q不想失去这次珍贵的机会，你能帮帮他吗？</p>
+<p><strong>输入描述</strong>：</p>
+<pre><code>第一行，一个整数 q，表示妞妞的询问次数。
+接下来 q 行，每行两个整数 l 和 r，表示妞妞询问的区间的左端点和右端点。
+</code></pre>
+<p><strong>输出描述</strong>：共 q 行，每行一个整数，表示妞妞询问的区间和。</p>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>q</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>5</mn></msup><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>l</mi><mo>≤</mo><mi>r</mi><mo>≤</mo><mn>109</mn></mrow><annotation encoding="application/x-tex">1≤q≤10^5,1≤l≤r≤109</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.008548em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">9</span></span></span></span></p>
+<p><strong>输入例子1</strong>：</p>
+<pre><code>4
+2 4
+2 2
+3 3
+1 5
+</code></pre>
+<p><strong>输出例子1</strong>：</p>
+<pre><code>3
+2
+-3
+-3
+</code></pre>
+<p><strong>输入例子2</strong>：</p>
+<pre><code>1
+1 1000000000
+</code></pre>
+<p><strong>输出例子2</strong>：</p>
+<pre><code>500000000
+</code></pre>
+<h4 id="解答-14">解答</h4>
+<p>对于给定的区间端点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mi>r</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">l=2,r=5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span>，区间内所有的数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo separator="true">,</mo><mo>−</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mo>−</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">2,-3,4,-5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord">5</span></span></span></span>,可以看到从首项开始，每两项的和为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mo>−</mo><mn>1</mn><msup><mo>)</mo><mo>(</mo></msup><mn>1</mn><mi>i</mi><mi>f</mi><mi>l</mi><mi mathvariant="normal">%</mi><mn>2</mn><mo>=</mo><mo>=</mo><mn>1</mn><mi>e</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(-1)^(1    ifl\%2 == 1 else -1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">−</span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mopen mtight">(</span></span></span></span></span></span></span></span><span class="mord">1</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord">%</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>,这样的对数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>r</mi><mo>−</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(r-l+1)//2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">/</span><span class="mord">2</span></span></span></span>，当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>r</mi><mo>−</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo><mi mathvariant="normal">%</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">(r-l+1)\%2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">%</span><span class="mord">2</span></span></span></span>为1时，还会剩余最后一项，最后一项的大小为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>∗</mo><mo>(</mo><mn>1</mn><mi>i</mi><mi>f</mi><mi>r</mi><mi mathvariant="normal">%</mi><mn>2</mn><mo>=</mo><mo>=</mo><mn>0</mn><mi>e</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">r*(1 if r\%2 == 0 else -1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord">%</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>。</p>
+<pre><code class="language-python">import sys
+texts = []
+q = sys.stdin.readline().strip()
+for line in sys.stdin:
+    if not line:
+        break
+    l,r = list(map(int,line.strip().split()))
+    temp1 = (r-l+1)//2*(1 if l%2 == 1 else -1)
+    temp2 = (r*(1 if r%2 == 0 else -1) if (r-l+1) % 2 == 1 else 0)
+    ans = temp1 + temp2
+    print(ans)
+</code></pre>
+<h2 id="编程题气球游戏评测地址">[编程题]气球游戏(<a href="https://www.acwing.com/problem/content/572/">评测地址</a>)</h2>
+<h4 id="题目-15">题目</h4>
+<p>小Q在进行射击气球的游戏，如果小Q在连续T枪中打爆了所有颜色的气球，将得到一只QQ公仔作为奖励。（每种颜色的球至少被打爆一只）。</p>
+<p>这个游戏中有m种不同颜色的气球，编号1到m。</p>
+<p>小Q一共有n发子弹，然后连续开了n枪。</p>
+<p>小Q想知道在这n枪中，打爆所有颜色的气球最少用了连续几枪？</p>
+<p><strong>输入格式</strong>：第一行包含两个整数n和m。第二行包含n个整数，分别表示每一枪打中的气球的颜色，0表示没打中任何颜色的气球。</p>
+<p><strong>输出格式</strong>：一个整数表示小Q打爆所有颜色气球用的最少枪数。如果小Q无法在这n枪打爆所有颜色的气球，则输出-1。</p>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>106</mn><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">1≤n≤106,1≤m≤2000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>12 5
+2 5 3 1 3 2 4 1 0 5 4 3
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>6
+</code></pre>
+<p><strong>样例解释</strong></p>
+<p>有五种颜色的气球，编号1到5。</p>
+<p>游客从第二枪开始直到第七枪，这连续六枪打爆了5 3 1 3 2 4这几种颜色的气球，包含了从1到5的所有颜色，所以最少枪数为6。</p>
+<h4 id="解答-15">解答</h4>
+<p>题目要求我们在给出的序列中找到最短的包含所有气球的子列。要特别注意空枪带来的影响。</p>
+<ul>
+<li>暴力解法：对于每个元素都遍历，以这个元素开头的剩余序列的最短子列，复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</li>
+<li>双指针：设置左指针和右指针，分别指向目标区间的左端点和右端点，
+<ol>
+<li>首先保持左端点不动，移动右指针，直到找到最小的包含所有气球的子列</li>
+<li>找到包含所有气球的子列后，固定右指针，向右移动左指针，收缩区间长度，直到到达符合条件的最小区间长度</li>
+<li>循环前两步</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-python">import sys 
+text = []
+n,m = list(map(int,sys.stdin.readline().strip().split()))
+candidate = list(map(int,sys.stdin.readline().strip().split()))
+dp = [0 for _ in range(m)]
+# 双指针：对于每一个右指针，找到最小的左指针范围
+pt1 = 0
+pt2 = 0
+min_len = 1000001
+while pt1 &lt; n:
+    # 如果有空的，则pt2一直往下，直到找到dp中包含全部的
+    if 0 in dp:
+        if pt2 == n:
+            break
+        elif not candidate[pt2] == 0:
+            dp[candidate[pt2]-1]+=1
+        pt2+=1
+    else:
+        if not candidate[pt1] == 0:
+        # 如果没有空的，那么对于当前的pt2找到最小pt1
+            min_len = min(min_len,pt2-pt1)
+            dp[candidate[pt1]-1]-=1
+        pt1+=1
+if min_len == 1000001:
+    print(-1)
+else:
+    print(min_len)
+</code></pre>
+<h2 id="编程题猜拳游戏评测地址">[编程题]猜拳游戏(<a href="https://www.acwing.com/problem/content/571/">评测地址</a>)</h2>
+<h4 id="题目-16">题目</h4>
+<p>小Q和牛妹参加一个剪刀石头布的游戏，游戏用卡片来玩，每张卡片是剪刀，石头，布中的一种，每种类型的卡片有无限个。</p>
+<p>牛妹从中选了n张卡片排成一排，正面朝下，小Q也会选择n张卡片排成一排，然后小Q和牛妹的卡片会依次进行比对，第一张对第一张，第二张对第二张…</p>
+<p>如果小Q赢，小Q会得到一分，现在已知牛妹的每一张牌以及小Q最终的得分 s，请问小Q有多少种选择卡片的方案(多少不同的排列)</p>
+<p><strong>输入格式</strong>：</p>
+<pre><code class="language-第一行包含两个整数">第二行包含 n 个整数，表示牛妹的每张卡片，每个数在[0,2]之间，0代表石头，1代表布，2代表剪刀。
+</code></pre>
+<p><strong>输出格式</strong>：</p>
+<pre><code>输出一个整数，表示总方案数对109+7109+7取模后的值。
+</code></pre>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>2000</mn><mo separator="true">,</mo><mn>0</mn><mo>≤</mo><mi>s</mi><mo>≤</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">1≤n≤2000,0≤s≤2000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+<p><strong>输入样例</strong>：</p>
+<pre><code>3 2
+0 1 2
+</code></pre>
+<p><strong>输出样例</strong>：</p>
+<pre><code>6
+</code></pre>
+<h4 id="解答-16">解答</h4>
+<p><mark>略</mark></p>
+<h4 id="解答-17">解答</h4>
+<p><mark>略</mark></p>
+<h2 id="编程题小q购物评测地址">[编程题]小Q购物(<a href="https://www.acwing.com/problem/content/603/">评测地址</a>)</h2>
+<h4 id="题目-17">题目</h4>
+<p>小Q去商场购物，经常会遇到找零的问题。</p>
+<p>小Q现在手上有n种不同面值的硬币，每种面值的硬币都有无限多个。</p>
+<p>为了方便购物，小Q希望带尽量少的硬币，并且要能组合出1到m之间（包含1和m）的所有面值。</p>
+<p><strong>输入格式</strong>：</p>
+<pre><code>第一行包含两个整数m和n。
+接下来n行，每行一个整数，第 i+1 行的整数表示第 i 种硬币的面值。
+</code></pre>
+<p><strong>输出格式</strong>：</p>
+<pre><code>输出一个整数，表示最少需要携带的硬币数量。
+如果无解，则输出-1。
+</code></pre>
+<p><strong>数据范围</strong>：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>100</mn><mo separator="true">,</mo><mn>1</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup><mi mathvariant="normal">，</mi><mn>1</mn><mo>≤</mo><mi mathvariant="normal">硬</mi><mi mathvariant="normal">币</mi><mi mathvariant="normal">面</mi><mi mathvariant="normal">值</mi><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">1≤n≤100,1≤m≤10^9，1≤硬币面值≤10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.950078em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mord cjk_fallback">，</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord cjk_fallback">硬</span><span class="mord cjk_fallback">币</span><span class="mord cjk_fallback">面</span><span class="mord cjk_fallback">值</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></p>
+<p><strong>输入样例：</strong></p>
+<pre><code>20 4
+1
+2
+5
+10
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>5
+</code></pre>
+<h4 id="解答-18">解答</h4>
+<p>给定的输入样例中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>=</mo><mn>20</mn><mo separator="true">,</mo><mi>n</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">m=20,n=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>，也就是我们要利用<code>1,2,5,10</code>四种硬币凑出<code>1,2,...,20</code>一共20种面值。</p>
+<p>我们来模拟凑硬币的过程：</p>
+<ol>
+<li>
+<p>首先我们一定会拿走1，如果没有1，那么一定无法凑齐1。所有如果给定的硬币无1，直接返回-1</p>
+</li>
+<li>
+<p>拿走1后，我们要凑2。凑2有两种选择：</p>
+<ul>
+<li>再拿走一枚一元的</li>
+<li>拿走一枚两元的</li>
+</ul>
+<p>这里我们应该拿走一枚两元的，因为拿走一元的和两元的，你的硬币数目都为2，但是后者的面值范围却比前者大。</p>
+</li>
+<li>
+<p>我们已经拿了<code>1枚1元、1枚2元</code>，硬币范围为1~3，接下来要凑4元。和上面类似，我们可以拿走一元的和两元，我们会选择面试更大的2元，此时面值范围为：1-5元</p>
+</li>
+<li>
+<p>由上面三步分析，我们在凑往下一个数时，总是拿最大的面额，类似于贪心法则</p>
+</li>
+<li>
+<p>第四步分析中，我们总是拿最大的面额，当我们到达5/10/20时，最大面额更新，直接取走相应的最大面额即可（即我们要凑5元，直接拿走5元，凑10元，直接拿走10元）。因此我们的目标更新为：<mark>利用已有的最大面额硬币，凑出下一个最大面额硬币-1元</mark>（即2元时，我们要凑出1元，5元时我们要凑出4元，10元时我们要凑出9元）。</p>
+</li>
+</ol>
+<p>根据上面的分析，假设到达硬币面额为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">S[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>，下一个硬币面额为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">S[i+1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>，当前余额为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span>，我们在余额<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span>的基础上，需要<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span>枚<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">S[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>，来凑出至少<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">S[i+1]-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>元。即<code>m+K*S[i] &gt;= S[i+1]-1</code>，因此可以得到我们需要面额为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">S[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>的硬币数目为：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>≥</mo><mfrac><mrow><mo>(</mo><mi>S</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>−</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>m</mi></mrow><mrow><mi>S</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">K\geq \frac{(S[i+1]-1)-m}{S[i]}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<pre><code class="language-python">import sys
+import math
+m,n = list(map(int,sys.stdin.readline().strip().split()))
+money = []
+for line in sys.stdin:
+    money.append(int(line.strip().split()[0]))
+if not money[0] == 1:
+    print(-1)
+    exit()
+money.sort()
+# money中大于的去除
+for i in range(len(money)):
+    if money[i] &gt; m:
+        break
+money = money[:i+1]
+# 最后要凑m-1，所以在最后添加一枚虚拟硬币，这样处理起来代码简单
+money.append(m+1)
+# 当前余额
+S = 1
+count = 1
+for i in range(len(money)-1):
+    # 要凑money[i+1]-1元
+    temp = math.ceil((money[i+1]-1-S)/money[i])
+    S+= temp * money[i]
+    count += temp
+print(count)
+</code></pre>
+<h1 id="腾讯20年校园招聘笔试题评测地址">腾讯20年校园招聘笔试题(<a href="https://www.nowcoder.com/test/21283868/summary">评测地址</a>)</h1>
+<h2 id="编程题压缩算法">[编程题]压缩算法</h2>
+<h4 id="题目-18">题目</h4>
+<p>小Q想要给他的朋友发送一个神秘字符串，但是他发现字符串的过于长了，于是小Q发明了一种压缩算法对字符串中重复的部分进行了压缩，对于字符串中连续的m个相同字符串S将会压缩为[m|S] (m为一个整数且1&lt;=m&lt;=100)，例如字符串ABCABCABC将会被压缩为[3|ABC]，现在小Q的同学收到了小Q发送过来的字符串，你能帮助他进行解压缩么？</p>
+<p><strong>输入描述:</strong></p>
+<pre><code>输入第一行包含一个字符串s，代表压缩后的字符串。
+S的长度&lt;=1000;
+S仅包含大写字母、[、]、|;
+解压后的字符串长度不超过100000;
+压缩递归层数不超过10层;
+</code></pre>
+<p><strong>输出描述:</strong></p>
+<pre><code>输出一个字符串，代表解压后的字符串。
+</code></pre>
+<p><strong>输入例子1:</strong></p>
+<pre><code>HG[3|B[2|CA]]F
+</code></pre>
+<p><strong>输出例子1:</strong></p>
+<pre><code>HGBCACABCACABCACAF
+</code></pre>
+<p><strong>例子说明1:</strong></p>
+<pre><code>HG[3|B[2|CA]]F−&gt;HG[3|BCACA]F−&gt;HGBCACABCACABCACAF
+</code></pre>
+<h4 id="解答-19">解答</h4>
+<p>类似于判断<code>() []</code>是否合法，一层一层找到最内层<code>[]</code>然后依次解码即可。为了在O(n)的复杂度内完成，每次遇到'['是入栈，遇到']'时出栈并解码，并更新指针位置，字符串长度。</p>
+<pre><code class="language-python">import sys 
+s = sys.stdin.readline().strip()
+stack = []
+# 由内到外拆解
+i = 0
+length = len(s)
+while i &lt; length:
+    if s[i] == '[':
+        stack.append(i)
+    if s[i] == ']':
+        if i == len(s):
+            break
+        pt1 = stack.pop()
+        pt2 = i
+        # 已经找到最内层一组[]，进行解码
+        temp_s = s[pt1+1:pt2]
+        split_idx = temp_s.index('|')
+        # 解码插入字符串
+        ins_s = temp_s[split_idx+1:]*int(temp_s[:split_idx])
+        s = s[:pt1]+ins_s+s[pt2+1:]
+        # 解码后i的位置
+        i = pt1+len(ins_s)
+        length = len(s)
+        continue
+    i+=1
+print(s)
+</code></pre>
+<h2 id="编程题逛街">[编程题]逛街</h2>
+<h4 id="题目-19">题目</h4>
+<p>小Q在周末的时候和他的小伙伴来到大城市逛街，一条步行街上有很多高楼，共有n座高楼排成一行。</p>
+<p>小Q从第一栋一直走到了最后一栋，小Q从来都没有见到这么多的楼，所以他想知道他在每栋楼的位置处能看到多少栋楼呢？（当前面的楼的高度大于等于后面的楼时，后面的楼将被挡住）</p>
+<p><strong>输入描述:</strong></p>
+<pre><code>输入第一行将包含一个数字n，代表楼的栋数，接下来的一行将包含n个数字wi(1&lt;=i&lt;=n)，代表每一栋楼的高度。
+1&lt;=n&lt;=100000;
+1&lt;=wi&lt;=100000; 
+</code></pre>
+<p><strong>输出描述:</strong></p>
+<pre><code>输出一行，包含空格分割的n个数字vi，分别代表小Q在第i栋楼时能看到的楼的数量。
+</code></pre>
+<p><strong>输入例子1:</strong></p>
+<pre><code>6
+5 3 8 3 2 5
+</code></pre>
+<p><strong>输出例子1:</strong></p>
+<pre><code>3 3 5 4 4 4
+</code></pre>
+<p><strong>例子说明1:</strong></p>
+<pre><code>当小Q处于位置3时，他可以向前看到位置2,1处的楼，向后看到位置4,6处的楼，加上第3栋楼，共可看到5栋楼。当小Q处于位置4时，他可以向前看到位置3处的楼，向后看到位置5,6处的楼，加上第4栋楼，共可看到4栋楼。
+</code></pre>
+<h4 id="解答-20">解答</h4>
+<p>题中要求向左看和向右两个方向的楼数总和，向左看和向右看的计算方法一样，因此我们先考虑从左侧向右看的楼数总和。对于任意一个位置起始，从左往右看，找到<mark>最长的递增子列</mark>，子列长度即为从左往右看能看到的楼数。同样的从右向左看，可以变为将数列翻转后，从左往右看，然后将对应的结果相加即可。</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+v = list(map(int,sys.stdin.readline().strip().split()))
+dp_l = [0 for _ in range(n)]
+# 向左遍历
+stack = [v[0]]
+for i in range(1,n):
+    dp_l[i] = len(stack)
+    # 更新栈
+    while True:
+        if stack:
+            if stack[-1] &lt;= v[i]:
+                stack.pop()
+            else:
+                stack.append(v[i])
+                break
+        else:
+            stack.append(v[i])
+            break
+
+dp_r = [0 for _ in range(n)]
+v_inv = v[::-1]
+# 向右遍历
+stack = [v_inv[0]]
+for i in range(1,n):
+    dp_r[i] = len(stack)
+    # 更新栈
+    while True:
+        if stack:
+            if stack[-1] &lt;= v_inv[i]:
+                stack.pop()
+            else:
+                stack.append(v_inv[i])
+                break
+        else:
+            stack.append(v_inv[i])
+            break
+# 加和
+for i in range(n): print(dp_l[i]+dp_r[n-i-1]+1,end=' ')
+</code></pre>
+<h2 id="编程题逆序对">[编程题]逆序对</h2>
+<h4 id="题目-20">题目</h4>
+<p>作为程序员的小Q，他的数列和其他人的不太一样，他有<img src="https://www.nowcoder.com/equation?tex=2%5En" alt="img" loading="lazy">个数。</p>
+<p>老板问了小Q一共 m次，每次给出一个整数<img src="https://www.nowcoder.com/equation?tex=q_i%20(1%20%3C%3D%20i%20%3C%3D%20m)" alt="img" loading="lazy">, 要求小Q把这些数每<img src="https://www.nowcoder.com/equation?tex=2%5E%7Bq_i%7D" alt="img" loading="lazy">分为一组，然后把每组进行翻转，小Q想知道每次操作后整个序列中的逆序对个数是多少呢？</p>
+<p>例如:</p>
+<p>对于序列1 3 4 2，逆序对有(4, 2),(3, 2),总数量为2。</p>
+<p>翻转之后为2 4 3 1，逆序对有(2, 1),(4, 3), (4, 1), (3, 1),总数量为4。</p>
+<p><strong>输入描述:</strong></p>
+<pre><code>第一行一个数
+第二行个数，表示初始的序列()
+第三行一个数
+第四行m个数表示
+</code></pre>
+<p><strong>输出描述:</strong></p>
+<pre><code>m行每行一个数表示答案。
+</code></pre>
+<p><strong>输入例子1:</strong></p>
+<pre><code>2
+2 1 4 3
+4
+1 2 0 2
+</code></pre>
+<p><strong>输出例子1:</strong></p>
+<pre><code>0
+6
+6
+0
+</code></pre>
+<p><strong>例子说明1:</strong></p>
+<pre><code>初始序列2 1 4 3
+ -&gt;
+第一次：1 2 3 4 -&gt; 逆序对数为0
+ -&gt;
+第二次：4 3 2 1 -&gt; 逆序对数为6
+ -&gt;
+第三次：4 3 2 1 -&gt; 逆序对数为6
+ -&gt;
+第四次：1 2 3 4 -&gt; 逆序对数为0
+</code></pre>
+<h4 id="解答-21">解答</h4>
+<p><mark>略</mark></p>
+<h2 id="编程题假期">[编程题]假期</h2>
+<h4 id="题目-21">题目</h4>
+<p>由于业绩优秀，公司给小Q放了 n 天的假，身为工作狂的小Q打算在在假期中工作、锻炼或者休息。他有个奇怪的习惯：不会连续两天工作或锻炼。只有当公司营业时，小Q才能去工作，只有当健身房营业时，小Q才能去健身，小Q一天只能干一件事。给出假期中公司，健身房的营业情况，求小Q最少需要休息几天。</p>
+<p><strong>输入描述:</strong></p>
+<pre><code>第一行一个整数  表示放假天数
+第二行 n 个数 每个数为0或1,第 i 个数表示公司在第 i 天是否营业
+第三行 n 个数 每个数为0或1,第 i 个数表示健身房在第 i 天是否营业
+（1为营业 0为不营业）
+</code></pre>
+<p><strong>输出描述:</strong></p>
+<pre><code>一个整数，表示小Q休息的最少天数
+</code></pre>
+<p><strong>输入例子1:</strong></p>
+<pre><code>4
+1 1 0 0
+0 1 1 0
+</code></pre>
+<p><strong>输出例子1:</strong></p>
+<pre><code>2
+</code></pre>
+<p><strong>例子说明1:</strong></p>
+<pre><code>小Q可以在第一天工作，第二天或第三天健身，小Q最少休息2天
+</code></pre>
+<h4 id="解答-22">解答</h4>
+<p>小Q每一天有三种选择：工作、健身或者休息。很容易想到这是一道动态规划题目，只是状态数目较多（DP维度稍高）。我们先把问题的描述按点剖析一下：</p>
+<ol>
+<li>公司/健身房开门才能选择去工作/健身</li>
+<li>昨天工作/健身了，无论今天公司/健身房是否开门，都不能继续工作/健身</li>
+</ol>
+<p>为了更清晰得表达，画成状态转换图为：</p>
+<img src="https://s1.ax1x.com/2020/03/22/8oeRmR.png" alt="假期-状态转换图" style="zoom: 50%;" />
+<p>我们设定每<code>i</code>天做出工作[1]、健身[2]、休息[0]选择的条件下，所获得的最大非休息天数为<code>dp[i][1]、dp[2][1]、dp[i][0]</code>。状态之间的转换关系为：</p>
+<ol>
+<li>今天选择休息，则今天的最大非休息天数=max(昨天健身的非休息天数，昨天工作的非休息天数）<code>dp[i][0] = max(dp[i-1][1],dp[i-1][2]</code></li>
+<li>如果今天公司开门，则今天可以选择工作，则今天的最大非休息天数=max(昨天健身的非休息天数，昨天休息的最大非休息天数)+1<code>dp[i][1] = max(dp[i-1][0],dp[i-1][2])+1</code></li>
+<li>如果今天健身房开门，则今天可以选择工作，则今天的最大非休息天数=max(昨天工作的非休息天数，昨天休息的最大非休息天数)+1<code>dp[i][2] = max(dp[i-1][0],dp[i-1][1])+1</code></li>
+</ol>
+<p>最终的最大休息天数为：<code>总天数-最后一天的最大非休息天数</code>。代码如下：</p>
+<pre><code class="language-python">import sys
+n = list(map(int,sys.stdin.readline().strip().split()))[0]
+company = list(map(int,sys.stdin.readline().strip().split()))
+exer = list(map(int,sys.stdin.readline().strip().split()))
+company2 = exer
+assert n == len(company) == len(exer)
+# 0休息  1 工作  2健身    第i天选择为0/1/2下的最大工作天数
+dp = [[0 for i in range(n)] for _ in range(3)]
+'''
+注意第一天，选择休息，则工作天数=0，跟公司健身房开不开没有半毛钱关系！！！！
+'''
+dp[0][0] = 0
+dp[1][0] = 1 if company[0] == 1 else 0
+dp[2][0] = 1 if exer[0] == 1 else 0
+# 开始状态转换
+for i in range(1,n):
+    # 不论是否开门，都可以选择休息！！！！！！！不是只有今天公司和健身房都不开门才休息
+    dp[0][i] = max(dp[0][i-1],dp[1][i-1],dp[2][i-1])
+    if company[i] == 1:
+        # 公司开门
+        dp[1][i] = max(dp[0][i-1],dp[2][i-1]) + 1
+    if exer[i] == 1:
+        # 健身房开门
+        dp[2][i] = max(dp[0][i-1],dp[1][i-1]) + 1
+print(n-max(dp[0][-1],dp[1][-1],dp[2][-1]))
+</code></pre>
+<h2 id="编程题视野争夺">[编程题]视野争夺</h2>
+<h4 id="题目-22">题目</h4>
+<p>小Q在进行一场竞技游戏,这场游戏的胜负关键就在于能否能争夺一条长度为L的河道,即可以看作是[0,L]的一条数轴。</p>
+<p>这款竞技游戏当中有n个可以提供视野的道具−真视守卫,第i个真视守卫能够覆盖区间[xi,yi]。现在小Q想知道至少用几个真视守卫就可以覆盖整段河道。</p>
+<p><strong>输入描述:</strong></p>
+<pre><code>输入包括n+1行。
+第一行包括两个正整数n和L(1&lt;=n&lt;=105,1&lt;=L&lt;=109)
+接下来的n行,每行两个正整数xi,yi(0&lt;=xi&lt;=yi&lt;=109),表示第i个真视守卫覆盖的区间。 
+</code></pre>
+<p><strong>输出描述:</strong></p>
+<pre><code>一个整数，表示最少需要的真视守卫数量, 如果无解, 输出-1。
+</code></pre>
+<p><strong>输入例子1:</strong></p>
+<pre><code>4 6
+3 6
+2 4
+0 2
+4 7
+</code></pre>
+<p><strong>输出例子1:</strong></p>
+<pre><code>3
+</code></pre>
+<h4 id="解答-23">解答</h4>
+<p>为每个右区间找到最小的最区间</p>
+<pre><code class="language-python"># 本题通过90%还有BUG
+import sys 
+texts = []
+n,L = list(map(int,sys.stdin.readline().strip().split()))
+for line in sys.stdin:
+    texts.append(line.split())
+for i in range(len(texts)):
+    for j in range(len(texts[0])):
+        texts[i][j] = int(texts[i][j])
+starts = [texts[i][0] for i in range(len(texts))]
+end = [min(L,texts[i][1]) for i in range(len(texts))]
+from operator import itemgetter
+index = [index for index, value in sorted(enumerate(starts), key=itemgetter(1))]
+starts.sort()
+end = [end[index[i]] for i in range(len(end))]
+if not starts[0] == 0:
+    print(-1)
+    exit()
+ans = 0
+y = 0
+y_next = 0
+i = 0
+while i &lt; len(starts):
+    # 包含y且最远的
+    if  starts[i] &lt;= y:
+        y_next = max(y_next,end[i])
+        i+=1
+        continue
+    elif end[i] &gt; y_next:
+        # 更新y
+        y = y_next
+        ans+=1
+        continue
+    i+=1
+print(ans+1)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[LRU+递归实现暴力解题]]></title>
-        <id>https://zxpzhong.github.io/post/LRU+递归实现暴力解题</id>
-        <link href="https://zxpzhong.github.io/post/LRU+递归实现暴力解题">
+        <id>https://zxpzhong.github.io/post/LRU+递归实现暴力解题/</id>
+        <link href="https://zxpzhong.github.io/post/LRU+递归实现暴力解题/">
         </link>
         <updated>2020-03-15T10:05:41.000Z</updated>
         <summary type="html"><![CDATA[<p>LRU+递归实现暴力解题</p>
@@ -106,8 +1015,8 @@ class Solution(object):
     </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode标签含义汇总]]></title>
-        <id>https://zxpzhong.github.io/post/leetcode算法题标签含义汇总</id>
-        <link href="https://zxpzhong.github.io/post/leetcode算法题标签含义汇总">
+        <id>https://zxpzhong.github.io/post/leetcode算法题标签含义汇总/</id>
+        <link href="https://zxpzhong.github.io/post/leetcode算法题标签含义汇总/">
         </link>
         <updated>2020-03-15T06:54:41.000Z</updated>
         <summary type="html"><![CDATA[<p>Leetcode标签含义汇总</p>
@@ -518,8 +1427,8 @@ def minimum(left, right):
     </entry>
     <entry>
         <title type="html"><![CDATA[pytorch多GPU并行运算]]></title>
-        <id>https://zxpzhong.github.io/post/pytorch-duo-gpu-bing-xing-yun-suan</id>
-        <link href="https://zxpzhong.github.io/post/pytorch-duo-gpu-bing-xing-yun-suan">
+        <id>https://zxpzhong.github.io/post/pytorch-duo-gpu-bing-xing-yun-suan/</id>
+        <link href="https://zxpzhong.github.io/post/pytorch-duo-gpu-bing-xing-yun-suan/">
         </link>
         <updated>2019-06-19T15:09:07.000Z</updated>
         <summary type="html"><![CDATA[<p>pytorch使用多块GPU并行运算</p>
@@ -555,8 +1464,8 @@ def minimum(left, right):
     </entry>
     <entry>
         <title type="html"><![CDATA[天池Docker提交]]></title>
-        <id>https://zxpzhong.github.io/post/tian-chi-docker-ti-jiao</id>
-        <link href="https://zxpzhong.github.io/post/tian-chi-docker-ti-jiao">
+        <id>https://zxpzhong.github.io/post/tian-chi-docker-ti-jiao/</id>
+        <link href="https://zxpzhong.github.io/post/tian-chi-docker-ti-jiao/">
         </link>
         <updated>2019-06-19T15:07:49.000Z</updated>
         <summary type="html"><![CDATA[<p>天池竞赛提交如何提交Docker镜像？相信很多小伙伴容易倒在第一步上~~</p>
@@ -748,8 +1657,8 @@ python main.py \
     </entry>
     <entry>
         <title type="html"><![CDATA[ncnn c++模型测试]]></title>
-        <id>https://zxpzhong.github.io/post/ncnn-cmo-xing-ce-shi</id>
-        <link href="https://zxpzhong.github.io/post/ncnn-cmo-xing-ce-shi">
+        <id>https://zxpzhong.github.io/post/ncnn-cmo-xing-ce-shi/</id>
+        <link href="https://zxpzhong.github.io/post/ncnn-cmo-xing-ce-shi/">
         </link>
         <updated>2019-06-19T15:06:41.000Z</updated>
         <summary type="html"><![CDATA[<p>ncnn模型c++代码测试</p>
@@ -875,8 +1784,8 @@ for(int j = 0;j &lt; cls_scores.size();j++)
     </entry>
     <entry>
         <title type="html"><![CDATA[win10使用RabbitMQ实现消息队列]]></title>
-        <id>https://zxpzhong.github.io/post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie</id>
-        <link href="https://zxpzhong.github.io/post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie">
+        <id>https://zxpzhong.github.io/post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie/</id>
+        <link href="https://zxpzhong.github.io/post/win10-shi-yong-rabbitmq-shi-xian-xiao-xi-dui-lie/">
         </link>
         <updated>2019-06-19T15:05:16.000Z</updated>
         <summary type="html"><![CDATA[<p>熟悉了linux下使用消息队列实现进程异步，转到win10下该怎么办？</p>
@@ -1040,8 +1949,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[win10下VS+QT混合编程]]></title>
-        <id>https://zxpzhong.github.io/post/win10-xia-vsqt-hun-he-bian-cheng</id>
-        <link href="https://zxpzhong.github.io/post/win10-xia-vsqt-hun-he-bian-cheng">
+        <id>https://zxpzhong.github.io/post/win10-xia-vsqt-hun-he-bian-cheng/</id>
+        <link href="https://zxpzhong.github.io/post/win10-xia-vsqt-hun-he-bian-cheng/">
         </link>
         <updated>2019-06-19T15:01:04.000Z</updated>
         <summary type="html"><![CDATA[<p>厌倦了windows系统API？但是又没脱离VS进行环境配置？何不试试windows下的VS+QT混合编程</p>
@@ -1111,8 +2020,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[pytorch模型转ncnn]]></title>
-        <id>https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn</id>
-        <link href="https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn">
+        <id>https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn/</id>
+        <link href="https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn/">
         </link>
         <updated>2019-06-19T14:57:26.000Z</updated>
         <summary type="html"><![CDATA[<p>pytorch模型转ncnn，加速模型运算，在底层运行</p>
@@ -1164,8 +2073,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[Github做图床]]></title>
-        <id>https://zxpzhong.github.io/post/github-zuo-tu-chuang</id>
-        <link href="https://zxpzhong.github.io/post/github-zuo-tu-chuang">
+        <id>https://zxpzhong.github.io/post/github-zuo-tu-chuang/</id>
+        <link href="https://zxpzhong.github.io/post/github-zuo-tu-chuang/">
         </link>
         <updated>2019-06-19T14:54:34.000Z</updated>
         <content type="html"><![CDATA[<h1 id="markdown相比于word-txt文本的优缺点">MarkDown相比于word txt文本的优缺点</h1>
@@ -1248,39 +2157,6 @@ int main() {
 </ol>
 <h1 id="禁止滥用">禁止滥用</h1>
 <p>对于个人MD使用来说，Github是一个相对稳定（微软收购后更加稳定了）、不用付费、可以查看历史、速度还行的图床。但是绝对不适用于大流量的场所，只限于个人小流量使用！！！！！！！！！！！！！！！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Gridea对接github page]]></title>
-        <id>https://zxpzhong.github.io/post/gridea-dui-jie-github-page</id>
-        <link href="https://zxpzhong.github.io/post/gridea-dui-jie-github-page">
-        </link>
-        <updated>2019-06-19T12:51:50.000Z</updated>
-        <summary type="html"><![CDATA[<p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>原来一直使用hexo部署github，但是hexo发布起来麻烦，而且使用体验感觉没有那么好，看到这个Gridea感觉不错，因此试了一下！！</p>
-<!-- more -->
-<h2 id="hexo部署github-page的缺点">hexo部署github page的缺点</h2>
-<ol>
-<li>hexo主题虽然多但是一般自己只会喜欢一两个，尤其是hexo的自定义程度高，可以用来玩（一玩玩一天的那种- - ！）但是对于我这种对于前端完全是小白的代码搬运工，并不是很想用可玩性这么高的，因为不自己配置没有特色，自己配置又搞不来</li>
-<li>hexo文章的属性在MD文件的开头，需要手动设置，Gridea把这几项都集成到了软件中，使用起来比较人性化!<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0FZ4.png" alt="mark" loading="lazy"></li>
-<li>编辑界面集成到了Gridea中，编辑发布一体化，适合小白使用</li>
-<li>可以把Gridea源位置设置在onedrive文件夹，这样还可以动态备份，就算换电脑，换软件，把文件夹下载下来还可以继续编辑</li>
-</ol>
-<h2 id="部署流程">部署流程</h2>
-<p>具体细节可以搜索github page部署教程，这里只写Gridea软件如何设置</p>
-<h3 id="安装gridea">安装Gridea</h3>
-<p>从Gridea网站下载软件，然后在下图中，设置好自己的github page域名，仓库名称，用户名（github用户名），邮箱，Token生成方法自行搜索<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0CsU.png" alt="mark" loading="lazy"></p>
-<h3 id="gitalk评论系统配置">gitalk评论系统配置</h3>
-<p><img src="https://s2.ax1x.com/2019/07/30/eGwzR0.png" alt="mark" loading="lazy"><br>
-在自己的github设置页面内-&gt;Developer settings-&gt;OAuth Apps-&gt;new OAuth App,新建一个，然后会返回一个client ID和一个Client Seceret<br>
-<img src="https://s2.ax1x.com/2019/07/30/eGw7M8.png" alt="mark" loading="lazy"><br>
-将这个client ID和Client Seceret填入Gridea中</p>
-<h3 id="其他设置">其他设置</h3>
-<p>可以直接可视化设置头像、主题、一些样式、显示内容、标签等，这点是我最喜欢的<br>
-<strong>完成设置后，可以发布测试一下，输入你的github page域名，即可看到对应的页面</strong></p>
 ]]></content>
     </entry>
 </feed>
