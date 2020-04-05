@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zxpzhong.github.io/</id>
     <title>Felix计算机视觉小屋</title>
-    <updated>2020-03-23T15:08:04.444Z</updated>
+    <updated>2020-04-05T02:01:08.903Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zxpzhong.github.io/"/>
     <link rel="self" href="https://zxpzhong.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://zxpzhong.github.io/images/avatar.png</logo>
     <icon>https://zxpzhong.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Felix计算机视觉小屋</rights>
+    <entry>
+        <title type="html"><![CDATA[基于指静脉的身份识别系统（横向项目，已落地）]]></title>
+        <id>https://zxpzhong.github.io/post/ji-yu-zhi-jing-mai-de-shen-fen-shi-bie-xi-tong-heng-xiang-xiang-mu-yi-luo-di/</id>
+        <link href="https://zxpzhong.github.io/post/ji-yu-zhi-jing-mai-de-shen-fen-shi-bie-xi-tong-heng-xiang-xiang-mu-yi-luo-di/">
+        </link>
+        <updated>2020-04-05T02:00:00.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://zxpzhong.github.io//post-images/1586052016336.jpg" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Multi-Source Transfer for Finger Vein Recognition]]></title>
+        <id>https://zxpzhong.github.io/post/multi-source-transfer-for-finger-vein-recognition/</id>
+        <link href="https://zxpzhong.github.io/post/multi-source-transfer-for-finger-vein-recognition/">
+        </link>
+        <updated>2020-04-05T01:58:08.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://zxpzhong.github.io//post-images/1586051947568.jpg" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[腾讯笔试题汇总]]></title>
         <id>https://zxpzhong.github.io/post/腾讯笔试题汇总/</id>
@@ -2032,147 +2050,6 @@ int main() {
 <p>将程序中的这一句话注释，然后将项目/属性/c/c++/预编译头/预编译头一栏修改为不使用预编译头</p>
 <h2 id="include-qlabel-qlabel-not-found">#include &quot;QLabel&quot; QLabel not found</h2>
 <p>这是因为Qt5.9.3中，将QT加入VS后，默认只添加了<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;#&#039; at position 78: …gets路径下，因此要改为使用#̲include &quot;QtWidg…'>QT_DIR/msvc2015_64/include/为include路径，但是QLabel文件再include/QtWidgets路径下，因此要改为使用#include &quot;QtWidgets/QLabel&quot;，或者手动将</span>QT_DIR/msvc2015_64/include/QtWidgets添加到include路径中</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pytorch模型转ncnn]]></title>
-        <id>https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn/</id>
-        <link href="https://zxpzhong.github.io/post/pytorch-mo-xing-zhuan-ncnn/">
-        </link>
-        <updated>2019-06-19T14:57:26.000Z</updated>
-        <summary type="html"><![CDATA[<p>pytorch模型转ncnn，加速模型运算，在底层运行</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>pytorch模型转ncnn，加速模型运算，在底层运行</p>
-<!-- more -->
-<h1 id="pytorch模型转ncnn">pytorch模型转ncnn</h1>
-<ul>
-<li>ncnn是腾讯公司发布的一款深度学习框架，ncnn 是一个为手机端极致优化的高性能神经网络前向计算框架。</li>
-<li>虽然ncnn对于底层CPU运算加速十分明显，尤其是ARM内核的处理器，但是对于大部分深度学习任务来说，使用python+深度学习框架来进行深度模型探索、训练时间性价比更高。</li>
-<li>但是最终将模型转到移动端计算时，还是要考虑到移动端的算力，可以从轻量化模型（MobileNet、ShuffleNet等）、权值量化、并行计算、GPU加速、计算框架等去考虑移动端加速</li>
-<li>使用pytorch训练模型，再将模型转换为ncnn</li>
-</ul>
-<hr>
-<h1 id="转换的几个思路">转换的几个思路</h1>
-<h2 id="pytorch转onnx转ncnn">pytorch转onnx转ncnn</h2>
-<p>第一种方式最容易想到，onnx全称Open Neural Network Exchange，本身设计的目的就是用来进行模型之间的相互转换，但是目前不支持ncnn转换。github地址：<a href="https://github.com/onnx/onnx">https://github.com/onnx/onnx</a><br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0NSP.png" alt="mark" loading="lazy"></p>
-<h2 id="pytorch转caffe转ncnn">pytorch转caffe转ncnn</h2>
-<p>ncnn官方似乎对caffe模型情有独钟，师兄在找我要模型的时候，都是直接说要caffe模型而不是ncnn模型，由此可见caffe与ncnn的亲密程度了，不过这也极有可能是因为caffe模型在移动端的优化做的也比较好。<br>
-其他pytorch转caffe工具，比如pytorch2caffe，github地址：<a href="https://github.com/longcw/pytorch2caffe">https://github.com/longcw/pytorch2caffe</a>，但是实际测试后感觉效果不理想</p>
-<h2 id="pytorch直接转ncnn">pytorch直接转ncnn</h2>
-<p>ncnn官方的源码中，pytorch转ncnn的推荐方法是使用PytorchConverter github地址：<a href="https://github.com/starimeL/PytorchConverter">https://github.com/starimeL/PytorchConverter</a>，经过多种方案测试无数次次后验证该方法可行<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0UQf.png" alt="mark" loading="lazy"></p>
-<h1 id="pytorchconverter将pytorch转换为ncnn过程">PytorchConverter将Pytorch转换为ncnn过程</h1>
-<h2 id="版本要求训练和转换时都必须满足这个版本要求">版本要求(训练和转换时都必须满足这个版本要求)</h2>
-<ul>
-<li>pytorch : torch==0.2</li>
-<li>torchvision==0.1.8</li>
-</ul>
-<h2 id="转换过程">转换过程</h2>
-<ol>
-<li>将PytorchConverter源码通过git克隆到本地</li>
-<li>打开run.py，可以看到其代码中内置了ResNet、MobileNet等，通过模仿其转换MobileNet的过程，可以写出自己的转换代码</li>
-<li>运行run.py将自己的pytorch模型转换为ncnn模型</li>
-</ol>
-<h2 id="踩坑记录">踩坑记录</h2>
-<ol>
-<li>pytorch版本不要太高，否则生成的模型的层名和ncnn转换时无法对应上，导致转换出错</li>
-<li>nn.logsoftmax()函数不支持，~~因此将NLL LOSS+logsoftmax转用CrossEntropy+softmax。~~参考：<a href="https://blog.csdn.net/hao5335156/article/details/80607732">https://blog.csdn.net/hao5335156/article/details/80607732</a>。再次验证后，发现能够得到正常结果的是NLL + logsoftmax，虽然在模型转换时，logsoftmax不支持，但是由于logsoftmax只在训练时起作用，<strong>所以可以在训练测试正常使用Logsoftmax，在模型转换时再换为softmax</strong>，因为softmax没有参数，所以原来保存的参数仍然你可以正常加载，且不影响最终<strong>特征层</strong>的输出。</li>
-<li>pytorch的pooling函数对奇数特征图长宽处理时，会将最外一层去掉，强制将特征图转换为偶数；而ncnn在处理时，会将奇数长宽强制+1后再处理。如果不注意这个问题，会导致最终进入全连接层时矩阵维度不对导致无法相乘，在ncnn c++模型测试代码中会出现其他层都有输出，但是一到全连接层时，程序直接崩溃。解决办法是在pooling函数的参数列表中加入 <code>ceil_mode=True</code>。参考：<a href="https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045">https://github.com/pytorch/pytorch/issues/6842#issuecomment-383332045</a><br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0yYn.png" alt="mark" loading="lazy"></li>
-<li>pytorch中的ReLU6激活函数PytorchConverter不支持转换，可以改用RuLU或者LeakyReLU</li>
-<li>PytorchConverter工具对python版本貌似没有要求，我测试过python2.7和3.6版本都可以正常使用，但是torch和torchvision的版本必须控制</li>
-<li>还是推荐使用python3.x版本，python2.7中整数除以整数<strong>只会整除</strong>，本人被这个问题卡了一整个上午；而python3中整数除以整数自动得到小数（不得不说太贴心了~）</li>
-<li>torch==0.2中，softmax和logsoftmax函数都不支持dim参数，直接去掉即可，因为最终到全连接层这儿的时候，只有一个维度了，所以做softmax的时候，也只有一个维度可以使用</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Github做图床]]></title>
-        <id>https://zxpzhong.github.io/post/github-zuo-tu-chuang/</id>
-        <link href="https://zxpzhong.github.io/post/github-zuo-tu-chuang/">
-        </link>
-        <updated>2019-06-19T14:54:34.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="markdown相比于word-txt文本的优缺点">MarkDown相比于word txt文本的优缺点</h1>
-<p>在写个人记录、个人博客时，MarkDown是一种比较好的选择</p>
-<ul>
-<li>相比于work文档，MD编辑起来更加轻量化，占用系统资源小，不容易卡死。当你工作的时候，电脑打开大量的软件，这时如果你想编辑一一个word文档，打开word后，呕吼，完蛋，电脑卡死了或者word卡死了，虽然说word卡死一般也不会导致文件内容丢失，但是让你卡几分钟也是很难受的</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://s2.ax1x.com/2019/07/30/eG0kdJ.png" alt="" loading="lazy"></figure>
-<ul>
-<li>相比于纯txt文档，其编辑时候的方式都是一样，使用纯键盘输入即可，但是加入MarkDown特有的标识符，MD文档可以渲染成一个带有格式的可展示文档，输入的难度不增加，且可展示性大大提高，不仅可以作为自己的个人记录，还可以直接发在CSDN、GITPAGE上，而且越来越多的博客系统也开始支持MarkDown语法了<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0ZJ1.png" alt="" loading="lazy"></li>
-</ul>
-<h1 id="markdown基本语法">MarkDown基本语法</h1>
-<p>这里就不赘述了，直接出门左转谷歌即可</p>
-<p><a href="https://www.jianshu.com/p/191d1e21f7ed">https://www.jianshu.com/p/191d1e21f7ed</a></p>
-<h1 id="markdown中的图片链接">MarkDown中的图片链接</h1>
-<ul>
-<li>在MarkDown中可以很快速得表示标题级数、有序无序列表、链接、代码段等等，最让人头痛的应该就是图片了，因为图片无法直接作为MD文本源码的一部分插入，只能插入图片的地址，这个地址可以是相对MD文件的相对路径，也可以是网络图片地址</li>
-<li><strong>如果将图片作为MD的相对路径插入MD文件中</strong>，在移动文件时，需要将图片与MD保持相对路径不变一起移动（比较好的办法是压缩打包后一起移动），否则极有可能出现访问图片无法正常加载</li>
-<li>为了能够将MD文件作为一个独立的文件移动，且其中的图片不丢失，比较好的一个解决办法是将网络图片地址插入MD文档中，这种办法虽然依赖于网络，但是连个网对于9102年应该不是什么难事吧~</li>
-</ul>
-<h1 id="如何将图片保存在网络上且获得图片的直链地址">如何将图片保存在网络上且获得图片的直链地址</h1>
-<p>这里直接把各类网盘（百度云、GDrive、OneDrive等等）排除在外了，因为网盘虽然上传图片比较方便，但是网盘中的图片无法获取到直链，或者获取到直链后很快就无法使用了</p>
-<h2 id="自建图片服务器">自建图片服务器</h2>
-<p>自建图片服务器的话，可以使用ftp、nginx、开源图床、网盘程序等等，但是费用较贵，而且你会忍不住去维护，最后不仅仅浪费了钱，还浪费了生命，血亏!</p>
-<h2 id="云储存对象">云储存对象</h2>
-<p>腾讯云、阿里云、等等云都提供云储存对象，虽然前几个月有免费额度，但是后面还是要收费滴，而且储存要收费、上传流量要收费、下载流量要收费、CDN回源要收费，请问看了这么多收费项后，谁还敢用啊~~~~其次还有七牛云、又拍云等有免费的储存空间，流量每个月也有免费，是一个不错的选择</p>
-<h2 id="第三方图床">第三方图床</h2>
-<p>感觉比较好用的有：</p>
-<ul>
-<li><a href="https://sm.ms/">https://sm.ms/</a></li>
-<li><a href="https://imgchr.com/">https://imgchr.com/</a></li>
-<li>第三方图床速度快，储存限制也比较小，比如每小时上传20张，每张大小小于10M之类的，对于写MD远远够了，主要是怕服务商跑路，跑路后图片消失没有了，除非你付费</li>
-</ul>
-<h2 id="github-repo图床">Github repo图床</h2>
-<p>Github的repo也可以储存东西，最直接的就是程序的版本控制，当然也可以用来当作备份储存，用来储存图片（github官方回复是：该行为不构成abuse，如果把github当图床算滥用，那么那么多人把微博当图床怎么就理所应当捏）。其实github对于国内的响应速度并不快，而且时不时被block，所以用github当图床完全是出于储存个人用途的自创图片，并不能当CDN使用。github自从被微软收购后，我对github的信心大增，代码以前只敢用git管理保存在本地，现在可以放心大胆上传到github了（很多是private，所以不可见），github图床主要就是图个稳定，也并不是想恶意刷github服务器的流量，恶意影响大家的体验。</p>
-<ol>
-<li>
-<p>新建repo，名称任意</p>
-</li>
-<li>
-<p>打开账户/Settings/Developer settings/Personal access tokens,点击Generate new token<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0uQK.png" alt="" loading="lazy"><br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0KsO.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>在弹出的产生token页面，Token description随意填写，但是一定要勾选上这几项<br>
-<img src="https://raw.githubusercontent.com/zxpzhong/image/master/imgs/20190227201200.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>下载PicGo客户端对应的版本并安装，github地址：<a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a></p>
-</li>
-<li>
-<p>启动PicGo后，打开设置界面，点击<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG0lee.png" alt="" loading="lazy"><br>
-在第一栏填入你的github名称/repo名称；在第二栏填入你的分支名称，默认为master；在第三栏填入你刚才申请到的Token；第四栏填入你的repo中的储存路径；最后点击确认，再点击设为默认图床</p>
-</li>
-<li>
-<p>使用QQ截图Ctrl+Alt+A或者微信的Alt+A截图后，按下Ctrl+Shiht+P快捷键即可自动上传到github对应的repo中，上传完成后，会有提示，自动将对应的图片地址送入剪贴板中，直接Ctrl+V即可粘贴对应的地址出来了~~</p>
-</li>
-</ol>
-<h2 id="picgo中使用其他图床">PicGo中使用其他图床</h2>
-<p>PicGo一共支持多种图床：<br>
-<img src="https://s2.ax1x.com/2019/07/30/eG03od.png" alt="" loading="lazy"></p>
-<ul>
-<li>其中SM.MS图床是免费且不需要账号的图床，缺点是无法查看历史上传的图片，因此每次使用同一张图片都需要重新上传一张一样的获取新的地址，或者是拷贝之前上传过的地址</li>
-<li><s>微博图床，我设置好账号和密码后，并不能正常上传，原因应该是微博限制了必须加上验证码才能登陆，所以微博图床对于这款程序并不太友好，应该说微博图床上传图片都很麻烦，登录过程就很麻烦，如果手动上传，感觉更麻烦，所以还是不推荐用微博图床</s>      经过再次测试后，发现<strong>微博第一次在某台电脑上登陆</strong>时，验证比较复杂，需要输入验证码，还有可能需要验证手机号，所以可以使用浏览器在网页中打开微博，然后登陆自己的微博，登陆成功后，在使用PicGo选择微博图床，进行上传测试，这时就可以正常上传了<img src="https://ws1.sinaimg.cn/large/006hYrYngy1g0nhxp4k10j305v05q40e.jpg" alt="" loading="lazy"></li>
-<li>腾讯、阿里的对象储存，上面说了，免费都有时间，过了免费时间后，可能需要付费，主要优势就是CDN加速了，超快，当然如果你的博客看的人多了，那么流量也多，费用也贵</li>
-<li>七牛云和又拍云可以申请免费储存空间，是不错的选择，但是也要小心流量被刷导致扣费、封号，具体可以看看别人的前车之鉴</li>
-</ul>
-<hr>
-<figure data-type="image" tabindex="2"><img src="https://s2.ax1x.com/2019/07/30/eG0GFA.png" alt="" loading="lazy"></figure>
-<ul>
-<li>Imgur也是免费的图床，是国外网站，相对国内速度不太理想，还是SM.MS速度快些</li>
-</ul>
-<h1 id="github图床缺点">Github图床缺点</h1>
-<ol>
-<li>对应储存图片的repo必须是public，如果是pravite，那么图片地址会带有一个随时刷新token，这样虽然repo他人不可见，但是也没法作为图床用</li>
-<li>图床每添加一张，那么会提交一次commit，这样会导致你的github动向表部分一片绿。。。。。虽然这样显得你很活跃，但是真正点进去会发现你的代码更新并没有你真正提交commit的频率高。</li>
-</ol>
-<h1 id="禁止滥用">禁止滥用</h1>
-<p>对于个人MD使用来说，Github是一个相对稳定（微软收购后更加稳定了）、不用付费、可以查看历史、速度还行的图床。但是绝对不适用于大流量的场所，只限于个人小流量使用！！！！！！！！！！！！！！！</p>
 ]]></content>
     </entry>
 </feed>
